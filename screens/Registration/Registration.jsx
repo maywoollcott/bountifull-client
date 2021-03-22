@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { registerUser } from '../../store/actions';
 import { RadioButton } from 'react-native-paper';
 import {COLORS} from '../../globalStyles';
+import { TextInputMask } from 'react-native-masked-text'
 
 export default function Dashboard() {
 
@@ -31,6 +32,12 @@ export default function Dashboard() {
         <Text style={styles.header}>Join the fun!</Text>
       </View>
       <View style={styles.formcontainer}>
+        <TextInput 
+          style={styles.input}
+          placeholder='Name'
+          name='name'
+          onChangeText={text => setFormData({...formData, name: text})}
+        />
         <TextInput 
           style={styles.input}
           placeholder='Email'
