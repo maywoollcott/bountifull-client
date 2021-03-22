@@ -1,7 +1,9 @@
 import axios from 'axios';
 import ActionType from './constants';
+import * as SecureStore from 'expo-secure-store';
 
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
+// TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
 const API_URL = process.env.API_URI;
 
@@ -18,12 +20,25 @@ export const loginUser = ({ email, password }) => {
         email,
         password,
       });
+      await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
       return dispatch({
         type: ActionType.LOGIN_SUCCESS,
         payload: data,
       });
     } catch (err) {
       return dispatch({ type: ActionType.LOGIN_ERROR, payload: err });
+    }
+  };
+};
+
+export const logoutUser = () => {
+  return async (dispatch) => {
+    dispatch({ type: ActionType.LOGOUT_REQUESTED})
+    try {
+      await SecureStore.deleteItemAsync('BOUNTIFULL_TOKEN_AUTH');
+      return dispatch({ type: ActionType.LOGOUT_SUCCESS});
+    } catch (err) {
+      return dispatch({ type: ActionType.LOGOUT_ERROR, payload: err });
     }
   };
 };
@@ -44,6 +59,7 @@ export const registerUser = ({ displayName, email, password, birthdate, sex, ava
         birthdate,
         sex,
       });
+      await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
       return dispatch({
         type: ActionType.REGISTER_SUCCESS,
         payload: data,
@@ -66,12 +82,18 @@ export const updateUser = ({ avatar, displayName, email, password }) => {
           pid,
         }
       } = getState();
+      const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
       dispatch({type: ActionType.UPDATE_REQUESTED});
       const { data } = await axios.post(`${API_URL}/update`, {
         pid,
         email,
         password,
-      });
+      }, config);
       return dispatch({
         type: ActionType.UPDATE_SUCCESS,
         payload: data,
@@ -81,6 +103,7 @@ export const updateUser = ({ avatar, displayName, email, password }) => {
     }
   };
 };
+
 
 // TODO: add Token and authorization header to request, store refreshToken in AsyncStorage or Expo-Secure-Store
 export const addItem = ({ item, date }) => {
@@ -94,12 +117,18 @@ export const addItem = ({ item, date }) => {
           pid,
         }
       } = getState();
+      const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
       dispatch({type: ActionType.ADD_ITEM_REQUESTED});
       const { data } = await axios.post(`${API_URL}/log`, {
         pid,
         item,
         date,
-      });
+      }, config);
       return dispatch({
         type: ActionType.ADD_ITEM_SUCCESS,
         payload: data,
@@ -122,8 +151,15 @@ export const deleteItem = ({ item, date }) => {
           pid,
         }
       } = getState();
+      const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
       dispatch({type: ActionType.DELETE_ITEM_REQUESTED});
       const { data } = await axios.delete(`${API_URL}/delete`, {
+        ...config,
         data: {
           pid,
           item,

@@ -33,6 +33,28 @@ const reducer = (state = initialState, action) => {
         currentProgress: action.payload.currentProgress,
         isLoading: false,
       };
+    case ActionType.LOGOUT_REQUESTED:
+      return {
+        ...state,
+        error: null,
+        isLoading: true,
+      };
+    case ActionType.LOGOUT_ERROR:
+      return {
+        ...state,
+        user: null,
+        currentProgress: null,
+        error: action.payload,
+        isLoading: false,
+      };
+    case ActionType.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        user: null,
+        currentProgress: null,
+        error: null,
+        isLoading: false,
+      };
     case ActionType.REGISTER_USER_REQUEST:
       return {
         ...state,
