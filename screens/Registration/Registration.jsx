@@ -10,6 +10,7 @@ import { TextInputMask } from 'react-native-masked-text'
 export default function Dashboard() {
 
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
     birthdate: '',
