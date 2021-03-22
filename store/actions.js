@@ -5,7 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
-const API_URL = process.env.API_URI;
+const API_URL = process.env.IP;
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
@@ -44,15 +44,14 @@ export const logoutUser = () => {
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const registerUser = ({ displayName, email, password, birthdate, sex, avatar }) => {
+export const registerUser = ({ name, email, password, birthdate, sex }) => {
   return async (dispatch) => {
-    if (!avatar || !displayName || !email || !password || !birthdate || !sex) {
+    if (!name || !email || !password || !birthdate || !sex) {
       return dispatch({ type: ActionType.REGISTER_ERROR, payload: 'Please make sure all required information has been provided for registration'});
     }
     try {
       dispatch({type: ActionType.REGISTER_REQUESTED});
       const { data } = await axios.post(`${API_URL}/register`, {
-        avatar,
         displayName,
         email,
         password,
