@@ -44,16 +44,16 @@ export const logoutUser = () => {
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const registerUser = ({ displayName, email, password, birthdate, sex, avatar }) => {
+export const registerUser = ({ name, email, password, birthdate, sex, avatar }) => {
   return async (dispatch) => {
-    if (!avatar || !displayName || !email || !password || !birthdate || !sex) {
+    if (!avatar || !name || !email || !password || !birthdate || !sex) {
       return dispatch({ type: ActionType.REGISTER_ERROR, payload: 'Please make sure all required information has been provided for registration'});
     }
     try {
       dispatch({type: ActionType.REGISTER_REQUESTED});
       const { data } = await axios.post(`${API_URL}/register`, {
         avatar,
-        displayName,
+        name,
         email,
         password,
         birthdate,
@@ -71,9 +71,9 @@ export const registerUser = ({ displayName, email, password, birthdate, sex, ava
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const updateUser = ({ avatar, displayName, email, password }) => {
+export const updateUser = ({ avatar, name, email, password }) => {
   return async (dispatch, getState) => {
-    if (!email || !password || !avatar || !displayName) {
+    if (!email || !password || !avatar || !name) {
       return dispatch({ type: ActionType.UPDATE_ERROR, payload: 'No information has been provided to update!'});
     }
     try {
