@@ -9,22 +9,25 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
 
-  header: {
-    fontSize: 40,
-    color: COLORS.sage,
-    fontWeight: '700',
-    marginBottom: 50
+  logo: {
+    width: 200,
+    height: 150
   },
 
-  radiolabel: {
-    fontSize: 18,
-    color: COLORS.turq,
-    fontWeight: '700'
+  namelogocontainer: {
+    width: 180,
+    height: 55,
+    justifyContent: 'center',
+  },
+
+  namelogo: {
+    width: null,
+    resizeMode: 'contain'
   },
 
   formcontainer: {
     marginTop: 10,
-    alignItems:'center',
+    alignItems:'center'
   },
 
   input: {
@@ -51,22 +54,5 @@ export default StyleSheet.create({
   buttontext: {
     color: 'white',
     fontSize: 20,
-  },
-
-  radiocontainer: {
-    flexDirection: 'row',
-    width: '80%',
-    marginTop: 10,
-    marginBottom: 20
-  },
-
-  radioitem: {
-    flex: 1,
-    alignItems: 'center'
-  },
-
-  sextext: {
-    marginTop: 20,
-    color: 'gray'
   }
 })
