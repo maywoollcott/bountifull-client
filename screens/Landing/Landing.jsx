@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { loginUser } from '../../store/actions'
 
 
-export default function Dashboard() {
+export default function Landing() {
 
   const [formData, setFormData] = useState({
     email: '',

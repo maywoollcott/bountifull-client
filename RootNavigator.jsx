@@ -3,15 +3,15 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Landing } from './screens/Landing';
-import { Registration } from './screens/Registration';
+import Landing  from './screens/Landing/Landing';
+import Registration from './screens/Registration/Registration';
 import { useSelector } from 'react-redux';
-import MainTabs from './screens/MainTabs';
+import MainTabs from './screens/MainTabs/MainTabs';
 
-const AuthStack = createStackNavigator();
-const state = useSelector(state => state);
 
 export default function RootNavigator() {
+  const AuthStack = createStackNavigator();
+  const state = useSelector(state => state);
 
   const AuthStackScreen = () => (
     <AuthStack.Navigator initialRouteName='Landing'>

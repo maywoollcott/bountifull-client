@@ -4,16 +4,18 @@ import Dashboard from '../Dashboard/Dashboard';
 import History from '../History/History';
 import SearchPage from '../SearchPage/SearchPage';
 import Achievements from '../Achievements/Achievements';
-import User from '../User/User';
+import UserPage from '../UserPage/UserPage';
 import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 import { useDispatch } from 'react-redux';
 import ActionType from '../../store/constants';
 
-const Tab = createBottomTabNavigator();
-const dispatch = useDispatch();
 
 export default function MainTabs () {
+
+  
+  const Tab = createBottomTabNavigator();
+  const dispatch = useDispatch();
 
   // This useEffect will check if there's a token in the store and will logout user if none is in there.
   // We can add some logic to remove token and user info for certain errors from the server.
@@ -85,7 +87,7 @@ export default function MainTabs () {
       />
       <Tab.Screen
         name='User'
-        component={User}
+        component={UserPage}
         options={{
           tabBarIcon: ({ color }) => (
           <AntDesign
