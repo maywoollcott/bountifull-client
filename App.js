@@ -1,27 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './store/index'
+import Dashboard from './screens/Dashboard/Dashboard'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Image source={require('./assets/images/logo.png')} style={styles.logo}/>
-      <Text>Let's get Bountifull!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <Dashboard> </Dashboard>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  logo: {
-    width: 200,
-    height: 200
-  }
-});
