@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './Registration.style';
 import { StatusBar } from 'expo-status-bar';
@@ -18,10 +19,11 @@ export default function Dashboard() {
   });
 
   const [checked, setChecked] = React.useState('null')
-
+  
+  const dispatch = useDispatch();
   const onSubmit = async () => {
     console.log(formData)
-    const res = await registerUser(formData);
+    const res = await dispatch(registerUser(formData));
     console.log(res.payload) //obv this needs to be changed
     //set auth
     //route to dashboard

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import ActionType from './constants';
 import * as SecureStore from 'expo-secure-store';
-
+// import { IP} from "@env"
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
-const API_URL = process.env.IP;
+// const API_URL = IP;
+const API_URL ='http://192.168.0.181:3001';
+
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
@@ -44,15 +46,17 @@ export const logoutUser = () => {
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const registerUser = ({ name, email, password, birthdate, sex, avatar }) => {
+export const registerUser = ({ name, email, password, birthdate, sex }) => {
+  // console.log(API_URL)
+  // console.log('name');
   return async (dispatch) => {
-    if (!avatar || !name || !email || !password || !birthdate || !sex) {
-      return dispatch({ type: ActionType.REGISTER_ERROR, payload: 'Please make sure all required information has been provided for registration'});
+    // console.log('here');
+    if (!name || !email || !password || !sex || !birthdate) {
+      return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: 'Please make sure all required information has been provided for registration'});
     }
     try {
-      dispatch({type: ActionType.REGISTER_REQUESTED});
+      dispatch({ type: ActionType.REGISTER_USER_REQUEST });
       const { data } = await axios.post(`${API_URL}/register`, {
-        avatar,
         name,
         email,
         password,
@@ -61,11 +65,11 @@ export const registerUser = ({ name, email, password, birthdate, sex, avatar }) 
       });
       await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
       return dispatch({
-        type: ActionType.REGISTER_SUCCESS,
+        type: ActionType.REGISTER_USER_SUCCESS,
         payload: data,
       });
     } catch (err) {
-      return dispatch({ type: ActionType.REGISTER_ERROR, payload: err });
+      return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: err });
     }
   };
 };
