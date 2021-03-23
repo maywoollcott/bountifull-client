@@ -46,13 +46,12 @@ export const logoutUser = () => {
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const registerUser = ({ name, email, password, birthdate, sex }) => {
-  console.log({name, email, password, birthdate, sex});
   return async (dispatch) => {
-    if (!name || !email || !password || !sex || !birthdate) {
-      return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: 'Please make sure all required information has been provided for registration' });
+    if (!name || !email || !password || !birthdate || !sex) {
+      return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: 'Please make sure all required information has been provided for registration'});
     }
     try {
-      dispatch({ type: ActionType.REGISTER_USER_REQUEST });
+      dispatch({type: ActionType.REGISTER_USER_REQUEST});
       const { data } = await axios.post(`${API_URL}/register`, {
         name,
         email,
@@ -60,22 +59,25 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
         birthdate,
         sex,
       });
+      console.log('data: ', data);
+      console.log(data.token)
       await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
       return dispatch({
         type: ActionType.REGISTER_USER_SUCCESS,
         payload: data,
       });
     } catch (err) {
+      console.error(err);
       return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: err });
     }
   };
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const updateUser = ({ avatar, displayName, email, password }) => {
+export const updateUser = ({ displayName, email, password }) => {
   return async (dispatch, getState) => {
-    if (!email || !password || !avatar || !displayName) {
-      return dispatch({ type: ActionType.UPDATE_ERROR, payload: 'No information has been provided to update!' });
+    if (!email || !password || !displayName) {
+      return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: 'No information has been provided to _USER!'});
     }
     try {
       const {
@@ -89,7 +91,7 @@ export const updateUser = ({ avatar, displayName, email, password }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      dispatch({ type: ActionType.UPDATE_REQUESTED });
+      dispatch({type: ActionType.UPDATE_USER_REQUESTED});
       const { data } = await axios.post(`${API_URL}/update`, {
         pid,
         email,

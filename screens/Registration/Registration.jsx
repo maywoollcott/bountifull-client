@@ -7,8 +7,11 @@ import { registerUser } from '../../store/actions';
 import { RadioButton } from 'react-native-paper';
 import {COLORS} from '../../globalStyles';
 import { TextInputMask } from 'react-native-masked-text'
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Dashboard() {
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -23,7 +26,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
 
   const onSubmit = async () => {
-    console.log(formData);
+    console.log(formData)
     const res = await dispatch(registerUser(formData));
     console.log(res.payload) //obv this needs to be changed
     //set auth
