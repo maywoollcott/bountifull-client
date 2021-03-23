@@ -2,6 +2,18 @@ import { StyleSheet } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
 export default StyleSheet.create({
+  modalView: {
+    position: "absolute",
+    bottom: 2,
+    width: "100%",
+    backgroundColor: "white"
+
+  },
+  modalButtonView: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -16,9 +28,9 @@ export default StyleSheet.create({
     marginBottom: 50
   },
   avatar: {
-    width: 200,
-    height: 200,
-    borderRadius: 200/2
+    width: 150,
+    height: 150,
+    borderRadius: 150/2
   },
 
   formcontainer: {

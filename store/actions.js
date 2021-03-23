@@ -74,6 +74,9 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
   };
 };
 
+export const getUserInfo = 
+
+
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const updateUser = ({ displayName, email, password }) => {
   return async (dispatch, getState) => {
