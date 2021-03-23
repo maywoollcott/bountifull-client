@@ -5,7 +5,7 @@ const initialState = {
   error: null,
   isLoading: false,
   currentProgress: null,
-  // TODO: Add an authenticated property here or under user?
+  fact: '',
 };
 
 // separate out actions into different reducers and combine.
@@ -31,6 +31,7 @@ const reducer = (state = initialState, action) => {
           ...action.payload.user,
         },
         currentProgress: action.payload.currentProgress,
+        fact: action.payload.fact,
         isLoading: false,
       };
     case ActionType.LOGOUT_REQUESTED:
@@ -74,6 +75,7 @@ const reducer = (state = initialState, action) => {
           ...action.payload.user,
         },
         currentProgress: action.payload.currentProgress,
+        fact: action.payload.fact,
         isLoading: false,
       };
     case ActionType.UPDATE_USER_REQUESTED:
