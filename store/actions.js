@@ -1,20 +1,17 @@
 import axios from 'axios';
 import ActionType from './constants';
 import * as SecureStore from 'expo-secure-store';
-// import { IP} from "@env"
+// import { IP} from 'react-native-dotenv';
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
-<<<<<<< HEAD
 // const API_URL = IP;
 const API_URL ='http://192.168.0.181:3001';
 
-=======
-const API_URL = 'http://192.168.0.9:3001';
->>>>>>> 3d6662f115bc8fedd77986aa13dabe3563f82419
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
+  console.log(API_URL);
   return async (dispatch) => {
     // TODO: Add validator helper functions
     if (!email || !password) {
@@ -54,20 +51,11 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
   // console.log(API_URL)
   // console.log('name');
   return async (dispatch) => {
-<<<<<<< HEAD
-    // console.log('here');
-    if (!name || !email || !password || !sex || !birthdate) {
-      return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: 'Please make sure all required information has been provided for registration'});
-    }
-    try {
-      dispatch({ type: ActionType.REGISTER_USER_REQUEST });
-=======
     if (!name || !email || !password || !birthdate || !sex) {
       return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: 'Please make sure all required information has been provided for registration'});
     }
     try {
       dispatch({type: ActionType.REGISTER_USER_REQUEST});
->>>>>>> 3d6662f115bc8fedd77986aa13dabe3563f82419
       const { data } = await axios.post(`${API_URL}/register`, {
         name,
         email,
@@ -83,27 +71,17 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
         payload: data,
       });
     } catch (err) {
-<<<<<<< HEAD
-=======
       console.error(err);
->>>>>>> 3d6662f115bc8fedd77986aa13dabe3563f82419
       return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: err });
     }
   };
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-<<<<<<< HEAD
-export const updateUser = ({ avatar, name, email, password }) => {
-  return async (dispatch, getState) => {
-    if (!email || !password || !avatar || !name) {
-      return dispatch({ type: ActionType.UPDATE_ERROR, payload: 'No information has been provided to update!'});
-=======
 export const updateUser = ({ displayName, email, password }) => {
   return async (dispatch, getState) => {
     if (!email || !password || !displayName) {
       return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: 'No information has been provided to _USER!'});
->>>>>>> 3d6662f115bc8fedd77986aa13dabe3563f82419
     }
     try {
       const { 
