@@ -8,6 +8,7 @@ import {COLORS} from '../../globalStyles';
 import { TextInputMask } from 'react-native-masked-text';
 import { useDispatch } from 'react-redux';
 
+
 export default function Dashboard() {
 
   const [formData, setFormData] = useState({
