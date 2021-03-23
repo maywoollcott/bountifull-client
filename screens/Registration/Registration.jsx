@@ -5,12 +5,11 @@ import { StatusBar } from 'expo-status-bar';
 import { registerUser } from '../../store/actions';
 import { RadioButton } from 'react-native-paper';
 import {COLORS} from '../../globalStyles';
-import { TextInputMask } from 'react-native-masked-text'
-import { useDispatch, useSelector } from 'react-redux';
+import { TextInputMask } from 'react-native-masked-text';
+import { useDispatch } from 'react-redux';
+
 
 export default function Dashboard() {
-  const state = useSelector(state => state);
-  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -19,6 +18,8 @@ export default function Dashboard() {
     birthdate: '',
     sex: ''
   });
+
+  const dispatch = useDispatch();
 
   const [checked, setChecked] = React.useState('null')
 

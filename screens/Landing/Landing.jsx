@@ -3,6 +3,7 @@ import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } 
 import styles from './Landing.style.jsx.jsx';
 import { StatusBar } from 'expo-status-bar';
 import { loginUser } from '../../store/actions'
+import { useDispatch } from 'react-redux';
 
 
 export default function Landing() {
@@ -12,10 +13,12 @@ export default function Landing() {
     password: '',
   });
   
+  const dispatch = useDispatch();
+
   const onSubmit = async () => {
     console.log('user email: ' + formData.email);
     console.log('user password: ' + formData.password);
-    const res = await loginUser(formData);
+    const res = await dispatch(loginUser(formData));
     console.log(res.payload) //obv this needs to be changed
     //set auth
     //route to dashboard
