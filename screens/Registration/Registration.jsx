@@ -5,7 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { registerUser } from '../../store/actions';
 import { RadioButton } from 'react-native-paper';
 import {COLORS} from '../../globalStyles';
-import { TextInputMask } from 'react-native-masked-text'
+import { TextInputMask } from 'react-native-masked-text';
+import { useDispatch } from 'react-redux';
 
 export default function Dashboard() {
 
@@ -17,11 +18,13 @@ export default function Dashboard() {
     sex: ''
   });
 
+  const dispatch = useDispatch();
+
   const [checked, setChecked] = React.useState('null')
 
   const onSubmit = async () => {
     console.log(formData)
-    const res = await registerUser(formData);
+    const res = await dispatch(registerUser(formData));
     console.log(res.payload) //obv this needs to be changed
     //set auth
     //route to dashboard
