@@ -14,7 +14,7 @@ export default function RootNavigator() {
   const state = useSelector(state => state);
 
   const AuthStackScreen = () => (
-    <AuthStack.Navigator initialRouteName='Registration'>
+    <AuthStack.Navigator initialRouteName='Landing'>
       <AuthStack.Screen name='Landing' component={Landing} />
       <AuthStack.Screen name='Registration' component={Registration} />
     </AuthStack.Navigator>
