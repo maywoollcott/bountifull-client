@@ -9,6 +9,7 @@ import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 import { useDispatch } from 'react-redux';
 import ActionType from '../../store/constants';
+import {COLORS} from '../../globalStyles';
 
 
 export default function MainTabs () {
@@ -26,12 +27,15 @@ export default function MainTabs () {
   }, []);
 
   return (
-    <Tab.Navigator
+  <Tab.Navigator
       initialRouteName='Dashboard'
-      // Icon color options listed on two lines below.
-      // activeColor='#Insert Color here'
-      // inactiveColor='#Insert Color here
-      // barStyle={{ backgroundColor: primaryColor }}
+      tabBarOptions={{
+        activeTintColor: COLORS.palegreen,
+        inactiveTintColor: COLORS.darkblue,
+        style: {
+          backgroundColor: COLORS.sage,
+        }
+      }}
     >
       <Tab.Screen
         name='Dashboard'
