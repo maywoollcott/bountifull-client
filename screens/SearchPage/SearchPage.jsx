@@ -23,6 +23,7 @@ export default function SearchPage() {
     console.log(query);
     const res = await apiService.searchNutritionApiBranded(query);
     const itemList = res.data.foods.slice(0, 20)
+    console.log(itemList)
     const itemListCodes = itemList.map(item => item.description);
     console.log(itemListCodes);
     // const itemListRes = await apiService.searchNutritionApiByItems(itemListCodes.join(','));

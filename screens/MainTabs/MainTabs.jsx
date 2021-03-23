@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Dashboard from '../Dashboard/Dashboard';
+import DashboardNavigator from '../../navigators/DashboardNavigator';
 import History from '../History/History';
 import SearchPage from '../SearchPage/SearchPage';
 import Achievements from '../Achievements/Achievements';
@@ -9,7 +9,11 @@ import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 import { useDispatch } from 'react-redux';
 import ActionType from '../../store/constants';
+<<<<<<< HEAD
 import {COLORS} from '../../globalStyles';
+=======
+import { COLORS } from '../../globalStyles';
+>>>>>>> 505a779ea3fe9eca67c1e8ca0c2920393ac29cac
 
 
 export default function MainTabs () {
@@ -39,7 +43,7 @@ export default function MainTabs () {
     >
       <Tab.Screen
         name='Dashboard'
-        component={Dashboard}
+        component={DashboardNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Entypo
@@ -64,7 +68,7 @@ export default function MainTabs () {
       }}
       />
       <Tab.Screen
-        name='SearchPage'
+        name='Add'
         component={SearchPage}
         options={{
           tabBarIcon: ({ color }) => (

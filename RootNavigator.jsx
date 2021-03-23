@@ -7,6 +7,7 @@ import Landing  from './screens/Landing/Landing';
 import Registration from './screens/Registration/Registration';
 import { useSelector } from 'react-redux';
 import MainTabs from './screens/MainTabs/MainTabs';
+import { COLORS } from './globalStyles';
 
 
 export default function RootNavigator() {
@@ -14,7 +15,20 @@ export default function RootNavigator() {
   const state = useSelector(state => state);
 
   const AuthStackScreen = () => (
+<<<<<<< HEAD
     <AuthStack.Navigator initialRouteName='Landing'>
+=======
+    <AuthStack.Navigator
+      initialRouteName='Landing'
+      screenOptions={{
+        // setting headerTitle to empty string to not display anything
+        headerTitle: '',
+        headerStyle: {
+          backgroundColor: COLORS.darkblue,
+        },
+      }}
+    >
+>>>>>>> 505a779ea3fe9eca67c1e8ca0c2920393ac29cac
       <AuthStack.Screen name='Landing' component={Landing} />
       <AuthStack.Screen name='Registration' component={Registration} />
     </AuthStack.Navigator>
