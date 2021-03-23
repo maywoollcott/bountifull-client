@@ -63,8 +63,6 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
         birthdate,
         sex,
       });
-      console.log('data: ', data);
-      console.log(data.token)
       await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
       return dispatch({
         type: ActionType.REGISTER_USER_SUCCESS,
@@ -101,11 +99,11 @@ export const updateUser = ({ displayName, email, password }) => {
         password,
       }, config);
       return dispatch({
-        type: ActionType.UPDATE_SUCCESS,
+        type: ActionType.UPDATE_USER_SUCCESS,
         payload: data,
       });
     } catch (err) {
-      return dispatch({ type: ActionType.UPDATE_ERROR, payload: err });
+      return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: err });
     }
   };
 };
