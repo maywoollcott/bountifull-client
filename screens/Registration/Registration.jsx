@@ -9,8 +9,6 @@ import { COLORS } from '../../globalStyles';
 import { TextInputMask } from 'react-native-masked-text'
 
 export default function Dashboard() {
-  const state = useSelector(state => state);
-  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -19,6 +17,8 @@ export default function Dashboard() {
     birthdate: '',
     sex: ''
   });
+
+  const dispatch = useDispatch();
 
   const [checked, setChecked] = React.useState('null')
 
