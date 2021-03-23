@@ -1,15 +1,20 @@
-
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, Image, Modal, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './UserPage.style';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
+import UpdateInfo from '../UpdateInfo/UpdateInfo';
+
 import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 // import * as ImagePicker from 'expo-image-picker';
 import keys from './keys';
 import { RNS3 } from 'react-native-aws3';
+import { useSelector } from 'react-redux';
 
-export default function UserPage() {
+export default function UserPage({ navigation }) {
+
+  const user = useSelector(state => state.user);
+
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -34,6 +39,12 @@ export default function UserPage() {
     console.log('submit')
     // const res = await dispatch(registerUser(formData));
     // console.log(res.payload)
+  }
+
+  const logoutUser = async () => {
+    console.log('logging out')
+    const res = await dispatchEvent(logoutUser());
+    console.log(res.payload);
   }
 
   const imageFromCamera = async () => {
@@ -74,12 +85,7 @@ export default function UserPage() {
       accessKey: keys.AccessKey,
       secretKey: keys.SecretKey,
       successActionStatus: 201,
-      // headers: {
-      //   'Access-Control-Allow-Origin': '*',
-      //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-      // }
     }
-
     RNS3.put(file, config).then(res => {
       if (res.status !== 201) throw new Error('failed to upload image to s3')
       console.log(file.name);
@@ -91,13 +97,13 @@ export default function UserPage() {
   return (
     <View style={styles.container}>
       <Image source={{ uri: `${baseS3Uri}/profilepic.jpg` }} style={styles.avatar}></Image>
-      
+
       {/* camera should only open when clicked on icon */}
       <View style={styles.container}>
-      <TouchableOpacity onPress={imageFromCamera}>
-        <FontAwesome name="camera" size={24} color="black" />
-      </TouchableOpacity>
-        <Camera  type={type} ref={ref => {
+        <TouchableOpacity onPress={imageFromCamera}>
+          <FontAwesome name="camera" size={24} color="black" />
+        </TouchableOpacity>
+        <Camera type={type} ref={ref => {
           setCameraRef(ref);
         }}>
           <View
@@ -120,16 +126,16 @@ export default function UserPage() {
               }}>
               <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ alignSelf: 'center' }} 
+            <TouchableOpacity style={{ alignSelf: 'center' }}
               onPress={async () => {
-              if (cameraRef) {
-                let photo = await cameraRef.takePictureAsync();
-                // console.log('photo', photo);
-                const photoTakenUri = photo;
-                saveImageToAWS3(photoTakenUri.uri)
-                // console.log(photoTakenUri.uri)
-              }
-            }}>
+                if (cameraRef) {
+                  let photo = await cameraRef.takePictureAsync();
+                  // console.log('photo', photo);
+                  const photoTakenUri = photo;
+                  saveImageToAWS3(photoTakenUri.uri)
+                  // console.log(photoTakenUri.uri)
+                }
+              }}>
               <View style={{
                 borderWidth: 2,
                 borderRadius: "50%",
@@ -155,55 +161,25 @@ export default function UserPage() {
           </View>
         </Camera>
       </View>
-      <Text>NAME</Text>
-      <Text>Member since year created</Text>
-      <Text>email</Text>
+      <Text>NAME {user.name}</Text>
+      <Text>Member since { }</Text>
+      <Text>{user.email}</Text>
       <Text>age</Text>
       <TouchableOpacity
         style={styles.submitbutton}
-        onPress={onSubmit}>
+        // onPress={() => navigation.push('UpdateInfo')}
+        >
         <Text style={styles.buttontext}>
           Update info
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.submitbutton}
-        onPress={onSubmit}>
+        onPress={logoutUser}>
         <Text style={styles.buttontext}>
           Logout
         </Text>
       </TouchableOpacity>
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modal}
-        onRequestClose={() => {
-          setModal(false)
-        }}
-      >
-        <View style={styles.modalView}>
-          <View style={styles.modalButtonView}>
-            <Button icon="camera"
-              // theme={theme}
-              mode="contained"
-              onPress={() => imageFromCamera()}>
-              camera
-                        </Button>
-            <Button
-              icon="image-area"
-              mode="contained"
-              // theme={theme}
-              onPress={() => imageFromGallery()}>
-              gallery
-                        </Button>
-          </View>
-          <Button
-            theme={theme}
-            onPress={() => setModal(false)}>
-            cancel
-                </Button>
-        </View>
-      </Modal> */}
     </View>
   );
 };
