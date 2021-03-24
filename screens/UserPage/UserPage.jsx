@@ -4,12 +4,17 @@ import styles from './UserPage.style';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import UpdateInfo from '../UpdateInfo/UpdateInfo';
-
 import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 // import * as ImagePicker from 'expo-image-picker';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import keys from './keys';
+import logoutUser from '../../store/actions';
 import { RNS3 } from 'react-native-aws3';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com';
+
 
 export default function UserPage({ navigation }) {
 
@@ -18,6 +23,7 @@ export default function UserPage({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -31,22 +37,14 @@ export default function UserPage({ navigation }) {
     return <Text>No access to camera</Text>;
   }
 
-  const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com';
-  // do we have the whole user object in state? we could just pull up their 
-  // avatar uri and extract it 
-
-  const onSubmit = async () => {
-    console.log('submit')
-    // const res = await dispatch(registerUser(formData));
-    // console.log(res.payload)
-  }
-
-  const logoutUser = async () => {
+  const handleLogout = async () => {
     console.log('logging out')
-    const res = await dispatchEvent(logoutUser());
-    console.log(res.payload);
+    await dispatch(logoutUser());
   }
-
+  
+  const calculateAge = (birthdate) => 
+    Math.floor((new Date() - new Date(birthdate).getTime()) / 3.15576e+10)
+  
   const imageFromCamera = async () => {
     if (cameraRef) {
       let photo = await cameraRef.takePictureAsync();
@@ -95,9 +93,9 @@ export default function UserPage({ navigation }) {
   }
 
   return (
+    <KeyboardAvoidingView style={styles.container}>
     <View style={styles.container}>
       <Image source={{ uri: `${baseS3Uri}/profilepic.jpg` }} style={styles.avatar}></Image>
-
       {/* camera should only open when clicked on icon */}
       <View style={styles.container}>
         <TouchableOpacity onPress={imageFromCamera}>
@@ -161,13 +159,14 @@ export default function UserPage({ navigation }) {
           </View>
         </Camera>
       </View>
-      <Text>NAME {user.name}</Text>
-      <Text>Member since { }</Text>
-      <Text>{user.email}</Text>
-      <Text>age</Text>
+      <Text style={styles.header}>{user.name}</Text>
+      <Text style={styles.memberSince}>Member since { }</Text>
+      <Text style={styles.secondaryText}>{user.email}</Text>
+      <Text style={styles.secondaryText}>{calculateAge(user.birthdate)} years old</Text>
+      <View style={styles.buttonContainer}>
       <TouchableOpacity
         style={styles.submitbutton}
-        // onPress={() => navigation.push('UpdateInfo')}
+        onPress={() => navigation.push('UpdateInfo')}
         >
         <Text style={styles.buttontext}>
           Update info
@@ -175,11 +174,13 @@ export default function UserPage({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.submitbutton}
-        onPress={logoutUser}>
+        onPress={handleLogout}>
         <Text style={styles.buttontext}>
           Logout
         </Text>
       </TouchableOpacity>
+      </View>
     </View>
+    </KeyboardAvoidingView>
   );
 };

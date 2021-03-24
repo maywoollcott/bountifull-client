@@ -18,43 +18,63 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+    },
 
   header: {
     fontSize: 40,
-    color: COLORS.sage,
+    color: COLORS.darkblue,
     fontWeight: '700',
-    marginBottom: 50
+    marginTop: 15,
+    marginBottom: 5
   },
+
+  memberSince: {
+    color: 'gray',
+    fontSize: 15,
+    marginBottom: 10,
+  },
+
+  secondaryText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: COLORS.darkblue
+  },
+
   avatar: {
     width: 150,
     height: 150,
-    borderRadius: 150/2
+    borderRadius: 150 / 2
   },
 
   formcontainer: {
     marginTop: 10,
     alignItems: 'center',
   },
-
-  submitbutton: {
-    margin: 5,
-    backgroundColor: COLORS.turq,
-    borderRadius: 7,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 150
+  buttonContainer: {
+    marginTop: 90,
+    // paddingVertical: 20,
+    paddingHorizontal: 10,
+    // marginBottom: 0
   },
 
+  submitbutton: {
+    margin: 7,
+    backgroundColor: COLORS.turq,
+    borderRadius: 15,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 150, 
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 4,
+    shadowColor: 'rgba(0, 0, 0, 0.25)'
+  },
   buttontext: {
     color: 'white',
     fontSize: 20,
-  },
-
-  sextext: {
-    marginTop: 20,
-    color: 'gray'
   }
 })
