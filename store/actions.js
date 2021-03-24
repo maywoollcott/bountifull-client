@@ -147,9 +147,9 @@ export const updateUser = ({ displayName, email, password, avatar }) => {
 
 
 // TODO: add Token and authorization header to request, store refreshToken in AsyncStorage or Expo-Secure-Store
-export const addItem = ({ item, date }) => {
+export const addItem = ( item ) => {
   return async (dispatch, getState) => {
-    if (!item || !date) {
+    if (!item) {
       return dispatch({ type: ActionType.ADD_ITEM_ERROR, payload: 'Please make sure all required information has been provided for logging.'});
     }
     try {
@@ -165,14 +165,13 @@ export const addItem = ({ item, date }) => {
         },
       };
       dispatch({type: ActionType.ADD_ITEM_REQUESTED});
-      const { data } = await axios.post(`${API_URL}/log`, {
-        _id,
-        item,
-        date,
+      const { data } = await axios.post(`${API_URL}/additem`, {
+        user: _id,
+        ...item,
       }, config);
       return dispatch({
         type: ActionType.ADD_ITEM_SUCCESS,
-        payload: data,
+        payload: item,
       });
     } catch (err) {
       return dispatch({ type: ActionType.ADD_ITEM_ERROR, payload: err });

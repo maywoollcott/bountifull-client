@@ -22,7 +22,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '70%',
-    height:90,
+    height: 90,
     paddingVertical: 20,
     paddingHorizontal: 25,
     borderRadius: 15,
@@ -51,7 +51,7 @@ export default StyleSheet.create({
   grayText: {
     color: 'gray',
     fontSize: 10,
-    marginHorizontal:15,
+    marginHorizontal: 15,
     marginVertical: 20,
   },
 
