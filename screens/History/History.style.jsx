@@ -8,31 +8,51 @@ export default StyleSheet.create({
     justifyContent: "space-around",
     padding: 10
   },
+
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
     justifyContent: 'center'
   },
 
-  calendar: {
-    borderWidth: 1,
-    borderColor: COLORS.darkblue,
-    height: 300,
-    // marginTop:20,
+  guide: {
+    marginHorizontal: 50,
+    marginVertical: 20,
+    backgroundColor: COLORS.palegreen,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '70%',
+    height:90,
+    paddingVertical: 20,
+    paddingHorizontal: 25,
+    borderRadius: 15,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 4,
+    shadowColor: 'rgba(0, 0, 0, 0.25)'
   },
+
+  calendar: {
+    height: 300,
+  },
+
   header: {
     fontSize: 15,
     color: COLORS.darkblue,
+    // justifyContent: 'center',
     fontWeight: '500',
-    marginTop: 15,
-    marginBottom: 10
+    width: '100%',
+    marginHorizontal: 140,
+    marginVertical: 10
   },
 
-  memberSince: {
+  grayText: {
     color: 'gray',
-    fontSize: 15,
-    marginBottom: 10,
+    fontSize: 10,
+    marginHorizontal:15,
+    marginVertical: 20,
   },
 
   secondaryText: {
@@ -41,21 +61,9 @@ export default StyleSheet.create({
     color: COLORS.darkblue
   },
 
-  avatar: {
-    width: 150,
-    height: 150,
-    borderRadius: 150 / 2
-  },
-
-  formcontainer: {
-    marginTop: 10,
-    alignItems: 'center',
-  },
   buttonContainer: {
     marginTop: 90,
-    // paddingVertical: 20,
     paddingHorizontal: 10,
-    // marginBottom: 0
   },
 
   submitbutton: {
@@ -73,8 +81,9 @@ export default StyleSheet.create({
     shadowOpacity: 4,
     shadowColor: 'rgba(0, 0, 0, 0.25)'
   },
+
   buttontext: {
     color: 'white',
-    fontSize: 20,
-  }
+    fontSize: 15,
+  },
 })
