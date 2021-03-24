@@ -5,11 +5,14 @@ import React, {useState} from 'react';
 import { RadioButton } from 'react-native-paper';
 import {COLORS} from '../../globalStyles';
 import apiService from '../../services/apiService'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../store/actions';
+import uuid from 'react-native-uuid'
 
 
 export default function SearchPage() {
+
+  const userid = useSelector(state => state.user._id)
 
   const dispatch = useDispatch();
 
@@ -156,13 +159,13 @@ export default function SearchPage() {
                   else if (nutrient.number === '307') itemNutrients.sodium = nutrient.amount
                   else if (nutrient.number === '309') itemNutrients.zinc = nutrient.amount
                 })
+                console.log(itemNutrients)
                 const postItemRes = await dispatch(addItem({
+                  uniqueId: uuid(),
                   itemName: item.name,
-                  user: 'need to grab from state somehow',
                   servingQuantity: 1,
                   totalNutrients: itemNutrients,
                 }));
-                console.log(itemNutrients)
                 setDisplay('search')
               }}
               key={item.id}

@@ -94,8 +94,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          ...state.user,
-          ...action.payload.updated
+          ...action.payload
         },
         isLoading: false,
       };
