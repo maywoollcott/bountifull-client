@@ -7,19 +7,16 @@ import UpdateInfo from '../UpdateInfo/UpdateInfo';
 import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 // import * as ImagePicker from 'expo-image-picker';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import keys from './keys';
 import logoutUser from '../../store/actions';
-import { RNS3 } from 'react-native-aws3';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+
+import { RNS3 } from 'react-native-aws3';
 const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com';
 
-
 export default function UserPage({ navigation }) {
-
   const user = useSelector(state => state.user);
-
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -97,7 +94,7 @@ export default function UserPage({ navigation }) {
     <View style={styles.container}>
       <Image source={{ uri: `${baseS3Uri}/profilepic.jpg` }} style={styles.avatar}></Image>
       {/* camera should only open when clicked on icon */}
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <TouchableOpacity onPress={imageFromCamera}>
           <FontAwesome name="camera" size={24} color="black" />
         </TouchableOpacity>
@@ -158,7 +155,7 @@ export default function UserPage({ navigation }) {
             </TouchableOpacity>
           </View>
         </Camera>
-      </View>
+      </View> */}
       <Text style={styles.header}>{user.name}</Text>
       <Text style={styles.memberSince}>Member since { }</Text>
       <Text style={styles.secondaryText}>{user.email}</Text>
