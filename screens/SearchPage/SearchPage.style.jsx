@@ -16,10 +16,6 @@ export default StyleSheet.create({
     paddingBottom: 30
   },
 
-  formcontainer: {
-    paddingBottom: 20
-  },
-
   input: {
     height: 40,
     width: 270,
@@ -39,23 +35,49 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: 150
   },
+  tryagainbutton: {
+    marginTop: 30,
+    backgroundColor: COLORS.darkblue,
+    borderRadius: 7,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 150
+  },
+  itembutton: {
+    marginTop: 10,
+    backgroundColor: COLORS.turq,
+    borderRadius: 7,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 300,
+    display: 'flex'
+  },
 
   buttontext: {
     color: 'white',
     fontSize: 20,
   },
+  itembuttontext: {
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center'
+  },
   radiocontainer: {
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'center'
 
   },
   radioitem: {
     alignItems: 'center',
-    marginRight: 30,
-    marginLeft: 30
+    marginRight: 13,
+    marginLeft: 13,
+    flex:1
   },
   radiolabel: {
-    fontSize: 18,
+    fontSize: 16,
     color: COLORS.darkblue,
     fontWeight: '600'
   },

@@ -9,11 +9,7 @@ import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 import { useDispatch } from 'react-redux';
 import ActionType from '../../store/constants';
-<<<<<<< HEAD
-import {COLORS} from '../../globalStyles';
-=======
 import { COLORS } from '../../globalStyles';
->>>>>>> 505a779ea3fe9eca67c1e8ca0c2920393ac29cac
 
 
 export default function MainTabs () {

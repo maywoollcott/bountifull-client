@@ -15,9 +15,6 @@ export default function RootNavigator() {
   const state = useSelector(state => state);
 
   const AuthStackScreen = () => (
-<<<<<<< HEAD
-    <AuthStack.Navigator initialRouteName='Landing'>
-=======
     <AuthStack.Navigator
       initialRouteName='Landing'
       screenOptions={{
@@ -28,7 +25,6 @@ export default function RootNavigator() {
         },
       }}
     >
->>>>>>> 505a779ea3fe9eca67c1e8ca0c2920393ac29cac
       <AuthStack.Screen name='Landing' component={Landing} />
       <AuthStack.Screen name='Registration' component={Registration} />
     </AuthStack.Navigator>
