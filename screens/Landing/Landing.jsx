@@ -4,9 +4,10 @@ import styles from './Landing.style.jsx.jsx';
 import { StatusBar } from 'expo-status-bar';
 import { loginUser } from '../../store/actions'
 import { useDispatch } from 'react-redux';
+import { COLORS } from '../../globalStyles';
 
 
-export default function Landing() {
+export default function Landing({navigation}) {
 
   const [formData, setFormData] = useState({
     email: '',
@@ -16,10 +17,7 @@ export default function Landing() {
   const dispatch = useDispatch();
 
   const onSubmit = async () => {
-    console.log('user email: ' + formData.email);
-    console.log('user password: ' + formData.password);
     const res = await dispatch(loginUser(formData));
-    console.log(res.payload) //obv this needs to be changed
     //set auth
     //route to dashboard
   }
@@ -58,6 +56,12 @@ export default function Landing() {
             style={styles.buttontext}
           >Submit</Text>
         </TouchableOpacity>
+        <View style={{margin:15}}>
+          <Text style={{color:COLORS.darkblue}}>Don't have an account, yet? </Text>
+          <TouchableOpacity onPress={() => navigation.push('Registration')}>
+            <Text style={{ color: COLORS.turq, marginHorizontal:65}}>Sign up!</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <StatusBar style="auto" />
     </KeyboardAvoidingView>

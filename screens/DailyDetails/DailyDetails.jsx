@@ -9,8 +9,6 @@ import 'intl/locale-data/jsonp/en';
 export default function DailyDetails() {
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
 
-  console.log('Here in the daily details screen', dailyTotal);
-
   const dateOptions = {
     weekday: 'long',
     month: 'long',
