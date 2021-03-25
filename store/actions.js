@@ -11,7 +11,6 @@ const API_URL = 'http://192.168.0.181:3001';
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
-  console.log(API_URL);
   return async (dispatch) => {
     // TODO: Add validator helper functions
     if (!email || !password) {
