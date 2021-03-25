@@ -35,6 +35,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: 150
   },
+  addbutton: {
+    backgroundColor: COLORS.darkblue,
+    borderRadius: 7,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 60,
+  },
   tryagainbutton: {
     marginTop: 30,
     backgroundColor: COLORS.darkblue,
@@ -59,10 +67,21 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 20,
   },
+  addbuttontext: {
+    color: 'white',
+    fontSize: 18,
+  },
   itembuttontext: {
     color: 'white',
     fontSize: 15,
     textAlign: 'center'
+  },
+  selecteditembuttontext: {
+    color: COLORS.darkblue,
+    paddingLeft: 5,
+    fontSize: 15,
+    fontWeight: '700',
+    textAlign: 'center',
   },
   radiocontainer: {
     marginTop: 20,
@@ -87,4 +106,20 @@ export default StyleSheet.create({
     color: 'gray',
     fontWeight: '600'
   },
+  servingentry: {
+    backgroundColor: 'white',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+  },
+  servingentrytext: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50
+  },
+
 })
