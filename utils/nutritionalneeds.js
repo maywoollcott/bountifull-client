@@ -200,11 +200,8 @@ const SeventyFiveMaleNeeds = {
 
 export const returnDailyGoals = ({ birthdate, sex }) => {
   const age =  Math.floor((new Date() - new Date(birthdate).getTime()) / 3.15576e+10);
-  console.log(age);
   if (sex !== 'female') {
-    console.log('not a female')
     if (age < 65) {
-      console.log("'I'm here!");
       return {
         ...GlobalNeeds,
         ...MaleNeeds,
@@ -214,6 +211,7 @@ export const returnDailyGoals = ({ birthdate, sex }) => {
       return {
         ...GlobalNeeds,
         ...MaleNeeds,
+        ...AdultMaleNeeds,
         ...SixtyFiveMaleNeeds,
       };
     } else {

@@ -4,7 +4,10 @@ const nutrientReducer = (accumulator, current) => {
   const nutrients = current.totalNutrients;
   for (const [key, value] of Object.entries(nutrients)) {
     if (key !== '_id') {
-      accumulator[key].progress = accumulator[key].progress + value;
+      // console.log('accumulator', accumulator);
+      // console.log(key, value);
+      // console.log('key-value', accumulator[key]);
+      accumulator[key].met = accumulator[key].met + value;
     }
   }
   return accumulator;
@@ -12,7 +15,6 @@ const nutrientReducer = (accumulator, current) => {
 
 export const calcTotalsByNutrient = ({ items, birthdate, sex }) => {
   const dailyGoals = returnDailyGoals({ birthdate, sex });
-  console.log('Daily Goals: ', dailyGoals);
   return items.reduce(nutrientReducer, dailyGoals);
 };
 
