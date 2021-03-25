@@ -10,6 +10,7 @@ import {updateUser, logoutUser} from '../../store/actions';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RNS3 } from 'react-native-aws3';
+import UpdateNavigator from '../../navigators/UpdateNavigator';
 
 const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com';
 

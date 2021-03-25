@@ -3,7 +3,8 @@ import { FlatList, Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoid
 import { useSelector } from 'react-redux';
 import { style } from './DailyDetails.style';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
-
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 export default function DailyDetails() {
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
