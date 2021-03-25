@@ -64,7 +64,7 @@ export const logoutUser = () => {
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const registerUser = ({ name, email, password, birthdate, sex }) => {
+export const registerUser = ({ name, email, password, birthdate, sex, avatar }) => {
   // console.log(API_URL)
   // console.log('name');
   return async (dispatch) => {
@@ -79,6 +79,7 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
         password,
         birthdate,
         sex,
+        avatar
       });
       const currentProgress = [];
       const dailyTotal = calcTotalsByNutrient({

@@ -1,28 +1,44 @@
 import React, { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './UserPage.style';
-import UpdateInfo from '../UpdateInfo/UpdateInfo';
-import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
-// import * as ImagePicker from 'expo-image-picker';
-import keys from './keys';
+import keys from '../../utils/keys';
 import {updateUser, logoutUser} from '../../store/actions';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import * as ImagePicker from 'expo-image-picker';
 import { RNS3 } from 'react-native-aws3';
 
-const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com';
+const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com/';
 
 export default function UserPage({ navigation }) {
   const user = useSelector(state => state.user);
   const [updateAvatar, setUpdateAvatar] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
-  const [userAvatar, setUserAvatar] = useState('')
+  // const [userAvatar, setUserAvatar] = useState('')
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
     console.log('logging out');
     await dispatch(logoutUser());
+  }
+
+  const calculateAge = (birthdate) => 
+    Math.floor((new Date() - new Date(birthdate).getTime()) / 3.15576e+10);
+  // const updateUserAvatar = async (userAvatar) => {
+  //   // const res = await dispatch(updateUser({...user, avatar:userAvatar}));
+  //   console.log('UPDATING USER AVATAR');
+  //   console.log(res);
+  // }
+  const askForPermission = async () => {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        // alert('Sorry, we need camera roll permissions to make this work!');
+      } else {
+        setHasPermission(true);
+      }
+    }
   }
 
   const updateImage = async () => {
@@ -35,20 +51,6 @@ export default function UserPage({ navigation }) {
     console.log(updateAvatar);
   }
 
-  const calculateAge = (birthdate) => 
-    Math.floor((new Date() - new Date(birthdate).getTime()) / 3.15576e+10);
-
-  const askForPermission = async () => {
-    if (Platform.OS !== 'web') {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
-      } else {
-        setHasPermission(true);
-      }
-    }
-  }
-
   const imageFromGallery = async () => {
     await askForPermission();
     if (hasPermission) {
@@ -59,7 +61,9 @@ export default function UserPage({ navigation }) {
         quality: 1
       })
       console.log(data)
-      saveImageToAWS3(data.uri)
+      if (data) {
+        saveImageToAWS3(data.uri)
+      }
     } else {
       alert('You must grant permission to choose an image');
     }
@@ -82,24 +86,19 @@ export default function UserPage({ navigation }) {
     RNS3.put(file, config).then(res => {
       if (res.status !== 201) throw new Error('failed to upload image to s3')
       console.log(file.name);
-      setUserAvatar(file.name);
-      console.log('user avatar is ', userAvatar)
-      updateUserAvatar(userAvatar);
+      // setUserAvatar(file.name);
+      // console.log('user avatar is ', userAvatar)
+      // updateUserAvatar(userAvatar);
       // saveAvatar link?({image_url: file.name })
       console.log('received by aws3 bountifull')
     })
-  }
-
-  const updateUserAvatar = async (userAvatar) => {
-    const res = await dispatch(updateUser({...user, avatar:userAvatar}));
-    console.log('UPDATING USER AVATAR');
-    console.log(res);
   }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.container}>
         <Image source={{ uri: `${baseS3Uri}/profilepic.jpg` }} style={styles.avatar}></Image>
+        {/* <Image source={{ uri:  }} style={styles.avatar}></Image> */}
         <TouchableOpacity style={styles.submitbutton} onPress={updateImage}>
           <Text>UpdateImage</Text>
         </TouchableOpacity>
@@ -122,6 +121,13 @@ export default function UserPage({ navigation }) {
         <Text style={styles.secondaryText}>{user.email}</Text>
         <Text style={styles.secondaryText}>{calculateAge(user.birthdate)} years old</Text>
         <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.submitbutton}
+            onPress={() => navigation.push('Achievements')}>
+            <Text style={styles.buttontext}>
+              Achievements
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.submitbutton}
             onPress={() => navigation.push('UpdateInfo')}>
