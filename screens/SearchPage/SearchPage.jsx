@@ -7,7 +7,7 @@ import {COLORS} from '../../globalStyles';
 import apiService from '../../services/apiService'
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../store/actions';
-import uuid from 'react-native-uuid';
+// import uuid from 'react-native-uuid';
 import NumericInput from 'react-native-numeric-input'
 
 
@@ -208,7 +208,7 @@ export default function SearchPage() {
                         }
                         console.log(itemNutrients)
                         const postItemRes = await dispatch(addItem({
-                          uniqueId: uuid(),
+                          // uniqueId: uuid(),
                           itemName: item.name,
                           servingQuantity: servings,
                           totalNutrients: itemNutrients,
