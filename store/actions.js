@@ -5,8 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
-// const API_URL = IP;
-const API_URL ='http://192.168.0.181:3001';
+const API_URL = 'api url goes here'
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
