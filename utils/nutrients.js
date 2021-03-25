@@ -12,8 +12,8 @@ const nutrientReducer = (accumulator, current) => {
 };
 
 export const calcTotalsByNutrient = ({ items, birthdate, sex }) => {
-  const dailyGoals = returnDailyGoals({ birthdate, sex });
-  return items.reduce(nutrientReducer, cloneDeep(dailyGoals));
+  const dailyGoals = cloneDeep(returnDailyGoals({ birthdate, sex }));
+  return items.length ? items.reduce(nutrientReducer, dailyGoals) : dailyGoals;
 };
 
 export const calcTotalProgress = (nutrientTotals) => {
