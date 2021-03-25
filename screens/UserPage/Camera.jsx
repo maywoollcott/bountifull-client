@@ -5,7 +5,7 @@ import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import UpdateInfo from '../UpdateInfo/UpdateInfo';
 import { FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import keys from './keys';
+import keys from '../../utils/keys';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RNS3 } from 'react-native-aws3';
