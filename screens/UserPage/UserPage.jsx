@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './UserPage.style';
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
-import keys from './keys';
+import keys from '../../utils/keys';
 import {updateUser, logoutUser} from '../../store/actions';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { RNS3 } from 'react-native-aws3';
 
-const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com';
+const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com/';
 
 export default function UserPage({ navigation }) {
   const user = useSelector(state => state.user);
@@ -23,19 +23,13 @@ export default function UserPage({ navigation }) {
     await dispatch(logoutUser());
   }
 
-  const updateImage = async () => {
-    setUpdateAvatar(true);
-    console.log(updateAvatar);
-  }
-
-  const closeCamera = () => {
-    setUpdateAvatar(false);
-    console.log(updateAvatar);
-  }
-
   const calculateAge = (birthdate) => 
     Math.floor((new Date() - new Date(birthdate).getTime()) / 3.15576e+10);
-
+  // const updateUserAvatar = async (userAvatar) => {
+  //   // const res = await dispatch(updateUser({...user, avatar:userAvatar}));
+  //   console.log('UPDATING USER AVATAR');
+  //   console.log(res);
+  // }
   const askForPermission = async () => {
     if (Platform.OS !== 'web') {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -45,6 +39,16 @@ export default function UserPage({ navigation }) {
         setHasPermission(true);
       }
     }
+  }
+
+  const updateImage = async () => {
+    setUpdateAvatar(true);
+    console.log(updateAvatar);
+  }
+
+  const closeCamera = () => {
+    setUpdateAvatar(false);
+    console.log(updateAvatar);
   }
 
   const imageFromGallery = async () => {
@@ -88,12 +92,6 @@ export default function UserPage({ navigation }) {
       // saveAvatar link?({image_url: file.name })
       console.log('received by aws3 bountifull')
     })
-  }
-
-  const updateUserAvatar = async (userAvatar) => {
-    // const res = await dispatch(updateUser({...user, avatar:userAvatar}));
-    console.log('UPDATING USER AVATAR');
-    console.log(res);
   }
 
   return (

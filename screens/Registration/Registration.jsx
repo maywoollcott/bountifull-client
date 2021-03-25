@@ -7,12 +7,23 @@ import { RadioButton } from 'react-native-paper';
 import { COLORS } from '../../globalStyles';
 import { useDispatch } from 'react-redux';
 import { DatePickerModal } from 'react-native-paper-dates';
-export default function Dashboard() {
+import * as ImagePicker from 'expo-image-picker';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import keys from '../../utils/keys';
+import { RNS3 } from 'react-native-aws3';
+// const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com/';
 
+export default function Dashboard() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState('null')
   const [date, setDate] = useState(undefined);
   const [open, setOpen] = useState(false);
+
+  const [openCamera, setOpenCamera] = useState(false);
+  const [userAvatar, setUserAvatar] = useState(false);
+  const [avatarUri, setAvatarUri] = useState('');
+  const [hasPermission, setHasPermission] = useState(null);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,7 +32,7 @@ export default function Dashboard() {
     sex: '',
     avatar: ''
   });
-  
+
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     day: 'numeric',
     month: 'long',
@@ -43,8 +54,70 @@ export default function Dashboard() {
   const onSubmit = async () => {
     console.log(formData)
     console.log(date)
-    const res = await dispatch(registerUser({ ...formData, birthdate: date }));
+    const res = await dispatch(registerUser({ ...formData, birthdate: date, avatar: avatarUri }));
     console.log(res.payload)
+  }
+
+  const askForPermission = async () => {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      console.log(status);
+      if (status !== 'granted') {
+        // alert('Sorry, we need camera roll permissions to make this work!');
+      } else {
+        setHasPermission(true);
+      }
+    }
+  }
+
+  const closeCamera = () => {
+    setOpenCamera(false);
+    console.log(openCamera);
+  }
+
+  const setAvatar = async () => {
+    setOpenCamera(true);
+    console.log(openCamera);
+  }
+
+  const imageFromGallery = async () => {
+    await askForPermission();
+    if (hasPermission) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1
+      })
+      console.log(result)
+      if (result) {
+        setUserAvatar(result.uri);
+        saveImageToAWS3(result.uri)
+      }
+    } else {
+      // console.log('You must grant permission to choose an image');
+    }
+  }
+
+  const saveImageToAWS3 = (image) => {
+    const file = {
+      uri: image,
+      name: Math.random().toString(36).slice(2),
+      type: 'image/png'
+    }
+    const config = {
+      keyPrefix: '',
+      bucket: 'bountifull',
+      region: 'us-west-1',
+      accessKey: keys.AccessKey,
+      secretKey: keys.SecretKey,
+      successActionStatus: 201,
+    }
+    RNS3.put(file, config).then(res => {
+      if (res.status !== 201) throw new Error('failed to upload image to s3')
+      setAvatarUri(file.name);
+      console.log('received by aws3 bountifull')
+    })
   }
 
   return (
@@ -125,16 +198,22 @@ export default function Dashboard() {
             <Text style={styles.radiolabel}>Non-Binary</Text>
           </View>
         </View>
-        <Text>Profile picture</Text>
+
         <View>
-          <TouchableOpacity
-            style={styles.submitbutton}
-          // onPress={onSubmit}
-          >
-            <Text
-              style={styles.buttontext}
-            >Select</Text>
+          <TouchableOpacity style={styles.submitbutton} onPress={setAvatar}>
+            <Text style={styles.buttontext}>Profile picture</Text>
           </TouchableOpacity>
+          {openCamera &&
+            <View>
+              <TouchableOpacity style={styles.submitbutton} onPress={closeCamera}>
+                <MaterialIcons name="cancel" size={24} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.submitbutton} onPress={imageFromGallery}>
+                <Ionicons name="images" size={24} />
+              </TouchableOpacity>
+              {userAvatar && <Image source={{ uri: userAvatar }} style={{ width: 150, height: 150, borderRadius: 150 / 2 }} />}
+            </View>
+          }
         </View>
         <TouchableOpacity
           style={styles.submitbutton}

@@ -4,6 +4,7 @@ import styles from './Landing.style.jsx.jsx';
 import { StatusBar } from 'expo-status-bar';
 import { loginUser } from '../../store/actions'
 import { useDispatch } from 'react-redux';
+import { COLORS } from '../../globalStyles';
 
 
 export default function Landing({navigation}) {
@@ -54,10 +55,10 @@ export default function Landing({navigation}) {
             style={styles.buttontext}
           >Submit</Text>
         </TouchableOpacity>
-        <View>
-          <Text>Don't have an account, yet? </Text>
+        <View style={{margin:15}}>
+          <Text style={{color:COLORS.darkblue}}>Don't have an account, yet? </Text>
           <TouchableOpacity onPress={() => navigation.push('Registration')}>
-            <Text>Sign up!</Text>
+            <Text style={{ color: COLORS.turq, marginHorizontal:65}}>Sign up!</Text>
           </TouchableOpacity>
         </View>
       </View>

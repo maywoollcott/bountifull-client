@@ -46,7 +46,7 @@ export const logoutUser = () => {
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const registerUser = ({ name, email, password, birthdate, sex }) => {
+export const registerUser = ({ name, email, password, birthdate, sex, avatar }) => {
   // console.log(API_URL)
   // console.log('name');
   return async (dispatch) => {
@@ -61,6 +61,7 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
         password,
         birthdate,
         sex,
+        avatar
       });
       await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
       return dispatch({
