@@ -5,6 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
+
 const API_URL = 'api url goes here'
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
@@ -70,15 +71,15 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const updateUser = ({ displayName, email, password }) => {
+export const updateUser = ({ displayName, email, password, avatar }) => {
   return async (dispatch, getState) => {
-    if (!email || !password || !displayName) {
+    if (!email || !password || !displayName || !avatar) {
       return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: 'No information has been provided to _USER!'});
     }
     try {
       const { 
         user: {
-          pid,
+          _id,
         }
       } = getState();
       const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
@@ -89,9 +90,10 @@ export const updateUser = ({ displayName, email, password }) => {
       };
       dispatch({type: ActionType.UPDATE_USER_REQUESTED});
       const { data } = await axios.post(`${API_URL}/update`, {
-        pid,
+        _id,
         email,
         password,
+        avatar,
       }, config);
       return dispatch({
         type: ActionType.UPDATE_USER_SUCCESS,
@@ -146,7 +148,7 @@ export const deleteItem = ({ item, date }) => {
     try {
       const { 
         user: {
-          pid,
+          _id,
         }
       } = getState();
       const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
@@ -159,7 +161,7 @@ export const deleteItem = ({ item, date }) => {
       const { data } = await axios.delete(`${API_URL}/delete`, {
         ...config,
         data: {
-          pid,
+          _id,
           item,
           date,
         }

@@ -1,19 +1,48 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Button } from 'react-native';
 import style from './Dashboard.style';
 import DailyDetails from '../DailyDetails/DailyDetails';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients';
+import ActionType from '../../store/constants';
 
 const fact = 'There is no perfect diet for everyone.';
 
 export default function Dashboard({ navigation }) {
-  const state = useSelector(state => state);
+
+  const [metGoal, setMetGoal] = useState(null);
+  const dispatch = useDispatch();
+
+  const {
+    user: {
+      sex,
+      birthdate,
+    },
+    currentProgress,
+  } = useSelector(state => state);
+
+  useEffect(() => {
+    setMetGoal(calcProgress(currentProgress));
+  }, []);
 
   const calcProgress = (items) => {
-    // come up with function that will calc progress for each nutrient goal and then come up with a percentage.
-    // do we want to average progress across all nutrients?
-    // items ? items.reduce() : 0;
+    if (items.length) {
+      const dailyTotal = calcTotalsByNutrient({
+        items,
+        sex,
+        birthdate,
+      });
+      const totalGoalMet = calcTotalProgress(dailyTotal);
+      dispatch({
+        type: ActionType.ADD_DAILY_TOTAL,
+        payload: {
+          dailyTotal,
+          totalGoalMet,
+        }
+      });
+      return totalGoalMet;
+    }
     return 0;
   }
 
@@ -23,7 +52,7 @@ export default function Dashboard({ navigation }) {
         <Text style={ style.buttontext }>{ fact} </Text>
       </View>
       <View style={ style.goalBubble }>
-        <Text style={ style.percentage }>{ calcProgress(state.currentProgress) }%</Text>
+        <Text style={ style.percentage }>{ metGoal }%</Text>
         <Text style={ style.bubbleText }>of your daily needs have been met!</Text>
       </View>
       <TouchableOpacity style={ style.submitbutton } onPress={ () => navigation.push('Details') }>
