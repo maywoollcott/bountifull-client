@@ -16,7 +16,7 @@ export default function RootNavigator() {
 
   const AuthStackScreen = () => (
     <AuthStack.Navigator
-      initialRouteName='Landing'
+      initialRouteName='Registration'
       screenOptions={{
         // setting headerTitle to empty string to not display anything
         headerTitle: '',

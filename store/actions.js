@@ -6,7 +6,7 @@ import * as SecureStore from 'expo-secure-store';
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
 // const API_URL = process.env.API_URI;
-const API_URL = 'http://172.30.241.137:19000';
+const API_URL = 'http://10.0.0.54:4000';
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
