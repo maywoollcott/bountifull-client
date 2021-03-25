@@ -1,5 +1,14 @@
-import { initialState } from '.';
 import ActionType from './constants';
+
+export const initialState = {
+  user: null,
+  error: null,
+  isLoading: false,
+  currentProgress: null,
+  dailyTotal: null,
+  totalGoalMet: null,
+  fact: '',
+};
 
 // separate out actions into different reducers and combine.
 
@@ -20,11 +29,7 @@ const reducer = (state, action) => {
     case ActionType.LOGIN_SUCCESS:
       return {
         ...state,
-        user: {
-          ...action.payload.user,
-        },
-        currentProgress: action.payload.currentProgress,
-        fact: action.payload.fact,
+        ...action.payload,
         isLoading: false,
       };
     case ActionType.LOGOUT_REQUESTED:
@@ -60,10 +65,7 @@ const reducer = (state, action) => {
     case ActionType.REGISTER_USER_SUCCESS:
       return {
         ...state,
-        user: {
-          ...action.payload.user,
-        },
-        currentProgress: action.payload.currentProgress,
+        ...action.payload,
         fact: action.payload.fact,
         isLoading: false,
       };
@@ -101,7 +103,7 @@ const reducer = (state, action) => {
     case ActionType.ADD_ITEM_SUCCESS:
       return {
         ...state,
-        currentProgress: state.currentProgress.concat(action.payload),
+        ...action.payload,
         isLoading: false,
       };
       case ActionType.DELETE_ITEM_REQUESTED:
@@ -121,12 +123,9 @@ const reducer = (state, action) => {
           currentProgress: state.currentProgress.filter(item => item.id !== action.payload.id),
         };
       case ActionType.ADD_DAILY_TOTAL:
-        const { dailyTotal, totalGoalMet } = action.payload;
-        console.log(dailyTotal, totalGoalMet);
         return {
           ...state,
-          dailyTotal,
-          totalGoalMet,
+          ...action.payload,
         };
     default:
       return state;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import ActionType from './constants';
 import * as SecureStore from 'expo-secure-store';
+import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
 // import { IP} from 'react-native-dotenv';
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
@@ -22,11 +23,27 @@ export const loginUser = ({ email, password }) => {
         email,
         password,
       });
+      const {
+        currentProgress,
+        user: {
+          birthdate,
+          sex,
+        }
+      } = data;
+      const dailyTotal = calcTotalsByNutrient({
+        items: currentProgress,
+        sex,
+        birthdate,
+      });
+      const totalGoalMet = currentProgress.length ? calcTotalProgress(dailyTotal) : 0;
       await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
-      console.log('Heute ist Donnerstag', data);
       return dispatch({
         type: ActionType.LOGIN_SUCCESS,
-        payload: data,
+        payload: {
+          ...data,
+          dailyTotal,
+          totalGoalMet,
+        },
       });
     } catch (err) {
       return dispatch({ type: ActionType.LOGIN_ERROR, payload: err });
@@ -64,10 +81,22 @@ export const registerUser = ({ name, email, password, birthdate, sex, avatar }) 
         sex,
         avatar
       });
+      const currentProgress = [];
+      const dailyTotal = calcTotalsByNutrient({
+        items: currentProgress,
+        sex,
+        birthdate,
+      });
+      const totalGoalMet =  0;
       await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
       return dispatch({
         type: ActionType.REGISTER_USER_SUCCESS,
-        payload: data,
+        payload: {
+          ...data,
+          currentProgress,
+          dailyTotal,
+          totalGoalMet,
+        },
       });
     } catch (err) {
       return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: err });
@@ -76,7 +105,7 @@ export const registerUser = ({ name, email, password, birthdate, sex, avatar }) 
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const updateUser = ({ displayName, email, password, avatar }) => {
+export const updateUser = ({ birthdate, sex, displayName, email, password, avatar }) => {
   return async (dispatch, getState) => {
     if (!email || !password || !displayName || !avatar) {
       return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: 'No information has been provided to _USER!'});
@@ -94,11 +123,13 @@ export const updateUser = ({ displayName, email, password, avatar }) => {
         },
       };
       dispatch({type: ActionType.UPDATE_USER_REQUESTED});
-      const { data } = await axios.post(`${API_URL}/update`, {
-        _id,
+      const { data } = await axios.put(`${API_URL}/update/${_id}`, {
         email,
         password,
-        avatar
+        avatar,
+        birthdate,
+        sex,
+        displayName,
       }, config);
       return dispatch({
         type: ActionType.UPDATE_USER_SUCCESS,
@@ -113,7 +144,6 @@ export const updateUser = ({ displayName, email, password, avatar }) => {
 
 // TODO: add Token and authorization header to request, store refreshToken in AsyncStorage or Expo-Secure-Store
 export const addItem = ( item ) => {
-  console.log(item);
   return async (dispatch, getState) => {
     if (!item) {
       return dispatch({ type: ActionType.ADD_ITEM_ERROR, payload: 'Please make sure all required information has been provided for logging.'});
@@ -122,7 +152,10 @@ export const addItem = ( item ) => {
       const { 
         user: {
           _id,
-        }
+          birthdate,
+          sex,
+        },
+        currentProgress,
       } = getState();
       const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
       const config = {
@@ -135,9 +168,19 @@ export const addItem = ( item ) => {
         user: _id,
         ...item,
       }, config);
+      const dailyTotal = calcTotalsByNutrient({
+        items: currentProgress.concat(item),
+        sex,
+        birthdate,
+      });
+      const totalGoalMet = calcTotalProgress(dailyTotal);
       return dispatch({
         type: ActionType.ADD_ITEM_SUCCESS,
-        payload: item,
+        payload: {
+          dailyTotal,
+          totalGoalMet,
+          currentProgress: currentProgress.concat(item),
+        },
       });
     } catch (err) {
       return dispatch({ type: ActionType.ADD_ITEM_ERROR, payload: err });

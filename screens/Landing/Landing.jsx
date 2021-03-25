@@ -17,10 +17,7 @@ export default function Landing({navigation}) {
   const dispatch = useDispatch();
 
   const onSubmit = async () => {
-    console.log('user email: ' + formData.email);
-    console.log('user password: ' + formData.password);
     const res = await dispatch(loginUser(formData));
-    console.log(res.payload) //obv this needs to be changed
     //set auth
     //route to dashboard
   }
