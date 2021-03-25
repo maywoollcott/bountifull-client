@@ -207,8 +207,9 @@ export default function SearchPage() {
                           }
                         }
                         console.log(itemNutrients)
-                        const postItemRes = await dispatch(addItem({
-                          // uniqueId: uuid(),
+
+                        const postItemRes = dispatch(addItem({
+                          uniqueId: uuid(),
                           itemName: item.name,
                           servingQuantity: servings,
                           totalNutrients: itemNutrients,

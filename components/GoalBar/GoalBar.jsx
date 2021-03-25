@@ -4,6 +4,10 @@ import { ProgressBar } from 'react-native-paper';
 import { COLORS } from '../../globalStyles';
 import { style } from './GoalBar.style';
 
+// const formatDetails = ({ met, goal }) => {
+
+// };
+
 export const GoalBar = ({ nutrient }) => {
   const {
     name,
@@ -11,7 +15,6 @@ export const GoalBar = ({ nutrient }) => {
     met,
     unit,
   } = nutrient;
-
 
   return (
     <View style= { style.container }>
