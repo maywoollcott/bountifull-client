@@ -23,6 +23,7 @@ export const loginUser = ({ email, password }) => {
         password,
       });
       await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
+      console.log('Heute ist Donnerstag', data);
       return dispatch({
         type: ActionType.LOGIN_SUCCESS,
         payload: data,
@@ -111,6 +112,7 @@ export const updateUser = ({ displayName, email, password, avatar }) => {
 
 // TODO: add Token and authorization header to request, store refreshToken in AsyncStorage or Expo-Secure-Store
 export const addItem = ( item ) => {
+  console.log(item);
   return async (dispatch, getState) => {
     if (!item) {
       return dispatch({ type: ActionType.ADD_ITEM_ERROR, payload: 'Please make sure all required information has been provided for logging.'});

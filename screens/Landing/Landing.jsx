@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Platform, Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './Landing.style.jsx.jsx';
 import { StatusBar } from 'expo-status-bar';
 import { loginUser } from '../../store/actions'
@@ -25,7 +25,7 @@ export default function Landing() {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView behavior={ Platform.OS === 'ios' ? 'padding' : 'height' } style={styles.container}>
       <Image source={require('../../assets/images/logo.png')} 
         style={styles.logo}
       />
@@ -38,12 +38,16 @@ export default function Landing() {
           style={styles.input}
           placeholder='Email'
           name='email'
+          returnKeyType='next'
           onChangeText={text => setFormData({...formData, email: text})}
         />
         <TextInput 
           style={styles.input}
           placeholder='Password'
           name='password'
+          returnKeyType='go'
+          onSubmitEditing={onSubmit}
+          secureTextEntry={ true }
           onChangeText={text => setFormData({...formData, password: text})}
         />
         <TouchableOpacity
