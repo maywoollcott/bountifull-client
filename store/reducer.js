@@ -1,18 +1,9 @@
+import { initialState } from '.';
 import ActionType from './constants';
-
-const initialState = {
-  user: null,
-  error: null,
-  isLoading: false,
-  currentProgress: null,
-  dailyTotal: null,
-  totalGoalMet: null,
-  fact: '',
-};
 
 // separate out actions into different reducers and combine.
 
-const reducer = (state = initialState, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case ActionType.LOGIN_REQUESTED:
       return {
@@ -52,11 +43,7 @@ const reducer = (state = initialState, action) => {
       };
     case ActionType.LOGOUT_SUCCESS:
       return {
-        ...state,
-        user: null,
-        currentProgress: null,
-        error: null,
-        isLoading: false,
+        ...initialState,
       };
     case ActionType.REGISTER_USER_REQUEST:
       return {
@@ -135,6 +122,7 @@ const reducer = (state = initialState, action) => {
         };
       case ActionType.ADD_DAILY_TOTAL:
         const { dailyTotal, totalGoalMet } = action.payload;
+        console.log(dailyTotal, totalGoalMet);
         return {
           ...state,
           dailyTotal,

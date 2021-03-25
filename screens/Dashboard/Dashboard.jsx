@@ -11,7 +11,7 @@ const fact = 'There is no perfect diet for everyone.';
 
 export default function Dashboard({ navigation }) {
 
-  const [metGoal, setMetGoal] = useState(null);
+  const [metGoal, setMetGoal] = useState(0);
   const dispatch = useDispatch();
 
   const {

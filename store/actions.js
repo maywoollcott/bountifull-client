@@ -6,7 +6,7 @@ import * as SecureStore from 'expo-secure-store';
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
 
-const API_URL = 'http://192.168.0.181:3001'
+const API_URL = 'http://192.168.0.9:3001';
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
@@ -23,6 +23,7 @@ export const loginUser = ({ email, password }) => {
         password,
       });
       await SecureStore.setItemAsync('BOUNTIFULL_TOKEN_AUTH', data.token);
+      console.log('Heute ist Donnerstag', data);
       return dispatch({
         type: ActionType.LOGIN_SUCCESS,
         payload: data,
@@ -112,6 +113,7 @@ export const updateUser = ({ displayName, email, password, avatar }) => {
 
 // TODO: add Token and authorization header to request, store refreshToken in AsyncStorage or Expo-Secure-Store
 export const addItem = ( item ) => {
+  console.log(item);
   return async (dispatch, getState) => {
     if (!item) {
       return dispatch({ type: ActionType.ADD_ITEM_ERROR, payload: 'Please make sure all required information has been provided for logging.'});
