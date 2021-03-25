@@ -46,11 +46,11 @@ export default StyleSheet.create({
   memberSince: {
     color: 'gray',
     fontSize: 15,
-    marginBottom: 10,
+    marginBottom: 20,
   },
 
   secondaryText: {
-    marginTop: 20,
+    marginTop: 10,
     fontSize: 16,
     color: COLORS.darkblue
   },
@@ -66,7 +66,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   buttonContainer: {
-    marginTop: 90,
+    marginTop: 20,
     // paddingVertical: 20,
     paddingHorizontal: 10,
     // marginBottom: 0
