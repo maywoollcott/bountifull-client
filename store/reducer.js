@@ -5,6 +5,8 @@ const initialState = {
   error: null,
   isLoading: false,
   currentProgress: null,
+  dailyTotal: null,
+  totalGoalMet: null,
   fact: '',
 };
 
@@ -130,6 +132,13 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           currentProgress: state.currentProgress.filter(item => item.id !== action.payload.id),
+        };
+      case ActionType.ADD_DAILY_TOTAL:
+        const { dailyTotal, totalGoalMet } = action.payload;
+        return {
+          ...state,
+          dailyTotal,
+          totalGoalMet,
         };
     default:
       return state;
