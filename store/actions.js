@@ -73,43 +73,6 @@ export const registerUser = ({ name, email, password, birthdate, sex }) => {
   };
 };
 
-// export const getUserInfo = ({_id}) => {
-//   return async (dispatch, getState) => {
-//     if(!_id) {
-//       return dispatch({type:ActionType.GET_USER_INFO_ERROR, payload:'No user found'})
-//     }
-//     try {
-//       const {
-//         user : {
-//           _id,
-//         }
-//       } = getState();
-//       const token = await SecureStore.getItemAsync('BOUNTIFUL_TOKEN_AUTH');
-//       const config = {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         }
-//       };
-//       dispatch({type:ActionType.GET_USER_INFO});
-//       const { data } = await axios.get(`${API_URL}/user/${_id}`, {
-//         _id, 
-//         name,
-//         email, 
-//         avatar,
-//         birthdate
-//       }, config);
-//       console.log(data)
-//       return dispatch({
-//         type: ActionType.UPDATE_USER_SUCCESS,
-//         payload: data,
-//       });
-//     } catch (err) {
-//       return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: err });
-//     }
-//     }
-// } 
-
-
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const updateUser = ({ displayName, email, password, avatar }) => {
   return async (dispatch, getState) => {

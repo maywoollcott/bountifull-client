@@ -19,7 +19,21 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
-    },
+  },
+  cameraContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    // justifyContent: 'center'
+  },
+  buttonContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    margin: 40,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
 
   header: {
     fontSize: 40,
@@ -65,7 +79,7 @@ export default StyleSheet.create({
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 150, 
+    width: 150,
     shadowOffset: {
       width: 0,
       height: 4,
