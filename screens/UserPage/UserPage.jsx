@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './UserPage.style';
-import UpdateInfo from '../UpdateInfo/UpdateInfo';
-import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
-// import * as ImagePicker from 'expo-image-picker';
 import keys from './keys';
 import {updateUser, logoutUser} from '../../store/actions';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import * as ImagePicker from 'expo-image-picker';
 import { RNS3 } from 'react-native-aws3';
 
 const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com';

@@ -6,7 +6,7 @@ import { loginUser } from '../../store/actions'
 import { useDispatch } from 'react-redux';
 
 
-export default function Landing() {
+export default function Landing({navigation}) {
 
   const [formData, setFormData] = useState({
     email: '',
@@ -54,6 +54,12 @@ export default function Landing() {
             style={styles.buttontext}
           >Submit</Text>
         </TouchableOpacity>
+        <View>
+          <Text>Don't have an account, yet? </Text>
+          <TouchableOpacity onPress={() => navigation.push('Registration')}>
+            <Text>Sign up!</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <StatusBar style="auto" />
     </KeyboardAvoidingView>

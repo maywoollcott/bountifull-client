@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {COLORS} from '../../globalStyles';
+import { COLORS } from '../../globalStyles';
 
 export default StyleSheet.create({
   container: {
@@ -24,7 +24,7 @@ export default StyleSheet.create({
 
   formcontainer: {
     marginTop: 10,
-    alignItems:'center',
+    alignItems: 'center',
   },
 
   input: {
@@ -35,6 +35,19 @@ export default StyleSheet.create({
     paddingLeft: 10,
     borderWidth: 2,
     borderRadius: 7,
+    borderColor: COLORS.darkblue
+  },
+
+  birthdate: {
+    height: 40,
+    width: 270,
+    margin: 7,
+    color: 'grey',
+    fontSize: 18,
+    paddingLeft: 10,
+    borderWidth: 2,
+    borderRadius: 5,
+    paddingTop: 5,
     borderColor: COLORS.darkblue
   },
 
