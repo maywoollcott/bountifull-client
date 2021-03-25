@@ -22,7 +22,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
 
   const [checked, setChecked] = React.useState('null')
-
+  
   const onSubmit = async () => {
     console.log(formData)
     const res = await dispatch(registerUser(formData));

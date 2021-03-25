@@ -10,6 +10,8 @@ import * as SecureStore from 'expo-secure-store';
 import { useDispatch } from 'react-redux';
 import ActionType from '../../store/constants';
 import { COLORS } from '../../globalStyles';
+import UserNavigator from '../../navigators/UserNavigator';
+import HistoryNavigator from '../../navigators/HistoryNavigator';
 
 
 export default function MainTabs () {
@@ -52,7 +54,7 @@ export default function MainTabs () {
         />
       <Tab.Screen
       name='History'
-      component={History}
+      component={HistoryNavigator}
       options={{
         tabBarIcon: ({ color }) => (
           <FontAwesome5
@@ -91,7 +93,7 @@ export default function MainTabs () {
       />
       <Tab.Screen
         name='User'
-        component={UserPage}
+        component={UserNavigator}
         options={{
           tabBarIcon: ({ color }) => (
           <AntDesign
@@ -100,7 +102,7 @@ export default function MainTabs () {
             size={26}
           />
           )
-        }}    
+        }}
       />
     </Tab.Navigator>
   );

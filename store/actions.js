@@ -1,7 +1,7 @@
 import axios from 'axios';
 import ActionType from './constants';
 import * as SecureStore from 'expo-secure-store';
-
+// import { IP} from 'react-native-dotenv';
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
@@ -10,6 +10,7 @@ const API_URL = 'api url goes here'
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
+  console.log(API_URL);
   return async (dispatch) => {
     // TODO: Add validator helper functions
     if (!email || !password) {
@@ -46,6 +47,8 @@ export const logoutUser = () => {
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const registerUser = ({ name, email, password, birthdate, sex }) => {
+  // console.log(API_URL)
+  // console.log('name');
   return async (dispatch) => {
     if (!name || !email || !password || !birthdate || !sex) {
       return dispatch({ type: ActionType.REGISTER_USER_ERROR, payload: 'Please make sure all required information has been provided for registration'});
@@ -93,7 +96,7 @@ export const updateUser = ({ displayName, email, password, avatar }) => {
         _id,
         email,
         password,
-        avatar,
+        avatar
       }, config);
       return dispatch({
         type: ActionType.UPDATE_USER_SUCCESS,
