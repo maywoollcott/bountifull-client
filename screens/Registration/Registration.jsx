@@ -18,7 +18,6 @@ export default function Dashboard() {
   const [checked, setChecked] = useState('null')
   const [date, setDate] = useState(undefined);
   const [open, setOpen] = useState(false);
-
   const [openCamera, setOpenCamera] = useState(false);
   const [userAvatar, setUserAvatar] = useState(false);
   const [avatarUri, setAvatarUri] = useState('');
@@ -51,13 +50,6 @@ export default function Dashboard() {
     [setOpen, setDate, setFormData]
   );
 
-  const onSubmit = async () => {
-    console.log(formData)
-    console.log(date)
-    const res = await dispatch(registerUser({ ...formData, birthdate: date, avatar: avatarUri }));
-    console.log(res.payload)
-  }
-
   const askForPermission = async () => {
     if (Platform.OS !== 'web') {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -89,13 +81,12 @@ export default function Dashboard() {
         aspect: [4, 3],
         quality: 1
       })
-      console.log(result)
       if (result) {
         setUserAvatar(result.uri);
         saveImageToAWS3(result.uri)
       }
     } else {
-      // console.log('You must grant permission to choose an image');
+      console.log('You must grant permission to choose an image');
     }
   }
 
@@ -116,8 +107,19 @@ export default function Dashboard() {
     RNS3.put(file, config).then(res => {
       if (res.status !== 201) throw new Error('failed to upload image to s3')
       setAvatarUri(file.name);
+      console.log(file.name);
       console.log('received by aws3 bountifull')
     })
+  }
+
+  const onSubmit = async () => {
+    console.log(formData)
+    console.log(date)
+    console.log(avatarUri)
+    const res = await dispatch(registerUser({ ...formData, birthdate: date, avatar: avatarUri }));
+    // console.log(date)
+    // console.log(avatarUri)
+    console.log(res.payload)
   }
 
   return (

@@ -8,7 +8,7 @@ export const style = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    width: 250,
+    width: 264,
     justifyContent: 'space-between',
     marginBottom: 1,
   },

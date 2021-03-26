@@ -54,5 +54,6 @@ export const style = StyleSheet.create({
 
   infoContainer: {
     marginBottom: 30,
-  }
+  },
+
 })

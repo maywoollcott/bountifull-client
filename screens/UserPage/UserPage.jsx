@@ -3,13 +3,11 @@ import { Text, View, Image, TouchableOpacity, KeyboardAvoidingView } from 'react
 import styles from './UserPage.style';
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import keys from '../../utils/keys';
-import {updateUser, logoutUser} from '../../store/actions';
+import { updateUser, logoutUser } from '../../store/actions';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { RNS3 } from 'react-native-aws3';
-
-const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com/';
 
 export default function UserPage({ navigation }) {
   const user = useSelector(state => state.user);
@@ -23,13 +21,18 @@ export default function UserPage({ navigation }) {
     await dispatch(logoutUser());
   }
 
-  const calculateAge = (birthdate) => 
-    Math.floor((new Date() - new Date(birthdate).getTime()) / 3.15576e+10);
+  const calculateAge = (birthdate) => Math.floor((new Date() - new Date(birthdate).getTime()) / 3.15576e+10);
+
+  const memberSince = (dateJoined) => {
+    const yearJoined = dateJoined.toString().slice(0, 4);
+    return yearJoined
+  }
   // const updateUserAvatar = async (userAvatar) => {
   //   // const res = await dispatch(updateUser({...user, avatar:userAvatar}));
   //   console.log('UPDATING USER AVATAR');
   //   console.log(res);
   // }
+
   const askForPermission = async () => {
     if (Platform.OS !== 'web') {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -97,10 +100,14 @@ export default function UserPage({ navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.container}>
-        <Image source={{ uri: `${baseS3Uri}/profilepic.jpg` }} style={styles.avatar}></Image>
-        {/* <Image source={{ uri:  }} style={styles.avatar}></Image> */}
-        <TouchableOpacity style={styles.submitbutton} onPress={updateImage}>
-          <Text>UpdateImage</Text>
+        <Image source={{ uri: `${keys.baseS3Uri}/${user.avatar}` }} style={styles.avatar}></Image>
+        <Text style={styles.header}>{user.name}</Text>
+        <Text style={styles.memberSince}>Member since {memberSince(user.createdAt)}</Text>
+        <Text style={styles.secondaryText}>{user.email}</Text>
+        <Text style={styles.secondaryText}>{calculateAge(user.birthdate)} years old</Text>
+        <View style={styles.buttonContainer}>
+          {/* <TouchableOpacity style={styles.submitbutton} onPress={updateImage}>
+          <Text style={styles.buttontext}>Update Image</Text>
         </TouchableOpacity>
         {updateAvatar &&
           <View>
@@ -111,16 +118,10 @@ export default function UserPage({ navigation }) {
               <FontAwesome name="camera" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.submitbutton} onPress={imageFromGallery}>
-              {/* <MaterialIcons name="photo-library" size={24}/> */}
               <Ionicons name="images" size={24} />
             </TouchableOpacity>
           </View>
-        }
-        <Text style={styles.header}>{user.name}</Text>
-        <Text style={styles.memberSince}>Member since { }</Text>
-        <Text style={styles.secondaryText}>{user.email}</Text>
-        <Text style={styles.secondaryText}>{calculateAge(user.birthdate)} years old</Text>
-        <View style={styles.buttonContainer}>
+        } */}
           <TouchableOpacity
             style={styles.submitbutton}
             onPress={() => navigation.push('Achievements')}>
@@ -135,11 +136,12 @@ export default function UserPage({ navigation }) {
               Update info
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.submitbutton}
             onPress={handleLogout}>
             <Text style={styles.buttontext}>
-              Logout
+              Log out
             </Text>
           </TouchableOpacity>
         </View>
