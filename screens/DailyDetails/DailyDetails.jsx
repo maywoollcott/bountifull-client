@@ -3,10 +3,12 @@ import { FlatList, Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoid
 import { useSelector } from 'react-redux';
 import { style } from './DailyDetails.style';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
+import ItemButton from '../../components/ItemButton/ItemButton';
 import { AntDesign } from '@expo/vector-icons'; 
 
 export default function DailyDetails({navigation}) {
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
+
 
   const dateOptions = {
     weekday: 'long',
@@ -40,6 +42,16 @@ export default function DailyDetails({navigation}) {
           })
         }
       </View>
+      {/* <View style= { style.infoContainer }>
+        <Text style={ style.header }>Today's intake:</Text>
+        {
+          currentProgress.length ? (
+            <ItemButton />
+          ) : (
+            <Text>Get out there and eat something good. :)</Text>
+          )
+        }
+      </View> */}
     </ScrollView>
   );
 };
