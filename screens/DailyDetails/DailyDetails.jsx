@@ -4,10 +4,13 @@ import { useSelector } from 'react-redux';
 import { style } from './DailyDetails.style';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
 import ItemButton from '../../components/ItemButton/ItemButton';
+import { AntDesign } from '@expo/vector-icons';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
+export default function DailyDetails({navigation}) {
+  const { dailyTotal, totalGoalMet } = useSelector(state => state);
 
-export default function DailyDetails() {
-  const { dailyTotal, totalGoalMet, currentProgress } = useSelector(state => state);
 
   const dateOptions = {
     weekday: 'long',
@@ -22,8 +25,9 @@ export default function DailyDetails() {
   const date = new Intl.DateTimeFormat('default', dateOptions).format(Date.now());
   return (
     <ScrollView contentContainerStyle={ style.container }>
+
       <View style={ style.headerContainer }>
-        <Text style={ style.header }>daily progress</Text>
+        <Text style={ style.header }>daily progress</Text> 
         <Text style={ style.date }>{ date }</Text>
       </View>
       <View style={ style.goalBubble }>

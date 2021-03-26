@@ -9,7 +9,7 @@ const LandingStack = createStackNavigator();
 
 export default () => (
   <LandingStack.Navigator
-    initialRouteName='UserPage'
+    initialRouteName='Landing'
     screenOptions={{
       headerTitle: '',
       headerStyle: {
