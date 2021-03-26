@@ -10,9 +10,10 @@ import { addItem } from '../../store/actions';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 import NumericInput from 'react-native-numeric-input'
+import { AntDesign } from '@expo/vector-icons'; 
 
 
-export default function SearchPage() {
+export default function SearchPage({navigation}) {
 
   const userid = useSelector(state => state.user._id)
 
@@ -56,8 +57,12 @@ export default function SearchPage() {
   return (
     <KeyboardAvoidingView style={styles.container}>
       {display === 'search' &&
-        <View style={styles.container}>       
+        <View style={styles.container}>
           <Text style={styles.header}>Add food here:</Text>
+          <TouchableOpacity onPress={() => navigation.push('ServingInfo')}>
+            <Text style={{color:'grey'}}> What is a serving?  <AntDesign name="questioncircle" size={14} color="grey" /></Text>
+          </TouchableOpacity>
+
           <View style={styles.formcontainer}>
             <TextInput 
               style={styles.input}
