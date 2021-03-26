@@ -223,3 +223,6 @@ export const deleteItem = ({ item, date }) => {
     }
   };
 };
+
+
+// get items by user_id and date? and calculate the totals

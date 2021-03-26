@@ -6,6 +6,8 @@ import { GoalBar } from '../../components/GoalBar/GoalBar';
 import { COLORS } from '../../globalStyles';
 import { AntDesign } from '@expo/vector-icons';
 
+const dateSelected = '2021-03-16'
+
 export default function DailyDetails() {
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
 

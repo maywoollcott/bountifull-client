@@ -12,7 +12,8 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import keys from '../../utils/keys';
 import { RNS3 } from 'react-native-aws3';
 // const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com/';
-
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState('null')

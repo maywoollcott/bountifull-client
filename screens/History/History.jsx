@@ -5,7 +5,11 @@ import styles from './History.style';
 import { LocaleConfig } from 'react-native-calendars';
 import { COLORS } from '../../globalStyles';
 import XDate from 'xdate';
+import { useSelector, useDispatch } from 'react-redux';
+
 export default function History({navigation}) {
+
+  const { dateSelectedState } = useSelector(state => state.dateSelectedState);
 
   const today = new XDate();
   const todayMonth = today.toString("MMMM yyyy")
@@ -16,6 +20,7 @@ export default function History({navigation}) {
   const twoWeeksAhead = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000)
 
   const handleMonthChange = (month) => {
+    
     const dateStr = month.dateString;
     const dateForm = new Date(dateStr);
     const thisMonth = dateForm.toLocaleDateString('en-gb', {
@@ -28,7 +33,9 @@ export default function History({navigation}) {
   const onDayPress = selectedDay => {
     const dateSelected = selectedDay.dateString;
     setSelected(dateSelected);
+    // dateSelectedState = dateSelected;
     console.log(selected)
+    // console.log('state ', dateSelectedState)
     const dateForm = new Date(selected);
     const formattedDate = dateForm.toLocaleDateString('en-gb', {
       year: 'numeric',

@@ -5,7 +5,8 @@ import { style } from './DailyDetails.style';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
 import ItemButton from '../../components/ItemButton/ItemButton';
 import { AntDesign } from '@expo/vector-icons'; 
-
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 export default function DailyDetails({navigation}) {
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
 

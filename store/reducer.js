@@ -8,6 +8,7 @@ export const initialState = {
   dailyTotal: null,
   totalGoalMet: null,
   fact: '',
+  dateSelectedState:''
 };
 
 // separate out actions into different reducers and combine.
