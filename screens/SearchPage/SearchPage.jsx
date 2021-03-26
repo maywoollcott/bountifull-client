@@ -7,7 +7,8 @@ import {COLORS} from '../../globalStyles';
 import apiService from '../../services/apiService'
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../store/actions';
-// import uuid from 'react-native-uuid';
+import 'react-native-get-random-values';
+import { v4 as uuid } from 'uuid';
 import NumericInput from 'react-native-numeric-input'
 
 
