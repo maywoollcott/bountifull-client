@@ -1,5 +1,5 @@
 import axios from 'axios'
-const key = 'insert api key here'
+const key = 'EerTU5HKMdt8k2anMPctiBGkZwwEKaTKwV1Jncm3'
 const path = 'https://api.nal.usda.gov/fdc/v1/foods'
 
 const apiService = {};
