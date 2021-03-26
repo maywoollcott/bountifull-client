@@ -8,7 +8,7 @@ const HistoryStack = createStackNavigator();
 
 export default () => (
   <HistoryStack.Navigator
-    initialRouteName='UserPage'
+    initialRouteName='History'
     screenOptions={{
       headerTitle: '',
       headerStyle: {

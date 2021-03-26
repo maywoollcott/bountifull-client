@@ -13,6 +13,7 @@ import ActionType from '../../store/constants';
 import { COLORS } from '../../globalStyles';
 import UserNavigator from '../../navigators/UserNavigator';
 import HistoryNavigator from '../../navigators/HistoryNavigator';
+import SearchPageNavigator from '../../navigators/SearchPageNavigator';
 
 export default function MainTabs() {
 
@@ -67,7 +68,7 @@ export default function MainTabs() {
       />
       <Tab.Screen
         name='Add'
-        component={SearchPage}
+        component={SearchPageNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign

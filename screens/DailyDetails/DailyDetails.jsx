@@ -3,9 +3,9 @@ import { FlatList, Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoid
 import { useSelector } from 'react-redux';
 import { style } from './DailyDetails.style';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
+import { AntDesign } from '@expo/vector-icons'; 
 
-
-export default function DailyDetails() {
+export default function DailyDetails({navigation}) {
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
 
   const dateOptions = {
@@ -21,6 +21,7 @@ export default function DailyDetails() {
   const date = new Intl.DateTimeFormat('default', dateOptions).format(Date.now());
   return (
     <ScrollView contentContainerStyle={ style.container }>
+
       <View style={ style.headerContainer }>
         <Text style={ style.header }>daily progress</Text>
         <Text style={ style.date }>{ date }</Text>
