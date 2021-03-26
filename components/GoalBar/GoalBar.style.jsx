@@ -14,12 +14,16 @@ export const style = StyleSheet.create({
   },
   mainDetails: {
     textTransform: 'capitalize',
-    fontSize: 18,
+    fontSize: 15,
     color: COLORS.darkblue,
   },
   details: {
     color: 'rgba(0, 0, 0, 0.47)',
     fontSize: 12,
+    position: 'absolute',
+    width: 264,
+    top: 3,
+    textAlign: 'center',
   },
   bar: {
     borderRadius: 15,

@@ -6,7 +6,7 @@ import SearchPage from '../SearchPage/SearchPage';
 import Achievements from '../Achievements/Achievements';
 import UserPage from '../UserPage/UserPage';
 import DailyDetails from '../DailyDetails/DailyDetails';
-import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, Entypo, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 import { useDispatch } from 'react-redux';
 import ActionType from '../../store/constants';
@@ -83,8 +83,8 @@ export default function MainTabs() {
         component={DailyDetails}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign
-              name='Trophy'
+            <MaterialIcons
+              name='list-alt'
               color={color}
               size={26}
             />
