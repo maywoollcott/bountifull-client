@@ -6,6 +6,7 @@ import Camera from '../screens/UserPage/Camera';
 import Achievements from '../screens/Achievements/Achievements';
 import { COLORS } from '../globalStyles';
 
+
 const UserPageStack = createStackNavigator();
 
 export default () => (
