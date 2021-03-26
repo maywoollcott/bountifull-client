@@ -7,11 +7,10 @@ import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
 
-const API_URL = 'http://192.168.0.9:3001';
+const API_URL = 'http://192.168.0.181:3001';
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
-  console.log(API_URL);
   return async (dispatch) => {
     // TODO: Add validator helper functions
     if (!email || !password) {
