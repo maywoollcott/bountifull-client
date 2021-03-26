@@ -5,7 +5,7 @@ import styles from './History.style';
 import { LocaleConfig } from 'react-native-calendars';
 import { COLORS } from '../../globalStyles';
 import XDate from 'xdate';
-export default function History() {
+export default function History({navigation}) {
 
   const today = new XDate();
   const todayMonth = today.toString("MMMM yyyy")
@@ -83,7 +83,7 @@ export default function History() {
       {/* <Text style={styles.grayText}>Date selected : {selected}</Text> */}
       <View>
         {dateIsSelected &&
-          <TouchableOpacity style={styles.submitbutton}>
+          <TouchableOpacity style={styles.submitbutton} onPress={() => navigation.push('SelectedDate')}>
             <Text style={styles.buttontext}>GO TO {selected}</Text>
           </TouchableOpacity>}
       </View>

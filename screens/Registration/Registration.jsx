@@ -207,7 +207,7 @@ export default function Dashboard() {
           </TouchableOpacity>
           {openCamera &&
             <View>
-              <TouchableOpacity style={styles.submitbutton} onPress={closeCamera}>
+            <TouchableOpacity style={{ alignItems: 'center'}} onPress={closeCamera}>
                 <MaterialIcons name="cancel" size={24} color="black" />
               </TouchableOpacity>
               <TouchableOpacity style={styles.submitbutton} onPress={imageFromGallery}>
