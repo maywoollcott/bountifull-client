@@ -2,12 +2,12 @@ const GlobalNeeds = {
   'vitaminB12': {
     goal: 1.5,
     met: 0,
-    unit: 'µg',
+    unit: 'mcg',
   },
   'folate': {
     goal: 200,
     met: 0,
-    unit: 'µg',
+    unit: 'mcg',
   },
   'vitaminC': {
     goal: 40,
@@ -40,7 +40,7 @@ const MaleNeeds = {
   'vitaminA': {
     goal: 700,
     met: 0,
-    unit: 'µg',
+    unit: 'mcg',
   },
   'vitaminB6': {
     goal: 1.4,
@@ -68,7 +68,7 @@ const FemaleNeeds = {
   'vitaminA': {
     goal: 600,
     met: 0,
-    unit: 'µg',
+    unit: 'mcg',
   },
   'vitaminB6': {
     goal: 1.2,
