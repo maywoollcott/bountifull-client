@@ -3,6 +3,7 @@ import { COLORS } from '../../globalStyles';
 
 export const style = StyleSheet.create({
   bar: {
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
