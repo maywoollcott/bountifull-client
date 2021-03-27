@@ -12,13 +12,13 @@ export default StyleSheet.create({
 
   factContainer: {
     margin: 5,
-    backgroundColor: COLORS.turq,
+    backgroundColor: COLORS.palegreen,
     justifyContent: 'center',
     alignItems: 'center',
     width: '70%',
     paddingVertical: 20,
     paddingHorizontal: 25,
-    borderRadius: 15,
+    borderRadius: 40,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -42,6 +42,12 @@ export default StyleSheet.create({
     },
     shadowOpacity: 4,
     shadowColor: 'rgba(0, 0, 0, 0.25)'
+  },
+
+  factText: {
+    color: COLORS.darkblue,
+    fontSize: 20,
+    textAlign: 'center',
   },
 
   buttontext: {

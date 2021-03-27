@@ -182,6 +182,7 @@ export const addItem = ( item ) => {
         },
       });
     } catch (err) {
+      console.error(err);
       return dispatch({ type: ActionType.ADD_ITEM_ERROR, payload: err });
     }
   };
