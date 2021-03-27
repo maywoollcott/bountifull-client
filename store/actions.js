@@ -6,17 +6,17 @@ import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
 // TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
-// const API_URL = process.env.API_URI;
-const API_URL = 'http://10.0.0.54:4000';
+
+const API_URL = 'http://192.168.0.181:3001';
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
   return async (dispatch) => {
     // TODO: Add validator helper functions
     if (!email || !password) {
-      return dispatch({ type: ActionType.LOGIN_ERROR, payload: 'Please check your credentials. Your email address and/or password is missing.' });
+      return dispatch({ type: ActionType.LOGIN_ERROR, payload: 'Please check your credentials. Your email address and/or password is missing.'});
     }
-    dispatch({ type: ActionType.LOGIN_REQUESTED });
+    dispatch({type: ActionType.LOGIN_REQUESTED});
     try {
       const { data } = await axios.post(`${API_URL}/login`, {
         email,
@@ -52,10 +52,10 @@ export const loginUser = ({ email, password }) => {
 
 export const logoutUser = () => {
   return async (dispatch) => {
-    dispatch({ type: ActionType.LOGOUT_REQUESTED })
+    dispatch({ type: ActionType.LOGOUT_REQUESTED})
     try {
       await SecureStore.deleteItemAsync('BOUNTIFULL_TOKEN_AUTH');
-      return dispatch({ type: ActionType.LOGOUT_SUCCESS });
+      return dispatch({ type: ActionType.LOGOUT_SUCCESS});
     } catch (err) {
       return dispatch({ type: ActionType.LOGOUT_ERROR, payload: err });
     }
@@ -104,13 +104,13 @@ export const registerUser = ({ name, email, password, birthdate, sex, avatar }) 
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const updateUser = ({ birthdate, sex, name, email, password, avatar }) => {
+export const updateUser = ({ birthdate, sex, displayName, email, password, avatar }) => {
   return async (dispatch, getState) => {
-    if (!name && !email && !birthdate && !sex && !password) {
+    if (!email || !password || !displayName || !avatar) {
       return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: 'No information has been provided to _USER!'});
     }
     try {
-      const {
+      const { 
         user: {
           _id,
         }
@@ -123,12 +123,12 @@ export const updateUser = ({ birthdate, sex, name, email, password, avatar }) =>
       };
       dispatch({type: ActionType.UPDATE_USER_REQUESTED});
       const { data } = await axios.put(`${API_URL}/update/${_id}`, {
-        name,
         email,
         password,
+        avatar,
         birthdate,
         sex,
-        avatar,
+        displayName,
       }, config);
       return dispatch({
         type: ActionType.UPDATE_USER_SUCCESS,
@@ -148,7 +148,7 @@ export const addItem = ( item ) => {
       return dispatch({ type: ActionType.ADD_ITEM_ERROR, payload: 'Please make sure all required information has been provided for logging.'});
     }
     try {
-      const {
+      const { 
         user: {
           _id,
           birthdate,
@@ -191,10 +191,10 @@ export const addItem = ( item ) => {
 export const deleteItem = ({ item, date }) => {
   return async (dispatch, getState) => {
     if (!item || !date) {
-      return dispatch({ type: ActionType.DELETE_ITEM_ERROR, payload: 'Please make sure all required information has been provided for deleting.' });
+      return dispatch({ type: ActionType.DELETE_ITEM_ERROR, payload: 'Please make sure all required information has been provided for deleting.'});
     }
     try {
-      const {
+      const { 
         user: {
           _id,
         }
@@ -205,7 +205,7 @@ export const deleteItem = ({ item, date }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      dispatch({ type: ActionType.DELETE_ITEM_REQUESTED });
+      dispatch({type: ActionType.DELETE_ITEM_REQUESTED});
       const { data } = await axios.delete(`${API_URL}/delete`, {
         ...config,
         data: {

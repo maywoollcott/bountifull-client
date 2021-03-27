@@ -30,7 +30,7 @@ export default function UpdateInfo() {
     password: user.password,
     birthdate: user.birthdate,
     sex: user.sex,
-    avatar: 'url'
+    avatar: user.avatar
   })
 
   const handleSubmit = async () => {

@@ -5,10 +5,14 @@ import { useSelector } from 'react-redux';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
 import { COLORS } from '../../globalStyles';
 import { AntDesign } from '@expo/vector-icons';
+import axios from 'axios';
 
-const dateSelected = '2021-03-16'
+const dateSelected = '2021-03-26'
+const API_URL = 'http://192.168.0.181:3001';
 
 export default function DailyDetails() {
+  const user = useSelector(state => state.user);
+
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
 
   const dateOptions = {
@@ -22,10 +26,60 @@ export default function DailyDetails() {
     return name.replace('n', 'n ');
   };
 
+  const getItemsByIdAndDate = async ()=> {
+    const userId = user._id; 
+    const fetchDate = '2021-03-26';
+    console.log(userId);
+    console.log(fetchDate);
+
+    try {
+      let res = [];
+      res = await axios.get(`${API_URL}/getItems/${user._id}/${fetchDate}`, {
+        user: user._id,
+        dateCreated: '2021-03-27'
+      });
+      // console.log({data});
+      // const obj = {data};
+      const items = res.data
+      const singleItem = items.map((item)=> {
+        console.log(item.itemName)
+      })
+      // console.log(singleItem)
+    } catch (error) {
+      console.log('error ', error)
+    }
+  }
+  // const getItemsByIdAndDate = async ()=> {
+  //   const userId = user._id; 
+  //   const fetchDate = '2021-03-26';
+  //   console.log(userId);
+  //   console.log(fetchDate);
+  //   // const config = {
+  //   //   headers: {
+  //   //     Authorization: `Bearer ${token}`,
+  //   //   },
+  //   // };
+  //   try {
+  //     const res = await axios.get(`${API_URL}/getItems`, {
+  //       user: user._id,
+  //       dateCreated: '2021-03-26'
+  //     });
+  //     console.log(res.itemName);
+  //   } catch (error) {
+  //     console.log('error ', error)
+  //   }
+  // }
+
   const date = new Intl.DateTimeFormat('default', dateOptions).format(Date.now());
   return (
     <ScrollView contentContainerStyle={style.container}>
-
+      <TouchableOpacity
+        // style={style.submitbutton}
+        onPress={getItemsByIdAndDate}>
+        <Text style={style.buttontext}>
+          Get Items
+            </Text>
+      </TouchableOpacity>
       <View style={style.headerContainer}>
         <Text style={style.header}>past daily progress</Text>
         <Text style={style.date}>{date}</Text>
