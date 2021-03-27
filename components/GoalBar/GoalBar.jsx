@@ -4,6 +4,7 @@ import { ProgressBar } from 'react-native-paper';
 import { COLORS } from '../../globalStyles';
 import { style } from './GoalBar.style';
 import { AntDesign } from '@expo/vector-icons';
+
 const formatDetails = ({ met, goal }) => {
   return goal < 10 ? `${Math.floor(met * 10)/10}/${goal}` : `${Math.floor(met)}/${goal}`;
 };
@@ -26,7 +27,7 @@ export const GoalBar = ({ nutrient }) => {
             color={ COLORS.darkblue }
             style={{
               position: 'absolute',
-              bottom: 6,
+              bottom: 5,
               zIndex: 1,
             }}
           />
