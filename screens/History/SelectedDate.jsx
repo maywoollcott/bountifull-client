@@ -1,17 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { FlatList, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
-// import { style } from './History.style';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
 import { COLORS } from '../../globalStyles';
-import { AntDesign } from '@expo/vector-icons';
+import ItemButton from '../../components/ItemButton/ItemButton';
 import axios from 'axios';
+import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
 
-const dateSelected = '2021-03-26'
+
+// const dateSelected = '2021-03-27'
 const API_URL = 'http://192.168.0.181:3001';
 
-export default function DailyDetails() {
+export default function DailyDetails({ route }) {
   const user = useSelector(state => state.user);
+
+  const { dateSelected } = route.params;
 
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
 
@@ -21,65 +24,46 @@ export default function DailyDetails() {
     day: '2-digit',
   };
 
+  useEffect(() => {
+    getItemsByIdAndDate()
+  }, []);
+  
   const formatName = (name) => {
-    // console.log(selected)
     return name.replace('n', 'n ');
   };
 
-  const getItemsByIdAndDate = async ()=> {
-    const userId = user._id; 
-    const fetchDate = '2021-03-26';
-    console.log(userId);
-    console.log(fetchDate);
+  let currentProgress=[];
 
+  const getItemsByIdAndDate = async ()=> {
+    // let currentProgress = [];
+    const userId = user._id; 
+    console.log(userId);
+    console.log('date selected ', dateSelected);
     try {
       let res = [];
-      res = await axios.get(`${API_URL}/getItems/${user._id}/${fetchDate}`, {
+      res = await axios.get(`${API_URL}/getItems/${user._id}/${dateSelected}`, {
         user: user._id,
         dateCreated: '2021-03-27'
       });
-      // console.log({data});
-      // const obj = {data};
       const items = res.data
       const singleItem = items.map((item)=> {
-        console.log(item.itemName)
+        currentProgress.push(item)
+        // console.log(items)
       })
-      // console.log(singleItem)
+      console.log(currentProgress);
     } catch (error) {
       console.log('error ', error)
     }
   }
-  // const getItemsByIdAndDate = async ()=> {
-  //   const userId = user._id; 
-  //   const fetchDate = '2021-03-26';
-  //   console.log(userId);
-  //   console.log(fetchDate);
-  //   // const config = {
-  //   //   headers: {
-  //   //     Authorization: `Bearer ${token}`,
-  //   //   },
-  //   // };
-  //   try {
-  //     const res = await axios.get(`${API_URL}/getItems`, {
-  //       user: user._id,
-  //       dateCreated: '2021-03-26'
-  //     });
-  //     console.log(res.itemName);
-  //   } catch (error) {
-  //     console.log('error ', error)
-  //   }
-  // }
 
-  const date = new Intl.DateTimeFormat('default', dateOptions).format(Date.now());
+  const normalizedDate = new Date(dateSelected)
+  const dateFormat = new Date(normalizedDate.getTime() + Math.abs(normalizedDate.getTimezoneOffset() * 60000)  );
+  const date = new Intl.DateTimeFormat('default', dateOptions).format(dateFormat);
+
   return (
+    <View>
     <ScrollView contentContainerStyle={style.container}>
-      <TouchableOpacity
-        // style={style.submitbutton}
-        onPress={getItemsByIdAndDate}>
-        <Text style={style.buttontext}>
-          Get Items
-            </Text>
-      </TouchableOpacity>
+
       <View style={style.headerContainer}>
         <Text style={style.header}>past daily progress</Text>
         <Text style={style.date}>{date}</Text>
@@ -89,6 +73,7 @@ export default function DailyDetails() {
         <Text style={style.bubbleText}>of your daily needs have been met!</Text>
       </View>
       <View style={style.infoContainer}>
+      {/* change this once we can restructure the database, and just grab the daily stats for that date */}
         {
           Object.keys(dailyTotal).map((nutrient) => {
             const name = nutrient.includes('vitamin') ? formatName(nutrient) : nutrient;
@@ -98,15 +83,53 @@ export default function DailyDetails() {
           })
         }
       </View>
+      <View style={style.infoContainer}>
+        <Text style={{ ...style.header, marginVertical: 35, }}>today's intake:</Text>
+        {
+          currentProgress.length ? currentProgress.map((item) =>
+          <ItemButton key={item.uniqueId} item={item} />
+          ) : (
+            <Text>Get out there and eat something good. :)</Text>
+          )
+        }
+      </View>
+        {/* <View style={style.containerGraph}>
+          <VictoryChart
+            theme={VictoryTheme.material}
+          >
+            <VictoryLine
+              style={{
+                data: { stroke: COLORS.turq },
+                parent: { border: COLORS.darkblue }
+              }}
+              categories={{
+                x: ["Jan", "Feb", "Mar", "Apr", "May"]
+              }}
+              data={[
+                { x: "Jan", y: .16 },
+                { x: "Feb", y: .40 },
+                { x: "Mar", y: .30 },
+                { x: "Apr", y: .50 },
+                { x: "May", y: .60 }
+              ]}
+            />
+          </VictoryChart>
+        </View> */}
     </ScrollView>
+    </View>
   );
 };
-
-
 
 const style = StyleSheet.create({
   container: {
     alignItems: 'center',
+  },
+
+  containerGraph: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5fcff"
   },
 
   headerContainer: {

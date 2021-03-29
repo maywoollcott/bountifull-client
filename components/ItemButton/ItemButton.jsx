@@ -16,9 +16,9 @@ const ItemButton = ({ item }) => {
   };
 
   return (
-    <TouchableOpacity style={ style.bar } onPress={ handlePress }>
+    <TouchableOpacity style={style.bar} onPress={handlePress}>
       <Text>{item.itemName.length < 25 ? item.itemName : `${item.itemName.slice(0, 25)}...`}</Text>
-      <SimpleLineIcons name='arrow-right' color={ COLORS.darkblue } />
+      <SimpleLineIcons name='arrow-right' color={COLORS.darkblue} />
     </TouchableOpacity>
   )
 }

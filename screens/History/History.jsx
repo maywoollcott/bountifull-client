@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import styles from './History.style';
@@ -6,6 +6,9 @@ import { LocaleConfig } from 'react-native-calendars';
 import { COLORS } from '../../globalStyles';
 import XDate from 'xdate';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { useNavigation } from '@react-navigation/core';
+
 
 export default function History({navigation}) {
 
@@ -19,8 +22,12 @@ export default function History({navigation}) {
   const [dateIsSelected, setDateIsSelected] = useState(false);
   const twoWeeksAhead = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000)
 
+  useEffect(()=>{
+    setSelected('');
+  },[])
+
   const handleMonthChange = (month) => {
-    
+
     const dateStr = month.dateString;
     const dateForm = new Date(dateStr);
     const thisMonth = dateForm.toLocaleDateString('en-gb', {
@@ -32,9 +39,10 @@ export default function History({navigation}) {
 
   const onDayPress = selectedDay => {
     const dateSelected = selectedDay.dateString;
+    navigation.navigate('Selected Date', {dateSelected});
     setSelected(dateSelected);
     // dateSelectedState = dateSelected;
-    console.log(selected)
+    // console.log('DATE SELECTED ', dateSelected)
     // console.log('state ', dateSelectedState)
     const dateForm = new Date(selected);
     const formattedDate = dateForm.toLocaleDateString('en-gb', {
@@ -57,7 +65,6 @@ export default function History({navigation}) {
     dayNamesShort: ['S', 'M', 'T', 'W', 'TH', 'F', 'SA'],
     today: 'Today'
   };
-
   LocaleConfig.defaultLocale = 'en';
   return (
     <View style={styles.container}>
@@ -69,8 +76,7 @@ export default function History({navigation}) {
         <Calendar
           style={styles.calendar}
           current={today}
-          // min date would be the date that the user created their account(import state)
-          minDate={'2021-02-01'}
+          minDate={'2021-03-01'}
           maxDate={twoWeeksAhead}
           onDayPress={onDayPress}
           markedDates={{
@@ -88,12 +94,13 @@ export default function History({navigation}) {
         />
       </View>
       {/* <Text style={styles.grayText}>Date selected : {selected}</Text> */}
-      <View>
+      {/* <View>
         {dateIsSelected &&
           <TouchableOpacity style={styles.submitbutton} onPress={() => navigation.push('SelectedDate')}>
             <Text style={styles.buttontext}>GO TO {selected}</Text>
-          </TouchableOpacity>}
-      </View>
+
+          </TouchableOpacity>} 
+      </View> */}
 
     </View>
   );
