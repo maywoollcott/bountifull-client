@@ -2,16 +2,9 @@ import axios from 'axios';
 import ActionType from './constants';
 import * as SecureStore from 'expo-secure-store';
 import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
-// import { IP} from 'react-native-dotenv';
 
 const API_URL = 'http://192.168.0.181:3001';
 
-<<<<<<< HEAD
-=======
-const API_URL = 'http://10.0.0.54:4000';
-
-// TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
->>>>>>> 45f64ac442023443040966e59912edcce73123a5
 export const loginUser = ({ email, password }) => {
   return async (dispatch) => {
     if (!email || !password) {

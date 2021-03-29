@@ -8,14 +8,9 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
 import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients';
-<<<<<<< HEAD
+
 const API_URL = 'http://192.168.0.181:3001';
-=======
 
-
-// const dateSelected = '2021-03-27'
-const API_URL = 'http://10.0.0.54:4000';
->>>>>>> 45f64ac442023443040966e59912edcce73123a5
 
 export default function DailyDetails({ route }) {
   const { _id, birthdate, sex } = useSelector(state => state.user);
