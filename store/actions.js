@@ -7,7 +7,7 @@ import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
 
-const API_URL = 'http://192.168.0.181:3001';
+const API_URL = 'http://192.168.0.9:3001';
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
@@ -162,17 +162,18 @@ export const addItem = ( item ) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      dispatch({type: ActionType.ADD_ITEM_REQUESTED});
-      const { data } = await axios.post(`${API_URL}/additem`, {
-        user: _id,
-        ...item,
-      }, config);
       const dailyTotal = calcTotalsByNutrient({
         items: currentProgress.concat(item),
         sex,
         birthdate,
       });
       const totalGoalMet = calcTotalProgress(dailyTotal);
+      dispatch({type: ActionType.ADD_ITEM_REQUESTED});
+      const { data } = await axios.post(`${API_URL}/additem`, {
+        user: _id,
+        totalGoalMet,
+        ...item,
+      }, config);
       return dispatch({
         type: ActionType.ADD_ITEM_SUCCESS,
         payload: {
