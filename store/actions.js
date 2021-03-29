@@ -162,17 +162,18 @@ export const addItem = ( item ) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      dispatch({type: ActionType.ADD_ITEM_REQUESTED});
-      const { data } = await axios.post(`${API_URL}/additem`, {
-        user: _id,
-        ...item,
-      }, config);
       const dailyTotal = calcTotalsByNutrient({
         items: currentProgress.concat(item),
         sex,
         birthdate,
       });
       const totalGoalMet = calcTotalProgress(dailyTotal);
+      dispatch({type: ActionType.ADD_ITEM_REQUESTED});
+      const { data } = await axios.post(`${API_URL}/additem`, {
+        user: _id,
+        totalGoalMet,
+        ...item,
+      }, config);
       return dispatch({
         type: ActionType.ADD_ITEM_SUCCESS,
         payload: {
