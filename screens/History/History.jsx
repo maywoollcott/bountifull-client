@@ -1,3 +1,4 @@
+
 import React, { useState, Fragment, useEffect } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
@@ -5,15 +6,12 @@ import styles from './History.style';
 import { LocaleConfig } from 'react-native-calendars';
 import { COLORS } from '../../globalStyles';
 import XDate from 'xdate';
-import axios from 'axios';
-
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useNavigation } from '@react-navigation/core';
-const API_URL = 'http://192.168.0.181:3001';
+
 
 export default function History({navigation}) {
-  const user = useSelector(state => state.user);
 
   const { dateSelectedState } = useSelector(state => state.dateSelectedState);
 
@@ -40,32 +38,9 @@ export default function History({navigation}) {
     setMonth(thisMonth)
   }
 
-  const getItemsByIdAndDate = async (userId, dateSelected) => {
-    // console.log(userId);
-    let currentProgress =[];
-    console.log('date selected ', dateSelected);
-    try {
-      let res = [];
-      res = await axios.get(`${API_URL}/getItems/${userId}/${dateSelected}`, {
-        user: userId,
-        dateCreated: '2021-03-27'
-      });
-      const items = res.data
-      const singleItem = items.map((item) => {
-        currentProgress.push(item)
-      })
-      console.log('CURRENT PROGRESS ', currentProgress);
-      return currentProgress;
-    } catch (error) {
-      console.log('error ', error)
-    }
-  }
-
   const onDayPress = selectedDay => {
     const dateSelected = selectedDay.dateString;
-    currentProgress = getItemsByIdAndDate(user._id, dateSelected);
-    navigation.navigate('Selected Date', { currentProgress, dateSelected });
-    // navigation.navigate('Selected Date', {dateSelected});
+    navigation.navigate('Selected Date', {dateSelected});
     setSelected(dateSelected);
     // dateSelectedState = dateSelected;
     // console.log('DATE SELECTED ', dateSelected)
@@ -81,25 +56,9 @@ export default function History({navigation}) {
     console.log(dateIsSelected)
     setSelectedFormat(formattedDate);
   };
-  // const onDayPress = selectedDay => {
-  //   const dateSelected = selectedDay.dateString;
-  //   navigation.navigate('Selected Date', {dateSelected});
-  //   setSelected(dateSelected);
-  //   // dateSelectedState = dateSelected;
-  //   // console.log('DATE SELECTED ', dateSelected)
-  //   // console.log('state ', dateSelectedState)
-  //   const dateForm = new Date(selected);
-  //   const formattedDate = dateForm.toLocaleDateString('en-gb', {
-  //     year: 'numeric',
-  //     month: 'long',
-  //     day: 'numeric',
-  //     timeZone: 'utc'
-  //   });
-  //   setDateIsSelected(true);
-  //   console.log(dateIsSelected)
-  //   setSelectedFormat(formattedDate);
-  // };
 
+  // when click on a date, show buttons at bottom of calendar with 'go to {selected}'? or should it just 
+  // redirect to that clone of the details page? 
   LocaleConfig.locales['en'] = {
     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     monthNamesShort: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL.', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -113,6 +72,7 @@ export default function History({navigation}) {
       <View style={styles.guide}>
         <Text >Click to view your stats and log for a particular day</Text>
       </View>
+      {/* <Text style={styles.header}>{currentMonth}</Text> */}
       <View>
         <Calendar
           style={styles.calendar}
@@ -134,6 +94,14 @@ export default function History({navigation}) {
           enableSwipeMonths={true}
         />
       </View>
+      {/* <Text style={styles.grayText}>Date selected : {selected}</Text> */}
+      {/* <View>
+        {dateIsSelected &&
+          <TouchableOpacity style={styles.submitbutton} onPress={() => navigation.push('SelectedDate')}>
+            <Text style={styles.buttontext}>GO TO {selected}</Text>
+          </TouchableOpacity>} 
+      </View> */}
+
     </View>
   );
 };
