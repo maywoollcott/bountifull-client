@@ -11,6 +11,7 @@ import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 import NumericInput from 'react-native-numeric-input'
 import { AntDesign } from '@expo/vector-icons'; 
+import ActionType from '../../store/constants';
 
 
 export default function SearchPage({navigation}) {
@@ -39,10 +40,18 @@ export default function SearchPage({navigation}) {
   const onSubmit = async () => {
     const query = formData.item.split(' ').join('%20');
     console.log(query);
-    let res = [];
-    if (checked === 'branded') res = await apiService.searchNutritionApiBranded(query)
-    if (checked === 'nonbranded') res = await apiService.searchNutritionApiNonBranded(query);
-    if (checked === 'all') res = await apiService.searchNutritionApiAll(query);
+    let res;
+    switch (checked) {
+      case 'branded':
+        res = await apiService.searchNutritionApi({type: 'branded', query});
+        break;
+      case 'non':
+        res = await apiService.searchNutritionApi({type: 'non', query});
+        break;
+      default:
+        res = await apiService.searchNutritionApi({type: 'all', query});
+    }
+    console.log(res);
     const itemList = res.data.foods.slice(0, 7)
     const itemListCodes = itemList.map(item => {
       const container = {};
@@ -51,7 +60,7 @@ export default function SearchPage({navigation}) {
       return container;
     });
     setSearchResults(itemListCodes);
-    setDisplay('results')
+    setDisplay('results');
   } 
 
   return (

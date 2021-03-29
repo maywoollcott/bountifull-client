@@ -128,6 +128,22 @@ const reducer = (state, action) => {
           ...state,
           ...action.payload,
         };
+      case ActionType.FETCH_REQUESTED:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ActionType.FETCH_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isLoading: false,
+        };
+      case ActionType.FETCH_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+        };
     default:
       return state;
   }
