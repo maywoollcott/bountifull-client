@@ -3,16 +3,11 @@ import ActionType from './constants';
 import * as SecureStore from 'expo-secure-store';
 import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
 // import { IP} from 'react-native-dotenv';
-// TODO: Do we want items/meals/was auch immer to have individual item ids so they can be added/deleted? This would also be good for react key purposes.
-// TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
-
 
 const API_URL = 'http://192.168.0.181:3001';
 
-// TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
   return async (dispatch) => {
-    // TODO: Add validator helper functions
     if (!email || !password) {
       return dispatch({ type: ActionType.LOGIN_ERROR, payload: 'Please check your credentials. Your email address and/or password is missing.'});
     }

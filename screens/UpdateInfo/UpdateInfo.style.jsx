@@ -14,7 +14,7 @@ export default StyleSheet.create({
     fontWeight: "700",
     marginBottom: 35,
   },
-   submitbutton: {
+  submitbutton: {
     margin: 7,
     backgroundColor: COLORS.turq,
     borderRadius: 15,
@@ -43,7 +43,7 @@ export default StyleSheet.create({
     borderRadius: 7,
     borderColor: COLORS.darkblue,
   },
-  addbutton: {
+  savebutton: {
     backgroundColor: COLORS.darkblue,
     borderRadius: 7,
     height: 50,
@@ -52,19 +52,33 @@ export default StyleSheet.create({
     width: 60,
     marginLeft: 110,
   },
-  // radiocontainer: {
-  //   flexDirection: "row",
-  //   width: "80%",
-  //   marginTop: 10,
-  //   marginBottom: 20,
-  // },
-  // radioitem: {
-  //   flex: 1,
-  //   alignItems: "center",
-  // },
-  // radiolabel: {
-  //   fontSize: 18,
-  //   color: COLORS.turq,
-  //   fontWeight: "700",
-  // },
-});
+  savebuttontext: {
+    color: 'white',
+    fontSize: 18,
+  },
+  savesexbutton: {
+    backgroundColor: COLORS.darkblue,
+    borderRadius: 7,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 60,
+    marginLeft: 90,
+  },
+
+  radiocontainer: {
+    flexDirection: "row",
+    width: "80%",
+    margin: 10,
+  },
+  radioitem: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  radiolabel: {
+    fontSize: 18,
+    color: COLORS.turq,
+    fontWeight: "700",
+    padding: 5
+  },
+})

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Text,
   View,
@@ -6,24 +7,20 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
+import { DatePickerModal } from "react-native-paper-dates";
+import { RadioButton } from "react-native-paper";
 import { updateUser } from "../../store/actions";
-import { useSelector, useDispatch } from "react-redux";
 import styles from "./UpdateInfo.style";
-// import { RadioButton } from "react-native-simple-radio-button";
-// import { COLORS } from '../../globalStyles';
+import { COLORS } from "../../globalStyles";
 
 export default function UpdateInfo() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  // const [checked, setChecked] = useState('null');
-
-  const [selectedNameButton, setSelectedNameButton] = useState("");
-  const [selectedEmailButton, setSelectedEmailButton] = useState("");
-  const [selectedPasswordButton, setSelectedPasswordButton] = useState("");
-  const [selectedBirthdateButton, setSelectedBirthdateButton] = useState("");
-  const [selectedSexButton, setSelectedSexButton] = useState("");
-
+  const [checked, setChecked] = useState("");
+  const [date, setDate] = useState(undefined);
+  const [open, setOpen] = useState(false);
+  const [selectedButton, setSelectedButton] = useState("");
   const [inputData, setInputData] = useState({
     name: user.name,
     email: user.email,
@@ -31,144 +28,173 @@ export default function UpdateInfo() {
     birthdate: user.birthdate,
     sex: user.sex,
     avatar: user.avatar,
-  })
+  });
+
+  const dateFormatter = new Intl.DateTimeFormat(undefined, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  const exitCalendar = useCallback(() => {
+    setOpen(false);
+    setSelectedButton("");
+  }, [setOpen]);
+
+  const onConfirmDate = useCallback(
+    (params) => {
+      setOpen(false);
+      setDate(params.date);
+      setSelectedButton("");
+    },
+    [setOpen, setDate, setInputData]
+  );
 
   const handleSubmit = async () => {
     await dispatch(updateUser(inputData));
-    
-  }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text style={ styles.header }>Update Your Details</Text>
+      <Text style={styles.header}>Update Your Details</Text>
       <View>
-        {selectedNameButton !== "UpdateName" && (
+        {selectedButton !== "UpdateName" && (
           <TouchableOpacity
             style={styles.submitbutton}
-            onPress={() => setSelectedNameButton("UpdateName")}
+            onPress={() => setSelectedButton("UpdateName")}
           >
             <Text style={styles.buttontext}>Update Name</Text>
           </TouchableOpacity>
         )}
-        {selectedNameButton === "UpdateName" && (
+        {selectedButton === "UpdateName" && (
           <View>
             <TextInput
               style={styles.input}
               placeholder="New Name"
               name="name"
-              onChangeText={(text) => setInputData({ ...inputData, name: text })}
+              onChangeText={(text) =>
+                setInputData({ ...inputData, name: text })
+              }
             />
             <TouchableOpacity
-              style={styles.addbutton}
+              style={styles.savebutton}
               onPress={async () => {
                 handleSubmit();
-                setSelectedNameButton("");
+                setSelectedButton("");
               }}
             >
-              <Text style={styles.addbuttontext}>Save</Text>
+              <Text style={styles.savebuttontext}>Save</Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
       <View>
-        {selectedEmailButton !== "UpdateEmail" && (
+        {selectedButton !== "UpdateEmail" && (
           <TouchableOpacity
             style={styles.submitbutton}
-            onPress={() => setSelectedEmailButton("UpdateEmail")}
+            onPress={() => setSelectedButton("UpdateEmail")}
           >
             <Text style={styles.buttontext}>Update Email</Text>
           </TouchableOpacity>
         )}
-        {selectedEmailButton === "UpdateEmail" && (
+        {selectedButton === "UpdateEmail" && (
           <View>
             <TextInput
               style={styles.input}
               placeholder="New Email"
               name="email"
-              onChangeText={(text) => setInputData({ ...inputData, email: text })}
+              onChangeText={(text) =>
+                setInputData({ ...inputData, email: text })
+              }
             />
             <TouchableOpacity
-              style={styles.addbutton}
+              style={styles.savebutton}
               onPress={async () => {
                 handleSubmit();
-                setSelectedEmailButton("");
+                setSelectedButton("");
               }}
             >
-              <Text style={styles.addbuttontext}>Save</Text>
+              <Text style={styles.savebuttontext}>Save</Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
       <View>
-        {selectedPasswordButton !== "UpdatePassword" && (
+        {selectedButton !== "UpdatePassword" && (
           <TouchableOpacity
             style={styles.submitbutton}
-            onPress={() => setSelectedPasswordButton("UpdatePassword")}
+            onPress={() => setSelectedButton("UpdatePassword")}
           >
             <Text style={styles.buttontext}>Update Password</Text>
           </TouchableOpacity>
         )}
-        {selectedPasswordButton === "UpdatePassword" && (
+        {selectedButton === "UpdatePassword" && (
           <View>
             <TextInput
               style={styles.input}
               placeholder="New Password"
               name="password"
-              onChangeText={(text) => setInputData({ ...inputData, password: text })}
+              onChangeText={(text) =>
+                setInputData({ ...inputData, password: text })
+              }
             />
             <TouchableOpacity
-              style={styles.addbutton}
+              style={styles.savebutton}
               onPress={async () => {
                 handleSubmit();
-                setSelectedPasswordButton("");
+                setSelectedButton("");
               }}
             >
-              <Text style={styles.addbuttontext}>Save</Text>
+              <Text style={styles.savebuttontext}>Save</Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
       <View>
-        {selectedBirthdateButton !== "UpdateBirthdate" && (
+        {selectedButton !== "UpdateBirthdate" && (
           <TouchableOpacity
             style={styles.submitbutton}
-            onPress={() => setSelectedBirthdateButton("UpdateBirthdate")}
+            onPress={() => {
+              setSelectedButton("UpdateBirthdate");
+              setOpen(true);
+            }}
           >
             <Text style={styles.buttontext}>Update Birthdate</Text>
           </TouchableOpacity>
         )}
-        {selectedBirthdateButton === "UpdateBirthdate" && (
+        {selectedButton === "UpdateBirthdate" && (
           <View>
-            <TextInput
-              style={styles.input}
-              placeholder="New Birthdate"
-              name="birthdate"
-              onChangeText={(text) => setInputData({ ...inputData, birthdate: text })}
-            />
             <TouchableOpacity
-              style={styles.addbutton}
-              onPress={async () => {
-                handleSubmit();
-                setSelectedBirthdateButton("");
-              }}
+              onPress={() => setOpen(true)}
+              uppercase={false}
+              mode="outlined"
             >
-              <Text style={styles.addbuttontext}>Save</Text>
+              <Text style={styles.birthdate}>
+                {date ? dateFormatter.format(date) : "Birthdate"}
+              </Text>
+              <DatePickerModal
+                mode="single"
+                visible={open}
+                onDismiss={exitCalendar}
+                date={date}
+                onConfirm={onConfirmDate}
+              />
             </TouchableOpacity>
           </View>
         )}
       </View>
       <View>
-        {selectedSexButton !== "UpdateSex" && (
+        {selectedButton !== "UpdateSex" && (
           <TouchableOpacity
             style={styles.submitbutton}
-            onPress={() => setSelectedSexButton("UpdateSex")}
+            onPress={() => setSelectedButton("UpdateSex")}
           >
             <Text style={styles.buttontext}>Update Sex</Text>
           </TouchableOpacity>
         )}
-        {selectedSexButton === "UpdateSex" && (
+        {selectedButton === "UpdateSex" && (
           <View>
-            {/* <View style={styles.radiocontainer}>
+            <View style={styles.radiocontainer}>
               <View style={styles.radioitem}>
                 <RadioButton
                   value="female"
@@ -210,13 +236,14 @@ export default function UpdateInfo() {
               </View>
             </View>
             <TouchableOpacity
-              style={styles.addbutton}
+              style={styles.savesexbutton}
               onPress={async () => {
-                setSelectedSexButton("");
+                handleSubmit();
+                setSelectedButton("");
               }}
             >
-              <Text style={styles.addbuttontext}>Save</Text>
-            </TouchableOpacity> */}
+              <Text style={styles.savebuttontext}>Save</Text>
+            </TouchableOpacity>
           </View>
         )}
       </View>

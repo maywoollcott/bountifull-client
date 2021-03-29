@@ -12,8 +12,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import keys from '../../utils/keys';
 import { RNS3 } from 'react-native-aws3';
 import 'intl';
-import 'intl/locale-data/jsonp/en';
-
+import 'intl/locale-data/jsonp/en'
 import { Camera } from 'expo-camera';
 
 export default function Dashboard() {
@@ -28,6 +27,7 @@ export default function Dashboard() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back);
+  // const [fromCamera, setFromCamera] = useState(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -78,6 +78,7 @@ export default function Dashboard() {
 
   const closeCamera = () => {
     setOpenCamera(false);
+    // setFromCamera(false);
     console.log(openCamera);
   }
 
@@ -92,6 +93,7 @@ export default function Dashboard() {
     }
 
   const imageFromCamera = async () => {
+    // setFromCamera(true);
     askForCameraPermission();
     if(hasCameraPermission) {
       if (cameraRef) {
@@ -182,6 +184,7 @@ export default function Dashboard() {
           style={styles.input}
           placeholder='Password'
           name='password'
+          secureTextEntry={true}
           onChangeText={text => setFormData({ ...formData, password: text })}
         />
         <View>
@@ -245,57 +248,34 @@ export default function Dashboard() {
           </TouchableOpacity>
           {openCamera &&
             <View>
-            <TouchableOpacity style={{ alignItems: 'center'}} onPress={closeCamera}>
-                <MaterialIcons name="cancel" size={24} color="black" />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.submitbutton} onPress={imageFromGallery}>
-                <Ionicons name="images" size={24} />
-              </TouchableOpacity>
-
+              <TouchableOpacity style={{ alignItems: 'center'}} onPress={closeCamera}>
+                  <MaterialIcons name="cancel" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.submitbutton} onPress={imageFromGallery}>
+                  <Ionicons name="images" size={24} />
+                </TouchableOpacity>
               <TouchableOpacity style={styles.submitbutton} onPress={imageFromCamera}>
-                <Ionicons name="camera" size={24} />
+                  <Ionicons name="camera" size={24} />
               </TouchableOpacity>
-              { hasCameraPermission &&
-                <View style={{flex: 2}}>
-                    <Camera ref={ref => {setCameraRef(ref)}} style={{ height: 200, width: 200}} type={type}>
+                {hasCameraPermission &&
+                  <View style={{flex: 1}}>
+                    <Camera ref={ref => {setCameraRef(ref)}} style={{ height: 200, width: 200, borderWidth:4, borderColor: 'black'}} type={type}>
                       <View style={{backgroundColor: 'transparent'}}>
-                      <View style={styles.buttonContainer}>
-                        <TouchableOpacity
-                          style={styles.button}
-                          onPress={() => {
-                            setType(
-                              type === Camera.Constants.Type.back
-                                ? Camera.Constants.Type.front
-                                : Camera.Constants.Type.back
-                            );
-                          }}>
-                          <Text style={{color: 'white', fontSize:18}}> Flip </Text>
-                        </TouchableOpacity>
+                      <View>
+                        <TouchableOpacity style={styles.cancelCameraButton} onPress={closeCamera}>
+                            <MaterialIcons name="cancel" size={24} color="white" />
+                          </TouchableOpacity>
+                          <TouchableOpacity style={styles.flipButton} onPress={cameraDirection}>
+                            <MaterialIcons name="flip-camera-android" size={24} color="white" />
+                          </TouchableOpacity>
                       </View>
-                        <TouchableOpacity style={{ alignSelf: 'center' }}
-                          onPress={imageFromCamera}>
-                          <View style={{
-                            borderWidth: 2,
-                            borderRadius: 35/2,
-                            borderColor: 'white',
-                            height: 35,
-                            width: 35,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                          }}
-                          >
-                            <View style={{
-                              borderWidth: 2,
-                              borderRadius: 35/2,
-                              borderColor: 'white',
-                              height: 25,
-                              width: 25,
-                              backgroundColor: 'white'
-                            }} >
+                        <View style={styles.buttonContainer}>
+                          <TouchableOpacity style={{ alignSelf: 'center', marginTop:110 }} onPress={imageFromCamera}>
+                            <View style={styles.outerCircle}>
+                              <View style={styles.innerCircle} />
                             </View>
+                          </TouchableOpacity>
                         </View>
-                        </TouchableOpacity>
                       </View>
                     </Camera>
                   </View> 
@@ -305,11 +285,8 @@ export default function Dashboard() {
         </View>
         <TouchableOpacity
           style={styles.submitbutton}
-          onPress={onSubmit}
-        >
-          <Text
-            style={styles.buttontext}
-          >Submit</Text>
+          onPress={onSubmit}>
+          <Text style={styles.buttontext}>Submit</Text>
         </TouchableOpacity>
          {userAvatar && <Image source={{ uri: userAvatar }} style={{ width: 150, height: 150, borderRadius: 150 / 2 }} />}
       </View>
