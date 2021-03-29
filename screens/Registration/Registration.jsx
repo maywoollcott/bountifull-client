@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Text, Alert, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './Registration.style';
 import { StatusBar } from 'expo-status-bar';
 import { registerUser } from '../../store/actions';
@@ -117,9 +117,11 @@ export default function Dashboard() {
     console.log(date)
     console.log(avatarUri)
     const res = await dispatch(registerUser({ ...formData, birthdate: date, avatar: avatarUri }));
-    // console.log(date)
-    // console.log(avatarUri)
-    console.log(res.payload)
+    if (res.type === 'REGISTER_USER_ERROR') {
+      Alert.alert("Please complete all fields to register", "Please try again", [
+        { text: 'okay' }
+      ])
+    }
   }
 
   return (
