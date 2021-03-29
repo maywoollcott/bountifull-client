@@ -1,12 +1,19 @@
-import React from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import React, {useState} from 'react'
+import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import { useSelector } from 'react-redux';
+import { deleteItem } from '../../store/actions'
 import { style } from './ItemDetails.style';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+import { useNavigation } from '@react-navigation/core'
+const API_URL = 'http://192.168.0.181:3001';
 
 const ItemDetails = ({ route }) => {
+  const dispatch = useDispatch();
   const dailyTotal = useSelector(state => state.dailyTotal);
-
   const { item } = route.params;
+    const navigation = useNavigation();
 
   const formatDetails = ({ amount, goal }) => {
     return goal < 10 ? `${Math.floor(amount * 10)/10}` : `${Math.floor(amount)}`;
@@ -23,8 +30,48 @@ const ItemDetails = ({ route }) => {
     </View>
   );
 
+  const deleteById = async () => {
+    console.log(item.uniqueId)
+    const res = await dispatch(deleteItem(item));
+    console.log(res.type)
+    if (res.type === 'DELETE_ITEM_SUCCESS') {
+      Alert.alert(
+      `Deleted`,
+      `${item.itemName.toLowerCase()} deleted successfully`,
+      [
+        {
+          text: "Okay",
+          onPress: () => navigation.navigate('Dashboard'),
+        }
+      ]
+    );
+    } else {
+      alert('There was a problem deleting')
+    }
+  }
+
+  const deleteItemAlert = async() => {
+    console.log(item.itemName)
+    console.log(item.uniqueId)
+    
+    Alert.alert(
+      `Delete item`,
+      `Delete ${item.itemName.toLowerCase()}?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Delete", onPress: () => deleteById() }
+      ]
+    );
+  }
+
   return (
     <ScrollView contentContainerStyle={ style.container }>
+    { item.uniqueId ? 
+    <>
       <View style={ style.headerContainer }>
         <Text style={ style.header }>item details</Text>
         <Text style={ style.name }>{ item.itemName }</Text>
@@ -46,6 +93,12 @@ const ItemDetails = ({ route }) => {
           ))
         }
       </View>
+      <TouchableOpacity style={style.deleteButton} onPress={deleteItemAlert}>
+        <Text style={style.buttonText}>Delete</Text>
+      </TouchableOpacity>
+      </> :
+      <View><Text>Deleted</Text></View>
+    }
     </ScrollView>
   )
 }

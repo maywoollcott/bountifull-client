@@ -8,20 +8,16 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
 import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients';
-
-
-// const dateSelected = '2021-03-27'
-const API_URL = 'http://192.168.0.9:3001';
+const API_URL = 'http://192.168.0.181:3001';
 
 export default function DailyDetails({ route }) {
   const { _id, birthdate, sex } = useSelector(state => state.user);
+  const { dateSelected } = route.params;
   const [state, setState] = useState({
     historicalTotal: {},
     historicalProgress: [],
     totalGoalMet: 0,
   });
-
-  const { dateSelected } = route.params;
 
   const dateOptions = {
     weekday: 'long',
@@ -38,7 +34,6 @@ export default function DailyDetails({ route }) {
   };
 
   const getItemsByIdAndDate = async ()=> {
-    console.log('date selected ', dateSelected);
     const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
     const config = {
       headers: {
@@ -59,7 +54,6 @@ export default function DailyDetails({ route }) {
         historicalTotal, 
         historicalProgress: data
       });
-      console.log(state);
     } catch (error) {
       console.log('error ', error)
     }
@@ -72,7 +66,6 @@ export default function DailyDetails({ route }) {
   return (
     <View>
     <ScrollView contentContainerStyle={style.container}>
-
       <View style={style.headerContainer}>
         <Text style={style.header}>past daily progress</Text>
         <Text style={style.date}>{date}</Text>
@@ -82,7 +75,6 @@ export default function DailyDetails({ route }) {
         <Text style={style.bubbleText}>of your daily needs have been met!</Text>
       </View>
       <View style={style.infoContainer}>
-      {/* change this once we can restructure the database, and just grab the daily stats for that date */}
         {
           Object.keys(state.historicalTotal).map((nutrient) => {
             const name = nutrient.includes('vitamin') ? formatName(nutrient) : nutrient;

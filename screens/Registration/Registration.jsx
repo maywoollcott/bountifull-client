@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Text, Dimensions, View, Alert, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './Registration.style';
 import { StatusBar } from 'expo-status-bar';
 import { registerUser } from '../../store/actions';
@@ -11,9 +11,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import keys from '../../utils/keys';
 import { RNS3 } from 'react-native-aws3';
-// const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com/';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+
+import { Camera } from 'expo-camera';
+
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState('null')
@@ -21,8 +23,11 @@ export default function Dashboard() {
   const [open, setOpen] = useState(false);
   const [openCamera, setOpenCamera] = useState(false);
   const [userAvatar, setUserAvatar] = useState(false);
-  const [avatarUri, setAvatarUri] = useState('');
+  const [avatarUri, setAvatarUri] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null)
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -63,14 +68,43 @@ export default function Dashboard() {
     }
   }
 
+  const cameraDirection = () => {
+    setType(
+      type === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  }
+
   const closeCamera = () => {
     setOpenCamera(false);
     console.log(openCamera);
   }
 
-  const setAvatar = async () => {
+  const openPicOptions = async () => {
     setOpenCamera(true);
     console.log(openCamera);
+  }
+
+  const askForCameraPermission = async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasCameraPermission(status === 'granted');
+    }
+
+  const imageFromCamera = async () => {
+    askForCameraPermission();
+    if(hasCameraPermission) {
+      if (cameraRef) {
+        let photo = await cameraRef.takePictureAsync();
+        if(photo) {
+        setUserAvatar(photo.uri);
+        saveImageToAWS3(photo.uri);
+        closeCamera();
+        }
+      }
+    } else {
+      console.log('need camera permission');
+    }
   }
 
   const imageFromGallery = async () => {
@@ -84,6 +118,7 @@ export default function Dashboard() {
       })
       if (result) {
         setUserAvatar(result.uri);
+        console.log('user avatar ', userAvatar)
         saveImageToAWS3(result.uri)
       }
     } else {
@@ -108,23 +143,25 @@ export default function Dashboard() {
     RNS3.put(file, config).then(res => {
       if (res.status !== 201) throw new Error('failed to upload image to s3')
       setAvatarUri(file.name);
-      console.log(file.name);
-      console.log('received by aws3 bountifull')
+      console.log(file.name, ' received by aws3 bountifull')
+      console.log('avatarURI ', avatarUri)
     })
   }
 
   const onSubmit = async () => {
-    console.log(formData)
-    console.log(date)
-    console.log(avatarUri)
-    const res = await dispatch(registerUser({ ...formData, birthdate: date, avatar: avatarUri }));
+    // console.log(formData)
     // console.log(date)
-    // console.log(avatarUri)
-    console.log(res.payload)
+    console.log('avatar uri to be saved to db ', avatarUri)
+    const res = await dispatch(registerUser({ ...formData, birthdate: date, avatar: avatarUri }));
+    if (res.type === 'REGISTER_USER_ERROR') {
+      Alert.alert("Please complete all fields to register", "Please try again", [
+        { text: 'okay' }
+      ])
+    }
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"} >
       <View style={styles.headercontainer}>
         <Text style={styles.header}>Join the fun!</Text>
       </View>
@@ -203,7 +240,7 @@ export default function Dashboard() {
         </View>
 
         <View>
-          <TouchableOpacity style={styles.submitbutton} onPress={setAvatar}>
+          <TouchableOpacity style={styles.submitbutton} onPress={openPicOptions}>
             <Text style={styles.buttontext}>Profile picture</Text>
           </TouchableOpacity>
           {openCamera &&
@@ -214,7 +251,55 @@ export default function Dashboard() {
               <TouchableOpacity style={styles.submitbutton} onPress={imageFromGallery}>
                 <Ionicons name="images" size={24} />
               </TouchableOpacity>
-              {userAvatar && <Image source={{ uri: userAvatar }} style={{ width: 150, height: 150, borderRadius: 150 / 2 }} />}
+
+              <TouchableOpacity style={styles.submitbutton} onPress={imageFromCamera}>
+                <Ionicons name="camera" size={24} />
+              </TouchableOpacity>
+              { hasCameraPermission &&
+                <View style={{flex: 2}}>
+                    <Camera ref={ref => {setCameraRef(ref)}} style={{ height: 200, width: 200}} type={type}>
+                      <View style={{backgroundColor: 'transparent'}}>
+                      <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                          style={styles.button}
+                          onPress={() => {
+                            setType(
+                              type === Camera.Constants.Type.back
+                                ? Camera.Constants.Type.front
+                                : Camera.Constants.Type.back
+                            );
+                          }}>
+                          <Text style={{color: 'white', fontSize:18}}> Flip </Text>
+                        </TouchableOpacity>
+                      </View>
+                        <TouchableOpacity style={{ alignSelf: 'center' }}
+                          onPress={imageFromCamera}>
+                          <View style={{
+                            borderWidth: 2,
+                            borderRadius: 35/2,
+                            borderColor: 'white',
+                            height: 35,
+                            width: 35,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                          }}
+                          >
+                            <View style={{
+                              borderWidth: 2,
+                              borderRadius: 35/2,
+                              borderColor: 'white',
+                              height: 25,
+                              width: 25,
+                              backgroundColor: 'white'
+                            }} >
+                            </View>
+                        </View>
+                        </TouchableOpacity>
+                      </View>
+                    </Camera>
+                  </View> 
+                }
             </View>
           }
         </View>
@@ -226,6 +311,7 @@ export default function Dashboard() {
             style={styles.buttontext}
           >Submit</Text>
         </TouchableOpacity>
+         {userAvatar && <Image source={{ uri: userAvatar }} style={{ width: 150, height: 150, borderRadius: 150 / 2 }} />}
       </View>
       <StatusBar style="auto" />
     </KeyboardAvoidingView>

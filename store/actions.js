@@ -7,7 +7,7 @@ import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
 
-const API_URL = 'http://192.168.0.9:3001';
+const API_URL = 'http://192.168.0.181:3001';
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
@@ -190,41 +190,47 @@ export const addItem = ( item ) => {
 };
 
 // TODO: add Token and authorization header to request, store refreshToken in AsyncStorage or Expo-Secure-Store
-export const deleteItem = ({ item, date }) => {
+export const deleteItem = ( item ) => {
   return async (dispatch, getState) => {
-    if (!item || !date) {
+    if (!item) {
       return dispatch({ type: ActionType.DELETE_ITEM_ERROR, payload: 'Please make sure all required information has been provided for deleting.'});
     }
     try {
       const { 
         user: {
           _id,
-        }
+          birthdate,
+          sex,
+        },
+        currentProgress,
       } = getState();
       const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
+      const dailyTotal = calcTotalsByNutrient({
+        items: currentProgress.filter(food => food.uniqueId !== item.uniqueId),
+        sex,
+        birthdate,
+      });
+      console.log('in actions ', item.uniqueId);
+      const totalGoalMet = calcTotalProgress(dailyTotal);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
       dispatch({type: ActionType.DELETE_ITEM_REQUESTED});
-      const { data } = await axios.delete(`${API_URL}/delete`, {
-        ...config,
-        data: {
-          _id,
-          item,
-          date,
-        }
+      await axios.delete(`${API_URL}/deleteItem/${item.uniqueId}`, {
+        ...config
       });
       return dispatch({
         type: ActionType.DELETE_ITEM_SUCCESS,
-        payload: data,
+        payload: {
+          dailyTotal,
+          totalGoalMet,
+          currentProgress: currentProgress.filter(food => food.uniqueId !== item.uniqueId)
+        },
       });
     } catch (err) {
       return dispatch({ type: ActionType.DELETE_ITEM_ERROR, payload: err });
     }
   };
 };
-
-
-// get items by user_id and date? and calculate the totals
