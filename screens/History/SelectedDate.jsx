@@ -1,22 +1,27 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { FlatList, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
 import { COLORS } from '../../globalStyles';
 import ItemButton from '../../components/ItemButton/ItemButton';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
+import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients';
 
 
 // const dateSelected = '2021-03-27'
-const API_URL = 'http://192.168.0.181:3001';
+const API_URL = 'http://192.168.0.9:3001';
 
 export default function DailyDetails({ route }) {
-  const user = useSelector(state => state.user);
+  const { _id, birthdate, sex } = useSelector(state => state.user);
+  const [state, setState] = useState({
+    historicalTotal: {},
+    historicalProgress: [],
+    totalGoalMet: 0,
+  });
 
   const { dateSelected } = route.params;
-
-  const { dailyTotal, totalGoalMet } = useSelector(state => state);
 
   const dateOptions = {
     weekday: 'long',
@@ -32,25 +37,29 @@ export default function DailyDetails({ route }) {
     return name.replace('n', 'n ');
   };
 
-  let currentProgress=[];
-
   const getItemsByIdAndDate = async ()=> {
-    // let currentProgress = [];
-    const userId = user._id; 
-    console.log(userId);
     console.log('date selected ', dateSelected);
+    const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
-      let res = [];
-      res = await axios.get(`${API_URL}/getItems/${user._id}/${dateSelected}`, {
-        user: user._id,
-        dateCreated: '2021-03-27'
+      const { data } = await axios.get(`${API_URL}/getItems/${_id}/${dateSelected}`, config);
+      const historicalTotal = calcTotalsByNutrient({
+        birthdate,
+        sex,
+        items: data,
       });
-      const items = res.data
-      const singleItem = items.map((item)=> {
-        currentProgress.push(item)
-        // console.log(items)
-      })
-      console.log(currentProgress);
+      const totalGoalMet = calcTotalProgress(historicalTotal);
+      setState({
+        ...state,
+        totalGoalMet,
+        historicalTotal, 
+        historicalProgress: data
+      });
+      console.log(state);
     } catch (error) {
       console.log('error ', error)
     }
@@ -69,16 +78,16 @@ export default function DailyDetails({ route }) {
         <Text style={style.date}>{date}</Text>
       </View>
       <View style={style.goalBubble}>
-        <Text style={style.percentage}>{totalGoalMet}%</Text>
+        <Text style={style.percentage}>{state.totalGoalMet}%</Text>
         <Text style={style.bubbleText}>of your daily needs have been met!</Text>
       </View>
       <View style={style.infoContainer}>
       {/* change this once we can restructure the database, and just grab the daily stats for that date */}
         {
-          Object.keys(dailyTotal).map((nutrient) => {
+          Object.keys(state.historicalTotal).map((nutrient) => {
             const name = nutrient.includes('vitamin') ? formatName(nutrient) : nutrient;
             return (
-              <GoalBar key={nutrient} nutrient={{ name, ...dailyTotal[nutrient] }} />
+              <GoalBar key={nutrient} nutrient={{ name, ...state.historicalTotal[nutrient] }} />
             );
           })
         }
@@ -86,7 +95,7 @@ export default function DailyDetails({ route }) {
       <View style={style.infoContainer}>
         <Text style={{ ...style.header, marginVertical: 35, }}>today's intake:</Text>
         {
-          currentProgress.length ? currentProgress.map((item) =>
+          state.historicalProgress.length ? state.historicalProgress.map((item) =>
           <ItemButton key={item.uniqueId} item={item} />
           ) : (
             <Text>Get out there and eat something good. :)</Text>

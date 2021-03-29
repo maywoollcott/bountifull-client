@@ -8,7 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
-export default function DailyDetails({navigation}) {
+export default function DailyDetails() {
   const { dailyTotal, totalGoalMet, currentProgress } = useSelector(state => state);
 
 
