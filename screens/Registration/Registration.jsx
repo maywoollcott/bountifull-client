@@ -12,7 +12,8 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import keys from '../../utils/keys';
 import { RNS3 } from 'react-native-aws3';
 // const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com/';
-
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState('null')
@@ -207,7 +208,7 @@ export default function Dashboard() {
           </TouchableOpacity>
           {openCamera &&
             <View>
-              <TouchableOpacity style={styles.submitbutton} onPress={closeCamera}>
+            <TouchableOpacity style={{ alignItems: 'center'}} onPress={closeCamera}>
                 <MaterialIcons name="cancel" size={24} color="black" />
               </TouchableOpacity>
               <TouchableOpacity style={styles.submitbutton} onPress={imageFromGallery}>
