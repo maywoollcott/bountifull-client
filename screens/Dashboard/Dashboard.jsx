@@ -16,7 +16,7 @@ export default function Dashboard({ navigation }) {
   return (
     <View style={ style.container }>
       <View style={ style.factContainer } >
-        <Text style={ style.buttontext }>{ fact} </Text>
+        <Text style={ style.factText }>{ fact} </Text>
       </View>
       <View style={ style.goalBubble }>
         <Text style={ style.percentage }>{ totalGoalMet }%</Text>

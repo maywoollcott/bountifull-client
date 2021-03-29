@@ -11,7 +11,7 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 
 export default function DailyDetails({navigation}) {
-  const { dailyTotal, totalGoalMet } = useSelector(state => state);
+  const { dailyTotal, totalGoalMet, currentProgress } = useSelector(state => state);
 
 
   const dateOptions = {
@@ -46,16 +46,16 @@ export default function DailyDetails({navigation}) {
           })
         }
       </View>
-      {/* <View style= { style.infoContainer }>
-        <Text style={ style.header }>Today's intake:</Text>
+      <View style= { style.infoContainer }>
+        <Text style={{ ...style.header, marginVertical: 35, }}>today's intake:</Text>
         {
-          currentProgress.length ? (
-            <ItemButton />
+          currentProgress.length ? currentProgress.map((item) =>
+            <ItemButton key={item.uniqueId} item={item} />
           ) : (
             <Text>Get out there and eat something good. :)</Text>
           )
         }
-      </View> */}
+      </View>
     </ScrollView>
   );
 };

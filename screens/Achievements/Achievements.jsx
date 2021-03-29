@@ -6,7 +6,7 @@ export default function Achievements() {
 
   return (
     <View>
-      <Text>Acheivements Page</Text>
+      <Text>Achievements Page</Text>
     </View>
   );
 };
