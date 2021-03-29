@@ -80,7 +80,7 @@ export default function MainTabs() {
         }}
       />
       <Tab.Screen
-        name='DailyDetails'
+        name='Daily Details'
         component={DailyDetails}
         options={{
           tabBarIcon: ({ color }) => (

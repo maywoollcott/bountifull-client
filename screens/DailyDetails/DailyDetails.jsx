@@ -6,7 +6,9 @@ import { GoalBar } from '../../components/GoalBar/GoalBar';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import ItemButton from '../../components/ItemButton/ItemButton';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 export default function DailyDetails({navigation}) {
   const { dailyTotal, totalGoalMet } = useSelector(state => state);
@@ -27,7 +29,7 @@ export default function DailyDetails({navigation}) {
     <ScrollView contentContainerStyle={ style.container }>
 
       <View style={ style.headerContainer }>
-        <Text style={ style.header }>daily progress</Text>
+        <Text style={ style.header }>daily progress</Text> 
         <Text style={ style.date }>{ date }</Text>
       </View>
       <View style={ style.goalBubble }>
