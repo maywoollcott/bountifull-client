@@ -6,9 +6,7 @@ import { COLORS } from '../../globalStyles';
 import ItemButton from '../../components/ItemButton/ItemButton';
 import axios from 'axios';
 import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients' ;
-
 // import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
-
 
 // const dateSelected = '2021-03-27'
 const API_URL = 'http://192.168.0.181:3001';
@@ -28,41 +26,28 @@ export default function DailyDetails({ route }) {
     return name.replace('n', 'n ');
   };
 
+
+const deleteItem = async (_id) => {
+  let currentProgress =[];
+  try {
+    let res = [];
+    res = await axios.get(`${API_URL}/deleteItem`, {
+      _id: _id,
+    });
+    // should get the currentProgress from the load
+    const updatedItems = currentProgress.filter(item => {
+      item._id === _id
+    })
+    console.log('Updated LIST ', updatedItems);
+    return currentProgress;
+  } catch (error) {
+    console.log('error ', error)
+  }
+}
+
   // useEffect(() => {
   //   getItemsByIdAndDate()
   // }, []);
-
-
-  // let currentProgress = [{
-  //   "__v": 0,
-  //   "_id": "605f662c0caa514614b70469",
-  //   "createdAt": "2021-03-27T17:06:52.570Z",
-  //   "dateCreated": "2021-03-27T00:00:00.000Z",
-  //   "itemName": "BANANA SPLIT",
-  //   "servingQuantity": 1,
-  //   "totalNutrients": {
-  //   "_id": "605f662c0caa514614b7046a",
-  //   "calcium": 74,
-  //   "fiber": 1.3,
-  //   "folate": 8,
-  //   "iron": 0.24,
-  //   "magnesium": 18,
-  //   "niacin": 0.254,
-  //   "potassium": 220,
-  //   "protein": 2.53,
-  //   "riboflavin": 0.148,
-  //   "sodium": 98,
-  //   "thiamin": 0.032,
-  //   "vitaminA": 0,
-  //   "vitaminB12": 0.21,
-  //   "vitaminB6": 0.117,
-  //   "vitaminC": 3.6,
-  //   "zinc": 0.45,
-  // },
-  //   "uniqueId": "f1d4f2bf-aa22-48a6-86fc-db241c1e716a",
-  //   "updatedAt": "2021-03-27T17:06:52.570Z",
-  //   "user": "605e2ac5ee15802290e9ae07",
-  // },];
 
   // let currentProgress=[];
 

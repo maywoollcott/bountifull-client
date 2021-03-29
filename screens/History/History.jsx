@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 const API_URL = 'http://192.168.0.181:3001';
 
-
 export default function History({navigation}) {
   const user = useSelector(state => state.user);
 
@@ -41,7 +40,6 @@ export default function History({navigation}) {
     setMonth(thisMonth)
   }
 
-  
   const getItemsByIdAndDate = async (userId, dateSelected) => {
     // console.log(userId);
     let currentProgress =[];
@@ -62,7 +60,6 @@ export default function History({navigation}) {
       console.log('error ', error)
     }
   }
-
 
   const onDayPress = selectedDay => {
     const dateSelected = selectedDay.dateString;
@@ -103,8 +100,6 @@ export default function History({navigation}) {
   //   setSelectedFormat(formattedDate);
   // };
 
-  // when click on a date, show buttons at bottom of calendar with 'go to {selected}'? or should it just 
-  // redirect to that clone of the details page? 
   LocaleConfig.locales['en'] = {
     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     monthNamesShort: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL.', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -118,7 +113,6 @@ export default function History({navigation}) {
       <View style={styles.guide}>
         <Text >Click to view your stats and log for a particular day</Text>
       </View>
-      {/* <Text style={styles.header}>{currentMonth}</Text> */}
       <View>
         <Calendar
           style={styles.calendar}
@@ -140,15 +134,6 @@ export default function History({navigation}) {
           enableSwipeMonths={true}
         />
       </View>
-      {/* <Text style={styles.grayText}>Date selected : {selected}</Text> */}
-      {/* <View>
-        {dateIsSelected &&
-          <TouchableOpacity style={styles.submitbutton} onPress={() => navigation.push('SelectedDate')}>
-            <Text style={styles.buttontext}>GO TO {selected}</Text>
-
-          </TouchableOpacity>} 
-      </View> */}
-
     </View>
   );
 };
