@@ -81,4 +81,8 @@ export default StyleSheet.create({
     fontWeight: "700",
     padding: 5
   },
+<<<<<<< HEAD
 })
+=======
+});
+>>>>>>> 45f64ac442023443040966e59912edcce73123a5

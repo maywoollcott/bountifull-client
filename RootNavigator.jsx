@@ -8,6 +8,7 @@ import Registration from './screens/Registration/Registration';
 import { useSelector } from 'react-redux';
 import MainTabs from './screens/MainTabs/MainTabs';
 import { COLORS } from './globalStyles';
+import { style } from './screens/DailyDetails/DailyDetails.style';
 
 
 export default function RootNavigator() {
@@ -34,7 +35,9 @@ export default function RootNavigator() {
     <NavigationContainer>
       {state.isLoading ? (
         // can replace this with a logo spinner
-      <ActivityIndicator size='large' />
+        <View style={ style.container }>
+          <ActivityIndicator size='large' />
+        </View>
       ) : state.user ? (
       <MainTabs />
       ) : (

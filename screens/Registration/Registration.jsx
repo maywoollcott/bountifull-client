@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Text, Dimensions, View, Alert, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Text, Alert, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from './Registration.style';
 import { StatusBar } from 'expo-status-bar';
 import { registerUser } from '../../store/actions';
@@ -151,9 +151,15 @@ export default function Dashboard() {
   }
 
   const onSubmit = async () => {
+<<<<<<< HEAD
     // console.log(formData)
     // console.log(date)
     console.log('avatar uri to be saved to db ', avatarUri)
+=======
+    console.log(formData)
+    console.log(date)
+    console.log(avatarUri)
+>>>>>>> 45f64ac442023443040966e59912edcce73123a5
     const res = await dispatch(registerUser({ ...formData, birthdate: date, avatar: avatarUri }));
     if (res.type === 'REGISTER_USER_ERROR') {
       Alert.alert("Please complete all fields to register", "Please try again", [
