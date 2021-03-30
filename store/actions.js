@@ -98,13 +98,13 @@ export const registerUser = ({ name, email, password, birthdate, sex, avatar }) 
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const updateUser = ({ birthdate, sex, displayName, email, password, avatar }) => {
+export const updateUser = ({ birthdate, sex, name, email, password, avatar }) => {
   return async (dispatch, getState) => {
-    if (!email || !password || !displayName || !avatar) {
-      return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: 'No information has been provided to _USER!'});
+    if (!email && !password && !name && !birthdate && !sex) {
+      return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: 'No information has been provided to _USER!' });
     }
     try {
-      const { 
+      const {
         user: {
           _id,
         }
@@ -115,14 +115,14 @@ export const updateUser = ({ birthdate, sex, displayName, email, password, avata
           Authorization: `Bearer ${token}`,
         },
       };
-      dispatch({type: ActionType.UPDATE_USER_REQUESTED});
+      dispatch({ type: ActionType.UPDATE_USER_REQUESTED });
       const { data } = await axios.put(`${API_URL}/update/${_id}`, {
         email,
         password,
         avatar,
         birthdate,
         sex,
-        displayName,
+        name,
       }, config);
       return dispatch({
         type: ActionType.UPDATE_USER_SUCCESS,

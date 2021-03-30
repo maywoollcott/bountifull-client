@@ -1,3 +1,4 @@
+
 import ActionType from './constants';
 
 export const initialState = {
@@ -8,7 +9,7 @@ export const initialState = {
   dailyTotal: null,
   totalGoalMet: null,
   fact: '',
-  dateSelectedState:''
+  dateSelectedState: ''
 };
 
 // separate out actions into different reducers and combine.

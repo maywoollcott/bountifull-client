@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import { useSelector } from 'react-redux';
 import { deleteItem } from '../../store/actions'
@@ -13,10 +13,10 @@ const ItemDetails = ({ route }) => {
   const dispatch = useDispatch();
   const dailyTotal = useSelector(state => state.dailyTotal);
   const { item } = route.params;
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const formatDetails = ({ amount, goal }) => {
-    return goal < 10 ? `${Math.floor(amount * 10)/10}` : `${Math.floor(amount)}`;
+    return goal < 10 ? `${Math.floor(amount * 10) / 10}` : `${Math.floor(amount)}`;
   };
 
   const formatName = (name) => {
@@ -24,9 +24,9 @@ const ItemDetails = ({ route }) => {
   };
 
   const NutrientDetail = ({ name, amount, unit, goal }) => (
-    <View style={ style.nutrient }>
-      <Text style={ style.label }>{ formatName(name) }</Text>
-      <Text style={ style.amount }>{ `${formatDetails({ amount, goal })} ${unit}` }</Text>
+    <View style={style.nutrient}>
+      <Text style={style.label}>{formatName(name)}</Text>
+      <Text style={style.amount}>{`${formatDetails({ amount, goal })} ${unit}`}</Text>
     </View>
   );
 
@@ -49,10 +49,10 @@ const ItemDetails = ({ route }) => {
     // }
   }
 
-  const deleteItemAlert = async() => {
+  const deleteItemAlert = async () => {
     console.log(item.itemName)
     console.log(item.uniqueId)
-    
+
     Alert.alert(
       `Delete item`,
       `Delete ${item.itemName.toLowerCase()}?`,
@@ -68,36 +68,36 @@ const ItemDetails = ({ route }) => {
   }
 
   return (
-    <ScrollView contentContainerStyle={ style.container }>
-    { item.uniqueId ? 
-    <>
-      <View style={ style.headerContainer }>
-        <Text style={ style.header }>item details</Text>
-        <Text style={ style.name }>{ item.itemName }</Text>
-        <Text style={ style.name }>SERVINGS: { item.servingQuantity }</Text>
-      </View>
-      <View style={ style.infoContainer }>
-        {
-          Object.entries(item.totalNutrients).map(([name, amount]) => (
-            name !== '_id' ? <NutrientDetail
-              key={ name }
-              name={ formatName(name) }
-              amount={ amount }
-              goal={ dailyTotal[name].goal }
-              unit={ dailyTotal[name].unit }
-            /> : (
-              <View key={name}>
-              </View>
-            )
-          ))
-        }
-      </View>
-      <TouchableOpacity style={style.deleteButton} onPress={deleteItemAlert}>
-        <Text style={style.buttonText}>Delete</Text>
-      </TouchableOpacity>
-      </> :
-      <View><Text>Deleted</Text></View>
-    }
+    <ScrollView contentContainerStyle={style.container}>
+      { item.uniqueId ?
+        <>
+          <View style={style.headerContainer}>
+            <Text style={style.header}>item details</Text>
+            <Text style={style.name}>{item.itemName}</Text>
+            <Text style={style.name}>SERVINGS: {item.servingQuantity}</Text>
+          </View>
+          <View style={style.infoContainer}>
+            {
+              Object.entries(item.totalNutrients).map(([name, amount]) => (
+                name !== '_id' ? <NutrientDetail
+                  key={name}
+                  name={formatName(name)}
+                  amount={amount}
+                  goal={dailyTotal[name].goal}
+                  unit={dailyTotal[name].unit}
+                /> : (
+                  <View key={name}>
+                  </View>
+                )
+              ))
+            }
+          </View>
+          <TouchableOpacity style={style.deleteButton} onPress={deleteItemAlert}>
+            <Text style={style.buttonText}>Delete</Text>
+          </TouchableOpacity>
+        </> :
+        <View><Text>Deleted</Text></View>
+      }
     </ScrollView>
   )
 }
