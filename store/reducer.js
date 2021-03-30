@@ -1,4 +1,3 @@
-
 import ActionType from './constants';
 
 export const initialState = {

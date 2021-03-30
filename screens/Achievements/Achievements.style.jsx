@@ -22,7 +22,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   h1: {
-    fontSize: 30,
+    fontSize: 29,
     color: COLORS.darkblue,
     fontWeight: '700'
   },

@@ -12,17 +12,19 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center'
+    // justifyContent: 'center'
   },
 
   guide: {
     marginHorizontal: 50,
-    marginVertical: 20,
+    // marginTop: 0,
+    marginVertical: 40,
     backgroundColor: COLORS.palegreen,
     justifyContent: 'center',
+    marginHorizontal:30,
     alignItems: 'center',
-    width: '70%',
-    height: 100,
+    width: '80%',
+    height: 120,
     paddingVertical: 20,
     paddingHorizontal: 25,
     borderRadius: 15,
@@ -30,22 +32,31 @@ export default StyleSheet.create({
       width: 0,
       height: 4,
     },
-    shadowOpacity: 4,
-    shadowColor: 'rgba(0, 0, 0, 0.25)'
+    // shadowOpacity: 4,
+    // shadowColor: 'rgba(0, 0, 0, 0.25)'
   },
 
   calendar: {
+    marginTop: 30, 
     height: 300,
   },
 
   header: {
     fontSize: 15,
     color: COLORS.darkblue,
-    // justifyContent: 'center',
+    justifyContent: 'center',
     fontWeight: '500',
     width: '100%',
-    marginHorizontal: 140,
-    marginVertical: 10
+    marginHorizontal: 80,
+    marginTop: 80,
+    marginBottom:0
+  },
+
+  h1: {
+    fontSize: 30,
+    color: COLORS.darkblue,
+    fontWeight: '500',
+    justifyContent: 'center',
   },
 
   grayText: {

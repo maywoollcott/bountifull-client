@@ -10,8 +10,8 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-const API_URL = 'http://192.168.0.181:3001';
-
+// const API_URL = 'http://192.168.0.181:3001';
+const API_URL = process.env.API_URI;
 export default function History() {
   const { dateSelectedState } = useSelector(state => state.dateSelectedState);
   const { _id, birthdate, sex } = useSelector(state => state.user);
@@ -116,12 +116,9 @@ export default function History() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.guide}>
-        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.sage} />    Logged at least 1 item </Text>
-        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.turq} />   Met 50% of your goals </Text>
-        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.darkblue} />   Met 100% of your goals</Text>
-         
-      </View>
+      {/* <View style={styles.header}>
+        <Text style={styles.h1}> Logging </Text>
+      </View> */}
       <View>
         <Calendar
           style={styles.calendar}
@@ -143,6 +140,11 @@ export default function History() {
             //   }
             }
         />
+      </View>
+      <View style={styles.guide}>
+        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.sage} />    Logged at least 1 item </Text>
+        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.turq} />   Met 50% of your goals </Text>
+        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.darkblue} />   Met 100% of your goals</Text>
       </View>
     </View>
   );
