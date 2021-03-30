@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-const API_URL = 'http://192.168.0.181:3001';
+const API_URL = 'http://192.168.1.148:3001';
 
 export default function History() {
   const { dateSelectedState } = useSelector(state => state.dateSelectedState);
