@@ -1,23 +1,20 @@
-
 import React, { useState, Fragment, useEffect } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { LocaleConfig, Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { Text, View, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { LocaleConfig, Calendar } from 'react-native-calendars';
 import styles from './History.style';
 // import { LocaleConfig } from 'react-native-calendars';
 import { COLORS } from '../../globalStyles';
 import XDate from 'xdate';
-import { useSelector, useDispatch } from 'react-redux';
+import { Octicons } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-
 const API_URL = 'http://192.168.0.181:3001';
-
 
 export default function History() {
   const { dateSelectedState } = useSelector(state => state.dateSelectedState);
   const { _id, birthdate, sex } = useSelector(state => state.user);
-
   const today = new XDate();
   const todayMonth = today.toString("MMMM yyyy")
   const [selected, setSelected] = useState('');
@@ -26,10 +23,12 @@ export default function History() {
   const [dateIsSelected, setDateIsSelected] = useState(false);
   const twoWeeksAhead = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000)
   const navigation = useNavigation();
+  const [daysLoggedCalendar, setDaysLoggedCalendar] = useState([]);
 
   useEffect(()=>{
     setSelected('');
-    daysGoalMet50();
+    // daysGoalMet50();
+    daysOfUser();
   },[])
 
   const handleMonthChange = (month) => {
@@ -59,14 +58,7 @@ export default function History() {
     setSelectedFormat(formattedDate);
   };
 
-  const filterBy50 = (day) => {
-    if (day.totalGoalMet >= 50) {
-      return true;
-    }
-    return false;
-  }
-
-  const daysGoalMet50 = async () => {
+  const daysOfUser = async() => {
     const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
     const config = {
       headers: {
@@ -74,20 +66,44 @@ export default function History() {
       },
     };
     try {
-      const currentUser  = await axios.get(`${API_URL}/user/${_id}`, config);
-      console.log(currentUser)
+      const currentUser = await axios.get(`${API_URL}/user/${_id}`, config);
       const userDays = currentUser.data.days;
-      console.log(userDays.map(day => console.log(day.date)))
-      // console.log('user days ' + )
-
-      const dayArr = userDays.filter( (day) => {
-        day.totalGoalMet >= 50;
-      })
-      console.log(dayArr);
+      const mapped = userDays.map(day => day.date)
+      setDaysLoggedCalendar([...mapped])
     } catch (error) {
       console.log('error ', error)
     }
   }
+
+  const loggedFormat = { selected: true, selectedColor: COLORS.sage }
+  const forCalendar = daysLoggedCalendar.map(day => ({
+    key: [day], value: loggedFormat
+  }))
+  const objectFormat = forCalendar.reduce(
+    (obj, item) => Object.assign(obj, { [item.key]: item.value }), {});
+
+  // const daysGoalMet50 = async () => {
+  //   const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
+  //   try {
+  //     const currentUser  = await axios.get(`${API_URL}/user/${_id}`, config);
+  //     console.log(currentUser)
+  //     const userDays = currentUser.data.days;
+  //     console.log(userDays.map(day => console.log(day.date)))
+  //     // console.log('user days ' + )
+
+  //     const dayArr = userDays.filter( (day) => {
+  //       day.totalGoalMet >= 50;
+  //     })
+  //     console.log(dayArr);
+  //   } catch (error) {
+  //     console.log('error ', error)
+  //   }
+  // }
 
   LocaleConfig.locales['en'] = {
     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -101,7 +117,10 @@ export default function History() {
   return (
     <View style={styles.container}>
       <View style={styles.guide}>
-        <Text >Click to view your stats and log for a particular day</Text>
+        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.sage} />    Logged at least 1 item </Text>
+        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.turq} />   Met 50% of your goals </Text>
+        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.darkblue} />   Met 100% of your goals</Text>
+         
       </View>
       <View>
         <Calendar
@@ -114,16 +133,15 @@ export default function History() {
           hideExtraDays={true}
           disableAllTouchEventsForDisabledDays={true}
           enableSwipeMonths={true}
-          markedDates={{
-            '2021-03-25': { selected: true, selectedColor: COLORS.turq, textColor: 'gray' },
-            '2021-03-26': { selected: true, selectedColor: COLORS.turq},
-            [selected]: {
-              selected: true,
-              disableTouchEvent: true,
-              selectedColor: COLORS.sage,
-              selectedTextColor: COLORS.darkblue
+          markedDates = {
+            objectFormat
+            // [selected]: {
+            //   selected: true,
+            //   disableTouchEvent: true,
+            //   selectedColor: COLORS.sage,
+            //   selectedTextColor: COLORS.darkblue
+            //   }
             }
-          }}
         />
       </View>
     </View>
