@@ -16,6 +16,7 @@ export const loginUser = ({ email, password }) => {
     if (!email || !password) {
       return dispatch({ type: ActionType.LOGIN_ERROR, payload: 'Please check your credentials. Your email address and/or password is missing.'});
     }
+  
     dispatch({type: ActionType.LOGIN_REQUESTED});
     try {
       const { data } = await axios.post(`${API_URL}/login`, {

@@ -19,5 +19,7 @@ export default () => (
   >
     <SearchPageStack.Screen name='SearchPage' component={SearchPage} />
     <SearchPageStack.Screen name='ServingInfo' component={ServingInfo} />
+    {/* <DashboardStack.Screen name='Item Details' component={ItemDetails} /> */}
+    {/* <DashboardStack.Screen name='Selected Date' component={SelectedDate} /> */}
   </SearchPageStack.Navigator>
 );
