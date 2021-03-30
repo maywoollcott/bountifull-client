@@ -33,21 +33,20 @@ const ItemDetails = ({ route }) => {
   const deleteById = async () => {
     console.log(item.uniqueId)
     const res = await dispatch(deleteItem(item));
-    console.log(res.type)
-    if (res.type === 'DELETE_ITEM_SUCCESS') {
-      Alert.alert(
+    console.log(res)
+    Alert.alert(
       `Deleted`,
       `${item.itemName.toLowerCase()} deleted successfully`,
       [
         {
           text: "Okay",
-          onPress: () => navigation.navigate('Dashboard'),
+          onPress: () => navigation.goBack(),
         }
       ]
     );
-    } else {
-      alert('There was a problem deleting')
-    }
+    // } else {
+    //   alert('There was a problem deleting')
+    // }
   }
 
   const deleteItemAlert = async() => {

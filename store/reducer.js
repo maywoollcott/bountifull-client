@@ -121,7 +121,8 @@ const reducer = (state, action) => {
       case ActionType.DELETE_ITEM_SUCCESS:
         return {
           ...state,
-          currentProgress: state.currentProgress.filter(item => item.uniqueId !== action.payload.uniqueId),
+          ...action.payload,
+          isLoading: false,
         };
       case ActionType.ADD_DAILY_TOTAL:
         return {

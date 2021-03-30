@@ -9,7 +9,7 @@ import * as SecureStore from 'expo-secure-store';
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
 import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients';
 
-const API_URL = 'http://192.168.0.181:3001';
+const API_URL = 'http://192.168.0.9:3001';
 
 
 export default function DailyDetails({ route }) {
