@@ -7,7 +7,7 @@ import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
 // TODO: After project is complete, Ben suggested looking into refactoring the code to use Redux Sage in lieu of thunks.
 
 
-const API_URL = 'http://192.168.1.148:3001'
+const API_URL = 'http://10.0.0.54:4000'
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
 export const loginUser = ({ email, password }) => {
@@ -104,9 +104,9 @@ export const registerUser = ({ name, email, password, birthdate, sex, avatar }) 
 };
 
 // TODO: add Store Token somewhere either in AsyncStorage or Expo-Secure-Store
-export const updateUser = ({ birthdate, sex, displayName, email, password, avatar }) => {
+export const updateUser = ({ birthdate, sex, name, email, password, avatar }) => {
   return async (dispatch, getState) => {
-    if (!email || !password || !displayName || !avatar) {
+    if (!email && !password && !name && !birthdate && !sex) {
       return dispatch({ type: ActionType.UPDATE_USER_ERROR, payload: 'No information has been provided to _USER!'});
     }
     try {
@@ -128,7 +128,7 @@ export const updateUser = ({ birthdate, sex, displayName, email, password, avata
         avatar,
         birthdate,
         sex,
-        displayName,
+        name,
       }, config);
       return dispatch({
         type: ActionType.UPDATE_USER_SUCCESS,

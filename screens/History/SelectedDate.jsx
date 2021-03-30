@@ -11,7 +11,7 @@ import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients';
 
 
 // const dateSelected = '2021-03-27'
-const API_URL = 'http://192.168.1.148:3001';
+const API_URL = 'http://10.0.0.54:4000';
 
 export default function DailyDetails({ route }) {
   const { _id, birthdate, sex } = useSelector(state => state.user);

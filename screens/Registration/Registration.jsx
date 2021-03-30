@@ -14,6 +14,8 @@ import { RNS3 } from 'react-native-aws3';
 // const baseS3Uri = 'https://bountifull.s3-us-west-1.amazonaws.com/';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import { Camera } from 'expo-camera';
+
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState('null')
@@ -23,7 +25,10 @@ export default function Dashboard() {
   const [userAvatar, setUserAvatar] = useState(false);
   const [avatarUri, setAvatarUri] = useState('');
   const [hasPermission, setHasPermission] = useState(null);
-
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null)
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  // const [fromCamera, setFromCamera] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -51,6 +56,11 @@ export default function Dashboard() {
     [setOpen, setDate, setFormData]
   );
 
+  const askForCameraPermission = async () => {
+    const { status } = await Camera.requestPermissionsAsync();
+    setHasCameraPermission(status === 'granted');
+  }
+
   const askForPermission = async () => {
     if (Platform.OS !== 'web') {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -60,6 +70,31 @@ export default function Dashboard() {
       } else {
         setHasPermission(true);
       }
+    }
+  }
+
+  const cameraDirection = () => {
+    setType(
+      type === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  }
+
+    const imageFromCamera = async () => {
+    // setFromCamera(true);
+    askForCameraPermission();
+    if(hasCameraPermission) {
+      if (cameraRef) {
+        let photo = await cameraRef.takePictureAsync();
+        if(photo) {
+        setUserAvatar(photo.uri);
+        saveImageToAWS3(photo.uri);
+        closeCamera();
+        }
+      }
+    } else {
+      console.log('need camera permission');
     }
   }
 
@@ -83,6 +118,7 @@ export default function Dashboard() {
         quality: 1
       })
       if (result) {
+        console.log(result.uri);
         setUserAvatar(result.uri);
         saveImageToAWS3(result.uri)
       }
@@ -210,16 +246,40 @@ export default function Dashboard() {
           </TouchableOpacity>
           {openCamera &&
             <View>
-            <TouchableOpacity style={{ alignItems: 'center'}} onPress={closeCamera}>
+              <TouchableOpacity style={{ alignItems: 'center' }} onPress={closeCamera}>
                 <MaterialIcons name="cancel" size={24} color="black" />
               </TouchableOpacity>
               <TouchableOpacity style={styles.submitbutton} onPress={imageFromGallery}>
                 <Ionicons name="images" size={24} />
               </TouchableOpacity>
-              {userAvatar && <Image source={{ uri: userAvatar }} style={{ width: 150, height: 150, borderRadius: 150 / 2 }} />}
+              <TouchableOpacity style={styles.submitbutton} onPress={imageFromCamera}>
+                <Ionicons name="camera" size={24} />
+              </TouchableOpacity>
+              {hasCameraPermission &&
+                <View style={{ flex: 1 }}>
+                  <Camera ref={ref => { setCameraRef(ref) }} style={{ height: 200, width: 200, borderWidth: 4, borderColor: 'black' }} type={type}>
+                    <View style={{ backgroundColor: 'transparent' }}>
+                      <View>
+                        <TouchableOpacity style={styles.cancelCameraButton} onPress={closeCamera}>
+                          <MaterialIcons name="cancel" size={24} color="white" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.flipButton} onPress={cameraDirection}>
+                          <MaterialIcons name="flip-camera-android" size={24} color="white" />
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={{ alignSelf: 'center', marginTop: 110 }} onPress={imageFromCamera}>
+                          <View style={styles.outerCircle}>
+                            <View style={styles.innerCircle} />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </Camera>
+                </View>
+              }
             </View>
           }
-        </View>
         <TouchableOpacity
           style={styles.submitbutton}
           onPress={onSubmit}
@@ -228,6 +288,8 @@ export default function Dashboard() {
             style={styles.buttontext}
           >Submit</Text>
         </TouchableOpacity>
+        {userAvatar && <Image source={{ uri: userAvatar }} style={{ width: 150, height: 150, borderRadius: 150 / 2 }} />}
+        </View>
       </View>
       <StatusBar style="auto" />
     </KeyboardAvoidingView>

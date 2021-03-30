@@ -99,6 +99,7 @@ export default function UserPage({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+      {console.log(user)}
       <View style={styles.container}>
         <Image source={{ uri: `${keys.baseS3Uri}/${user.avatar}` }} style={styles.avatar}></Image>
         <Text style={styles.header}>{user.name}</Text>
