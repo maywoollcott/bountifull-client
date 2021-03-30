@@ -81,4 +81,42 @@ export default StyleSheet.create({
     fontWeight: "700",
     padding: 5
   },
+  innerCircle: {
+    borderWidth: 2,
+    borderRadius: 35 / 2,
+    borderColor: 'white',
+    height: 25,
+    width: 25,
+    backgroundColor: 'white'
+  },
+  outerCircle: {
+    borderWidth: 2,
+    borderRadius: 35 / 2,
+    borderColor: 'white',
+    height: 35,
+    width: 35,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonContainer: {
+    backgroundColor: 'transparent',
+    margin: 0,
+    marginTop: -12,
+    justifyContent: 'center'
+  },
+  flipButton: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    alignSelf: 'flex-end',
+    marginTop: 10
+  },
+  cancelCameraButton: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    alignSelf: 'flex-end',
+    marginTop: 0
+  },
 });
