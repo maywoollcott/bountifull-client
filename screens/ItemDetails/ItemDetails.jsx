@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux';
 import { style } from './ItemDetails.style';
 
@@ -24,10 +24,11 @@ const ItemDetails = ({ route }) => {
   );
 
   return (
-    <View style={ style.container }>
+    <ScrollView contentContainerStyle={ style.container }>
       <View style={ style.headerContainer }>
         <Text style={ style.header }>item details</Text>
         <Text style={ style.name }>{ item.itemName }</Text>
+        <Text style={ style.name }>SERVINGS: { item.servingQuantity }</Text>
       </View>
       <View style={ style.infoContainer }>
         {
@@ -45,7 +46,7 @@ const ItemDetails = ({ route }) => {
           ))
         }
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
