@@ -229,6 +229,7 @@ export default function SearchPage({navigation}) {
                           servingQuantity: servings,
                           totalNutrients: itemNutrients,
                         }));
+                        console.log(postItemRes);
                         setDisplay('search')
                       }}>
                       <Text

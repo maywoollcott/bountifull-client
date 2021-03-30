@@ -1,5 +1,5 @@
 import axios from 'axios'
-const API_URL = 'http://192.168.1.148:3001';
+const API_URL = 'http://192.168.0.181:3001';
 import * as SecureStore from 'expo-secure-store';
 
 const apiService = {};

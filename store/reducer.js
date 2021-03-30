@@ -1,3 +1,4 @@
+
 import ActionType from './constants';
 
 export const initialState = {
@@ -8,7 +9,7 @@ export const initialState = {
   dailyTotal: null,
   totalGoalMet: null,
   fact: '',
-  dateSelectedState:''
+  dateSelectedState: ''
 };
 
 // separate out actions into different reducers and combine.
@@ -107,43 +108,44 @@ const reducer = (state, action) => {
         ...action.payload,
         isLoading: false,
       };
-      case ActionType.DELETE_ITEM_REQUESTED:
-        return {
-          ...state,
-          isLoading: true,
-        };
-      case ActionType.DELETE_ITEM_ERROR:
-        return {
-          ...state,
-          error: action.payload,
-          isLoading: false,
-        };
-      case ActionType.DELETE_ITEM_SUCCESS:
-        return {
-          ...state,
-          currentProgress: state.currentProgress.filter(item => item.id !== action.payload.id),
-        };
-      case ActionType.ADD_DAILY_TOTAL:
-        return {
-          ...state,
-          ...action.payload,
-        };
-      case ActionType.FETCH_REQUESTED:
-        return {
-          ...state,
-          isLoading: true,
-        };
-      case ActionType.FETCH_ERROR:
-        return {
-          ...state,
-          error: action.payload,
-          isLoading: false,
-        };
-      case ActionType.FETCH_SUCCESS:
-        return {
-          ...state,
-          isLoading: false,
-        };
+    case ActionType.DELETE_ITEM_REQUESTED:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ActionType.DELETE_ITEM_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false,
+      };
+    case ActionType.DELETE_ITEM_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+        isLoading: false,
+      };
+    case ActionType.ADD_DAILY_TOTAL:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case ActionType.FETCH_REQUESTED:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ActionType.FETCH_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false,
+      };
+    case ActionType.FETCH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
     default:
       return state;
   }
