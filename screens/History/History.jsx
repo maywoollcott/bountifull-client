@@ -91,7 +91,7 @@ export default function History() {
   //     return dates100;
   // }
 
-  const loggedFormat = { selected: true, selectedColor: COLORS.sage }
+  const loggedFormat = { selected: true, selectedColor: COLORS.turq }
   const forCalendar = days.map(day => ({
     key: [day.date], value: loggedFormat
   }))
