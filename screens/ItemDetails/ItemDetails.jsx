@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/core'
-const API_URL = 'http://192.168.0.181:3001';
+const API_URL = process.env.API_URL;
 
 const ItemDetails = ({ route }) => {
   const dispatch = useDispatch();
