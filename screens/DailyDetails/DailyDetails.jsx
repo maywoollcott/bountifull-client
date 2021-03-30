@@ -3,6 +3,8 @@ import { FlatList, Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoid
 import { useSelector } from 'react-redux';
 import { style } from './DailyDetails.style';
 import { GoalBar } from '../../components/GoalBar/GoalBar';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 import ItemButton from '../../components/ItemButton/ItemButton';
 import { AntDesign } from '@expo/vector-icons';
 import 'intl';
