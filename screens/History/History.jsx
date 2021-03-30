@@ -1,16 +1,23 @@
 
 import React, { useState, Fragment, useEffect } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { LocaleConfig, Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import styles from './History.style';
-import { LocaleConfig } from 'react-native-calendars';
+// import { LocaleConfig } from 'react-native-calendars';
 import { COLORS } from '../../globalStyles';
 import XDate from 'xdate';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
+import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+
+const API_URL = 'http://192.168.0.181:3001';
+
 
 export default function History() {
   const { dateSelectedState } = useSelector(state => state.dateSelectedState);
+  const { _id, birthdate, sex } = useSelector(state => state.user);
+
   const today = new XDate();
   const todayMonth = today.toString("MMMM yyyy")
   const [selected, setSelected] = useState('');
@@ -18,10 +25,11 @@ export default function History() {
   const [currentMonth, setMonth] = useState(todayMonth)
   const [dateIsSelected, setDateIsSelected] = useState(false);
   const twoWeeksAhead = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000)
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
   useEffect(()=>{
     setSelected('');
+    daysGoalMet50();
   },[])
 
   const handleMonthChange = (month) => {
@@ -51,6 +59,36 @@ export default function History() {
     setSelectedFormat(formattedDate);
   };
 
+  const filterBy50 = (day) => {
+    if (day.totalGoalMet >= 50) {
+      return true;
+    }
+    return false;
+  }
+
+  const daysGoalMet50 = async () => {
+    const token = await SecureStore.getItemAsync('BOUNTIFULL_TOKEN_AUTH');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const currentUser  = await axios.get(`${API_URL}/user/${_id}`, config);
+      console.log(currentUser)
+      const userDays = currentUser.data.days;
+      console.log(userDays.map(day => console.log(day.date)))
+      // console.log('user days ' + )
+
+      const dayArr = userDays.filter( (day) => {
+        day.totalGoalMet >= 50;
+      })
+      console.log(dayArr);
+    } catch (error) {
+      console.log('error ', error)
+    }
+  }
+
   LocaleConfig.locales['en'] = {
     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     monthNamesShort: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL.', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -72,7 +110,13 @@ export default function History() {
           minDate={'2021-03-01'}
           maxDate={twoWeeksAhead}
           onDayPress={onDayPress}
+          onMonthChange={handleMonthChange}
+          hideExtraDays={true}
+          disableAllTouchEventsForDisabledDays={true}
+          enableSwipeMonths={true}
           markedDates={{
+            '2021-03-25': { selected: true, selectedColor: COLORS.turq, textColor: 'gray' },
+            '2021-03-26': { selected: true, selectedColor: COLORS.turq},
             [selected]: {
               selected: true,
               disableTouchEvent: true,
@@ -80,10 +124,6 @@ export default function History() {
               selectedTextColor: COLORS.darkblue
             }
           }}
-          onMonthChange={handleMonthChange}
-          hideExtraDays={true}
-          disableAllTouchEventsForDisabledDays={true}
-          enableSwipeMonths={true}
         />
       </View>
     </View>
