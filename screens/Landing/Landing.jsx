@@ -61,7 +61,7 @@ export default function Landing({ navigation }) {
 
         <View style={{ margin: 15 }}>
           <Text style={{ color: COLORS.darkblue }}>Don't have an account, yet? </Text>
-          <TouchableOpacity onPress={() => navigation.push('Registration')}>
+          <TouchableOpacity title='Go to Registration' onPress={() => navigation.push('Registration')}>
             <Text style={{ color: COLORS.turq, marginHorizontal: 65 }}>Sign up!</Text>
           </TouchableOpacity>
         </View>

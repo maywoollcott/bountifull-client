@@ -9,10 +9,10 @@ import ItemButton from '../../components/ItemButton/ItemButton';
 import { AntDesign } from '@expo/vector-icons';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import { curryRight } from 'lodash';
 
 export default function DailyDetails() {
   const { dailyTotal, totalGoalMet, currentProgress } = useSelector(state => state);
-
 
   const dateOptions = {
     weekday: 'long',
@@ -38,7 +38,7 @@ export default function DailyDetails() {
       </View>
       <View style={ style.infoContainer }>
         {
-          Object.keys(dailyTotal).map((nutrient) => {
+          dailyTotal && Object.keys(dailyTotal).map((nutrient) => {
             const name = nutrient.includes('vitamin') ? formatName(nutrient) : nutrient;
             return (
               <GoalBar key={ nutrient } nutrient={{ name, ...dailyTotal[nutrient] }} />
@@ -49,7 +49,7 @@ export default function DailyDetails() {
       <View style= { style.infoContainer }>
         <Text style={{ ...style.header, marginVertical: 35, }}>today's intake:</Text>
         {
-          currentProgress.length ? currentProgress.map((item) =>
+          currentProgress?.length ? currentProgress.map((item) =>
             <ItemButton key={item.uniqueId} item={item} />
           ) : (
             <Text>Get out there and eat something good. :)</Text>

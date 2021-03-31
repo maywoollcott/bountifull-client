@@ -4,6 +4,7 @@ import { DatePickerModal } from "react-native-paper-dates";
 import { RadioButton } from "react-native-paper";
 import { RNS3 } from "react-native-aws3";
 import {
+  Image,
   Text,
   View,
   TextInput,
@@ -28,6 +29,7 @@ export default function UpdateInfo() {
   const [date, setDate] = useState(undefined);
   const [open, setOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState("");
+  const [openCamera, setOpenCamera] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
@@ -89,6 +91,10 @@ export default function UpdateInfo() {
     );
   };
 
+  const closeCamera = () => {
+    setHasCameraPermission(false);
+    console.log(openCamera);
+  };
   const imageFromCamera = async () => {
     // setFromCamera(true);
     askForCameraPermission();
@@ -105,9 +111,6 @@ export default function UpdateInfo() {
     }
   };
 
-  const closeCamera = () => {
-    setHasCameraPermission(false);
-  };
 
   const imageFromGallery = async () => {
     await askForPermission();
@@ -374,9 +377,11 @@ export default function UpdateInfo() {
                     setCameraRef(ref);
                   }}
                   style={{
+                    alignSelf: "center",
                     height: 200,
                     width: 200,
                     borderWidth: 4,
+                    marginTop:10,
                     borderColor: "black",
                   }}
                   type={type}

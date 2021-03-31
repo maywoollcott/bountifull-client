@@ -25,9 +25,9 @@ describe("<History />", () => {
     const tree = renderer
       .create(
         <Provider store={store}>
-          <PaperProvider>
+      {/* <PaperProvider> */}
             <History />
-          </PaperProvider>
+          {/* </PaperProvider> */}
         </Provider>
       )
       .toJSON();

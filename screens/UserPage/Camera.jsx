@@ -56,6 +56,7 @@ export default function UserPage({ navigation }) {
       console.log('received by aws3 bountifull')
     })
   }
+  
   const cameraDirection = () => {
     setType(
       type === Camera.Constants.Type.back

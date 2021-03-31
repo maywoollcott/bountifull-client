@@ -22,7 +22,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '70%',
-    height: 90,
+    height: 100,
     paddingVertical: 20,
     paddingHorizontal: 25,
     borderRadius: 15,

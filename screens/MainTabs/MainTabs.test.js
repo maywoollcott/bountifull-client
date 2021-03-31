@@ -4,16 +4,15 @@ import store from "../../store";
 import { Provider } from "react-redux";
 import { Provider as PaperProvider } from "react-native-paper";
 
-// import App from "./App";
-import ItemDetails from "./ItemDetails";
+import MainTabs from "./MainTabs";
 
-describe("<ItemDetails />", () => {
+describe("<MainTabs />", () => {
   it("has 1 child", () => {
     const tree = renderer
       .create(
         <Provider store={store}>
           <PaperProvider>
-            <ItemDetails />
+            <MainTabs />
           </PaperProvider>
         </Provider>
       )
@@ -21,16 +20,16 @@ describe("<ItemDetails />", () => {
     expect(tree.children.length).toBe(1);
   });
 
-  it("renders correctly", () => {
+  it("renders correctly across all screens", () => {
     const tree = renderer
       .create(
         <Provider store={store}>
           <PaperProvider>
-            <ItemDetails />
+            <MainTabs />
           </PaperProvider>
         </Provider>
       )
       .toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(tree).toMAtchSnapshot();
   });
 });

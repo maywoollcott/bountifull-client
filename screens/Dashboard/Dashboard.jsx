@@ -22,7 +22,7 @@ export default function Dashboard({ navigation }) {
         <Text style={ style.percentage }>{ totalGoalMet }%</Text>
         <Text style={ style.bubbleText }>of your daily needs have been met!</Text>
       </View>
-      <TouchableOpacity style={ style.submitbutton } onPress={ () => navigation.push('Details') }>
+      <TouchableOpacity title='Go to Details' style={ style.submitbutton } onPress={ () => navigation.push('Details') }>
         <Text style={ style.buttontext }>Daily Details</Text>
       </TouchableOpacity>
     </View>

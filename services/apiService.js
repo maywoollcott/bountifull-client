@@ -1,5 +1,5 @@
 import axios from 'axios'
-const API_URL = 'http://10.0.0.54:4000';
+const API_URL = process.env.EXPO_API_URL;
 import * as SecureStore from 'expo-secure-store';
 
 const apiService = {};

@@ -34,3 +34,4 @@ describe("<Registration />", () => {
     expect(tree).toBeTruthy();
   });
 });
+
