@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const API_URL = process.env.EXPO_API_URL;
+// const API_URL = process.env.EXPO_API_URL;
+const API_URL = 'https://bountifull.herokuapp.com';
+
 import * as SecureStore from 'expo-secure-store';
 
 const apiService = {};

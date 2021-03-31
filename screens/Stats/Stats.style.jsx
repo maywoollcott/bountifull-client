@@ -12,11 +12,11 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white", 
-    marginTop: 10
+    marginTop: 5
   },
 
   headerContainer: {
-    marginVertical: 35,
+    marginVertical: 30,
   },
 
   header: {
@@ -28,7 +28,9 @@ export default StyleSheet.create({
   graphTitle: {
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: 24,
+    marginBottom: 10,
+    paddingHorizontal: 3,
     color: COLORS.darkblue,
   },
 
@@ -36,21 +38,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     textTransform: 'uppercase',
     color: COLORS.turq,
-  },
-
-  goalBubble: {
-    width: 154,
-    height: 154,
-    borderRadius: 72,
-    backgroundColor: COLORS.sage,
-    justifyContent: 'center',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 4,
-    shadowColor: 'rgba(0, 0, 0, 0.25)',
-    marginBottom: 20,
   },
 
   percentage: {

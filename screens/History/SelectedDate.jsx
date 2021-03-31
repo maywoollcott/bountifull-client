@@ -6,10 +6,10 @@ import { COLORS } from '../../globalStyles';
 import ItemButton from '../../components/ItemButton/ItemButton';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
 import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients';
 
-const API_URL = process.env.EXPO_API_URL;
+// const API_URL = process.env.EXPO_API_URL;
+const API_URL = 'https://bountifull.herokuapp.com';
 
 export default function DailyDetails({ route }) {
   const { _id, birthdate, sex } = useSelector(state => state.user);

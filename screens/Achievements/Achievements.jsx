@@ -9,7 +9,8 @@ import axios from 'axios';
 
 export default function Achievements() {
   
-  const API_URL = process.env.EXPO_API_URL;
+  const API_URL = 'https://bountifull.herokuapp.com';
+  // const API_URL = process.env.EXPO_API_URL;
 
   const { _id } = useSelector(state => state.user);
   const dateToday = new Date().toISOString().substring(0, 10);
