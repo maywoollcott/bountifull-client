@@ -3,7 +3,6 @@ import ActionType from './constants';
 import * as SecureStore from 'expo-secure-store';
 import { calcTotalProgress, calcTotalsByNutrient } from '../utils/nutrients';
 
-// const API_URL = 'http://192.168.0.181:3001';
 const API_URL = process.env.EXPO_API_URL;
 
 export const loginUser = ({ email, password }) => {
