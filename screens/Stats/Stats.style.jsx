@@ -4,13 +4,14 @@ import { COLORS } from "../../globalStyles";
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
+    backgroundColor: 'white',
   },
 
   containerGraph: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5fcff", 
+    backgroundColor: "white", 
     marginTop: 10
   },
 
