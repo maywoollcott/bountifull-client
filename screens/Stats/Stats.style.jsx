@@ -10,7 +10,8 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5fcff"
+    backgroundColor: "#f5fcff", 
+    marginTop: 10
   },
 
   headerContainer: {
@@ -21,6 +22,12 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 36,
+    color: COLORS.darkblue,
+  },
+  graphTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 25,
     color: COLORS.darkblue,
   },
 

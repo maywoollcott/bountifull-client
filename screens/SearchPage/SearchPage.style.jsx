@@ -13,7 +13,12 @@ export default StyleSheet.create({
     color: COLORS.darkblue,
     fontWeight: '700',
     fontSize: 30,
-    paddingBottom: 30
+    paddingBottom: 5
+  },
+
+  servingInfo: {
+    paddingBottom: 10,
+    color:'grey'
   },
 
   input: {

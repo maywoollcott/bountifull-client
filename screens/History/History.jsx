@@ -2,7 +2,6 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Text, View, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { LocaleConfig, Calendar } from 'react-native-calendars';
 import styles from './History.style';
-// import { LocaleConfig } from 'react-native-calendars';
 import { COLORS } from '../../globalStyles';
 import XDate from 'xdate';
 import { Octicons } from '@expo/vector-icons';
@@ -26,12 +25,10 @@ export default function History() {
   const navigation = useNavigation();
   const [days, setDays] = useState([]);  
  
-  useEffect(()=>{
+  useEffect(() => {
     setSelected('');
     getDays();
-    daysOver50();
-    // daysReached100();
-  },[])
+  }, [])
 
   const handleMonthChange = (month) => {
     const dateStr = month.dateString;
@@ -73,36 +70,38 @@ export default function History() {
     }
   }
 
-  const daysOver50 = () => {
-    const over50 = days.filter(day => {
-      return day.totalGoalMet > 50
+  const daysLoggedIn = () => {
+    const loggedIn = days.filter(day => {
+      return day.totalGoalMet > 0
     })
-    const datesOver50 = over50.map(day => {
-      return day.date;
+    const datesLoggedIn = loggedIn.map(day => {
+      return day;
     })
-    console.log(' datesover50 ', datesOver50);
-    return datesOver50;
+    return datesLoggedIn;
   }
 
-  // const daysReached100 = () => {
-  //     const day100 = days.filter(day => {
-  //       return day.totalGoalMet >= 100;
-  //     })
-  //     return dates100;
-  // }
+  const daysIn = (daysLoggedIn());
+  const loggedFormat = { selected: true, selectedColor: COLORS.sage }
+  const loggedFormat50 = { selected: true, selectedColor: COLORS.turq }
+  const loggedFormat100 = { selected: true, selectedColor: COLORS.darkblue }
 
-  const loggedFormat = { selected: true, selectedColor: COLORS.turq }
-  const forCalendar = days.map(day => ({
-    key: [day.date], value: loggedFormat
-  }))
-  const objectFormat = forCalendar.reduce(
+  let dayGoal = 0;
+  const forCalendar1 = daysIn.map(day => {
+    dayGoal = day.totalGoalMet;
+    console.log(dayGoal)
+    if (dayGoal > 0 && dayGoal < 50) {
+      return {key: [day.date], value: loggedFormat};
+    }
+    else if (dayGoal >= 50) {
+      return {key: [day.date], value: loggedFormat50};
+    }
+    else if (dayGoal === 100) {
+      return {key:[day.date], value: loggedFormat100};
+    }
+  });
+
+  const markedDatesCalendar = forCalendar1.reduce(
     (obj, item) => Object.assign(obj, { [item.key]: item.value }), {});
-
-  console.log(objectFormat)
-
-
-
-
 
   LocaleConfig.locales['en'] = {
     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -115,6 +114,13 @@ export default function History() {
 
   return (
     <View style={styles.container}>
+     <View style={styles.guide}>
+        <Text style={styles.header}> Click on a date to view your log for that day</Text>
+        <Text style={styles.smallerText}><Octicons name="primitive-dot" size={25} color={COLORS.sage} style={{marginTop:10}}/>    Logged at least 1 item </Text>
+        <Text style={styles.smallerText}><Octicons name="primitive-dot" size={25} color={COLORS.turq} />   Met 50% of your goals </Text>
+        <Text style={styles.smallerText}><Octicons name="primitive-dot" size={25} color={COLORS.darkblue} />   Met 100% of your goals</Text>
+     
+      </View>
       <View>
         <Calendar
           style={styles.calendar}
@@ -127,20 +133,9 @@ export default function History() {
           disableAllTouchEventsForDisabledDays={true}
           enableSwipeMonths={true}
           markedDates = {
-            objectFormat
-            // [selected]: {
-            //   selected: true,
-            //   disableTouchEvent: true,
-            //   selectedColor: COLORS.sage,
-            //   selectedTextColor: COLORS.darkblue
-            //   }
+            markedDatesCalendar
             }
         />
-      </View>
-      <View style={styles.guide}>
-        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.sage} />    Logged at least 1 item </Text>
-        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.turq} />   Met 50% of your goals </Text>
-        <Text ><Octicons name="primitive-dot" size={30} color={COLORS.darkblue} />   Met 100% of your goals</Text>
       </View>
     </View>
   );

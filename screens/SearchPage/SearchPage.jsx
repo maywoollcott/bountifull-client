@@ -13,7 +13,6 @@ import NumericInput from 'react-native-numeric-input'
 import { AntDesign } from '@expo/vector-icons'; 
 import ActionType from '../../store/constants';
 
-
 export default function SearchPage({navigation}) {
 
   const userid = useSelector(state => state.user._id)
@@ -68,9 +67,7 @@ export default function SearchPage({navigation}) {
       {display === 'search' &&
         <View style={styles.container}>
           <Text style={styles.header}>Add food here:</Text>
-          <TouchableOpacity onPress={() => navigation.push('ServingInfo')}>
-            <Text style={{color:'grey'}}> What is a serving?  <AntDesign name="questioncircle" size={14} color="grey" /></Text>
-          </TouchableOpacity>
+
 
           <View style={styles.formcontainer}>
             <TextInput 
@@ -138,6 +135,9 @@ export default function SearchPage({navigation}) {
       {display === 'results' &&
         <View style={styles.container}>
           <Text style={styles.header}>Tap your pick!</Text>
+          <TouchableOpacity onPress={() => navigation.push('ServingInfo')}>
+            <Text style={styles.servingInfo}> What is a serving?  <AntDesign name="questioncircle" size={14} color="grey" /></Text>
+          </TouchableOpacity>
           {searchResults.map(item => {
             return <TouchableOpacity
               style={styles.itembutton}

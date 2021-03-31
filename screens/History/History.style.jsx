@@ -12,26 +12,24 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // justifyContent: 'center'
   },
 
   guide: {
-    marginHorizontal: 50,
     // marginTop: 0,
     marginVertical: 40,
     backgroundColor: COLORS.palegreen,
     justifyContent: 'center',
-    marginHorizontal:30,
+    marginHorizontal:15,
     alignItems: 'center',
-    width: '80%',
-    height: 120,
+    width: '90%',
+    height: 150,
     paddingVertical: 20,
     paddingHorizontal: 25,
     borderRadius: 15,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 4,
+    // },
     // shadowOpacity: 4,
     // shadowColor: 'rgba(0, 0, 0, 0.25)'
   },
@@ -45,11 +43,7 @@ export default StyleSheet.create({
     fontSize: 15,
     color: COLORS.darkblue,
     justifyContent: 'center',
-    fontWeight: '500',
     width: '100%',
-    marginHorizontal: 80,
-    marginTop: 80,
-    marginBottom:0
   },
 
   h1: {
@@ -57,6 +51,13 @@ export default StyleSheet.create({
     color: COLORS.darkblue,
     fontWeight: '500',
     justifyContent: 'center',
+  },
+
+  smallerText: {
+    fontSize: 12,
+    color: COLORS.darkblue,
+    justifyContent: 'center',
+
   },
 
   grayText: {
