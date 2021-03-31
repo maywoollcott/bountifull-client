@@ -22,16 +22,17 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '70%',
-    height: 100,
+    height: 130,
     paddingVertical: 20,
     paddingHorizontal: 25,
-    borderRadius: 15,
+    borderRadius: 5,
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
-    shadowColor: 'rgba(0, 0, 0, 0.25)'
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
 
   calendar: {

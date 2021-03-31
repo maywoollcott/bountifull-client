@@ -91,7 +91,7 @@ export default function DailyDetails({ route }) {
             state.historicalProgress.length ? state.historicalProgress.map((item) =>
               <ItemButton key={item.uniqueId} item={item} />
             ) : (
-              <Text>Get out there and eat something good. :)</Text>
+              <Text style={style.noResultText}>Get out there and eat something good :)</Text>
             )
           }
         </View>
@@ -143,6 +143,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 36,
     color: COLORS.darkblue,
+    marginBottom: 3
   },
 
   date: {
@@ -152,18 +153,19 @@ const style = StyleSheet.create({
   },
 
   goalBubble: {
-    width: 154,
-    height: 154,
-    borderRadius: 72,
+    width: 180,
+    height: 180,
+    borderRadius: 90,
     backgroundColor: COLORS.sage,
     justifyContent: 'center',
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
     marginBottom: 20,
+    elevation: 1,
   },
 
   percentage: {
@@ -176,12 +178,15 @@ const style = StyleSheet.create({
   bubbleText: {
     textAlign: 'center',
     fontSize: 13,
-    paddingHorizontal: 5,
+    paddingHorizontal: 15,
     color: COLORS.darkblue,
   },
 
   infoContainer: {
     marginBottom: 30,
   },
-
+  noResultText: {
+    marginVertical: 5,
+    color: COLORS.turq
+  }
 })

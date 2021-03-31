@@ -33,7 +33,14 @@ export default StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 150
+    width: 150,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 4,
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
   addbutton: {
     backgroundColor: COLORS.darkblue,
@@ -42,6 +49,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 60,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 4,
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
   tryagainbutton: {
     marginTop: 30,
@@ -50,7 +64,14 @@ export default StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 150
+    width: 150,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 4,
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
   itembutton: {
     marginTop: 10,
@@ -60,7 +81,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 300,
-    display: 'flex'
+    display: 'flex',
   },
 
   buttontext: {

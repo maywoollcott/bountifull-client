@@ -52,7 +52,7 @@ export default function DailyDetails() {
           currentProgress.length ? currentProgress.map((item) =>
             <ItemButton key={item.uniqueId} item={item} />
           ) : (
-            <Text>Get out there and eat something good. :)</Text>
+            <Text style={style.noResultText}>Get out there and eat something good :)</Text>
           )
         }
       </View>
