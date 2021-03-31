@@ -3,7 +3,7 @@ import { COLORS } from "../../globalStyles";
 
 export const style = StyleSheet.create({
   headerContainer: {
-    marginVertical: 20,
+    marginVertical: 15,
     width: '70%',
   },
 

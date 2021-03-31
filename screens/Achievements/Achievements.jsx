@@ -7,14 +7,12 @@ import * as SecureStore from 'expo-secure-store';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-
 export default function Achievements() {
+  
+  const API_URL = 'http://192.168.0.181:3001';
 
   const { _id } = useSelector(state => state.user);
   const dateToday = new Date().toISOString().substring(0, 10);
-
-  const API_URL = process.env.EXPO_API_URL;
-
   const [days, setDays] = useState([]);
   const [streak, setStreak] = useState(0);
   const [streakRecord, setStreakRecord] = useState(0);

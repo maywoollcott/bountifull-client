@@ -9,7 +9,8 @@ import * as SecureStore from 'expo-secure-store';
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
 import { calcTotalProgress, calcTotalsByNutrient } from '../../utils/nutrients';
 
-const API_URL = process.env.EXPO_API_URL;
+const API_URL = 'http://192.168.0.181:3001';
+// const API_URL = process.env.API_URI;
 
 export default function DailyDetails({ route }) {
   const { _id, birthdate, sex } = useSelector(state => state.user);
@@ -95,28 +96,6 @@ export default function DailyDetails({ route }) {
             )
           }
         </View>
-        {/* <View style={style.containerGraph}>
-          <VictoryChart
-            theme={VictoryTheme.material}
-          >
-            <VictoryLine
-              style={{
-                data: { stroke: COLORS.turq },
-                parent: { border: COLORS.darkblue }
-              }}
-              categories={{
-                x: ["Jan", "Feb", "Mar", "Apr", "May"]
-              }}
-              data={[
-                { x: "Jan", y: .16 },
-                { x: "Feb", y: .40 },
-                { x: "Mar", y: .30 },
-                { x: "Apr", y: .50 },
-                { x: "May", y: .60 }
-              ]}
-            />
-          </VictoryChart>
-        </View> */}
       </ScrollView>
     </View>
   );
