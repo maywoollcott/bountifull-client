@@ -24,18 +24,19 @@ export const style = StyleSheet.create({
   },
 
   goalBubble: {
-    width: 154,
-    height: 154,
-    borderRadius: 72,
+    width: 180,
+    height: 180,
+    borderRadius: 90,
     backgroundColor: COLORS.sage,
     justifyContent: 'center',
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
     marginBottom: 20,
+    elevation: 1,
   },
 
   percentage: {
@@ -55,5 +56,9 @@ export const style = StyleSheet.create({
   infoContainer: {
     marginBottom: 30,
   },
+  noResultText: {
+    marginVertical: 5,
+    color: COLORS.turq
+  }
 
 })

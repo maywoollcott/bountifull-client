@@ -154,7 +154,7 @@ export default function UpdateInfo() {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.header}>Update Your Details</Text>
+      <Text style={styles.header}>update your details</Text>
       <View>
         {selectedButton !== "UpdateName" && (
           <TouchableOpacity
@@ -165,7 +165,7 @@ export default function UpdateInfo() {
           </TouchableOpacity>
         )}
         {selectedButton === "UpdateName" && (
-          <View>
+          <View style={styles.formContainer}>
             <TextInput
               style={styles.input}
               placeholder="New Name"
@@ -196,7 +196,7 @@ export default function UpdateInfo() {
           </TouchableOpacity>
         )}
         {selectedButton === "UpdateEmail" && (
-          <View>
+          <View style={styles.formContainer}>
             <TextInput
               style={styles.input}
               placeholder="New Email"
@@ -227,7 +227,7 @@ export default function UpdateInfo() {
           </TouchableOpacity>
         )}
         {selectedButton === "UpdatePassword" && (
-          <View>
+          <View style={styles.formContainer}>
             <TextInput
               style={styles.input}
               placeholder="New Password"
@@ -281,7 +281,7 @@ export default function UpdateInfo() {
           </View>
         )}
       </View>
-      <View>
+      <View >
         {selectedButton !== "UpdateSex" && (
           <TouchableOpacity
             style={styles.submitbutton}

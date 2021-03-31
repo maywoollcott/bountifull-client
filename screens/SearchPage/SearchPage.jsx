@@ -253,11 +253,6 @@ export default function SearchPage({navigation}) {
           </TouchableOpacity>
         </View>
       }
-      {display === 'details' &&
-        <View style={styles.container}>
-          
-        </View>
-      }
     </KeyboardAvoidingView>
   );
 };

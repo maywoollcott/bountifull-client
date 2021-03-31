@@ -76,16 +76,17 @@ export default StyleSheet.create({
     margin: 7,
     backgroundColor: COLORS.turq,
     borderRadius: 15,
-    height: 45,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     width: 150,
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
-    shadowColor: 'rgba(0, 0, 0, 0.25)'
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
   buttontext: {
     color: 'white',

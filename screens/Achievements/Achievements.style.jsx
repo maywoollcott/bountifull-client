@@ -22,7 +22,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   h1: {
-    fontSize: 29,
+    fontSize: 28,
     color: COLORS.darkblue,
     fontWeight: '700'
   },
@@ -64,7 +64,14 @@ export default StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     marginBottom: 20,
-    marginTop: 20
+    marginTop: 20,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 4,
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
   streakTextContainer: {
     width: 100,

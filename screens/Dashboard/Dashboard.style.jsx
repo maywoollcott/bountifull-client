@@ -18,13 +18,14 @@ export default StyleSheet.create({
     width: '70%',
     paddingVertical: 20,
     paddingHorizontal: 25,
-    borderRadius: 40,
+    borderRadius: 5,
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
-    shadowColor: 'rgba(0, 0, 0, 0.25)'
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
 
   submitbutton: {
@@ -37,11 +38,12 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 15,
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
-    shadowColor: 'rgba(0, 0, 0, 0.25)'
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
 
   factText: {
@@ -57,17 +59,18 @@ export default StyleSheet.create({
   },
 
   goalBubble: {
-    width: 154,
-    height: 154,
-    borderRadius: 72,
+    width: 180,
+    height: 180,
+    borderRadius: 90,
     backgroundColor: COLORS.sage,
     justifyContent: 'center',
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
 
   percentage: {
@@ -80,7 +83,7 @@ export default StyleSheet.create({
   bubbleText: {
     textAlign: 'center',
     fontSize: 13,
-    paddingHorizontal: 5,
+    paddingHorizontal: 15,
     color: COLORS.darkblue,
   },
 })

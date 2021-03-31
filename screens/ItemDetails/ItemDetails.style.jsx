@@ -17,7 +17,7 @@ export const style = StyleSheet.create({
   name: {
     textAlign: 'center',
     textTransform: 'uppercase',
-    color: COLORS.turq,
+    color: COLORS.gray,
   },
 
   nutrient: {
@@ -39,6 +39,7 @@ export const style = StyleSheet.create({
 
   container: {
     alignItems: 'center',
+    paddingBottom: 20
   },
 
   infoContainer: {
@@ -46,28 +47,36 @@ export const style = StyleSheet.create({
     width: '70%',
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 15,
+    borderRadius: 10,
     color: 'white',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 4,
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
 
    deleteButton: {
     marginTop:15,
-    backgroundColor: 'red',
+    backgroundColor: COLORS.turq,
     borderRadius: 15,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     width: 130,
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
-    shadowColor: 'rgba(0, 0, 0, 0.25)'
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    elevation: 1,
   },
   
   buttonText: {
     color: 'white',
-    fontSize: 15,
+    fontSize: 18,
   }
 })
