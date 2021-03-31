@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-const API_URL = 'http://192.168.0.181:3001';
-// const API_URL = process.env.API_URI;
+
+const API_URL = process.env.EXPO_API_URL;
 
 export default function History() {
   const { dateSelectedState } = useSelector(state => state.dateSelectedState);
@@ -89,14 +89,14 @@ export default function History() {
   const forCalendar1 = daysIn.map(day => {
     dayGoal = day.totalGoalMet;
     console.log(dayGoal)
-    if (dayGoal > 0 && dayGoal < 50) {
+    if (dayGoal == 100) {
+      return {key:[day.date], value: loggedFormat100};
+    }
+    else if (dayGoal > 0 && dayGoal < 50) {
       return {key: [day.date], value: loggedFormat};
     }
     else if (dayGoal >= 50) {
       return {key: [day.date], value: loggedFormat50};
-    }
-    else if (dayGoal === 100) {
-      return {key:[day.date], value: loggedFormat100};
     }
   });
 
