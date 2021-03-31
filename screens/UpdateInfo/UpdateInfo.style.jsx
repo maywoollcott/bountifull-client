@@ -9,33 +9,34 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
   header: {
-    fontSize: 40,
+    fontSize: 35,
     color: COLORS.darkblue,
     fontWeight: "700",
-    marginBottom: 35,
+    marginBottom: 20,
   },
   submitbutton: {
     margin: 7,
     backgroundColor: COLORS.turq,
     borderRadius: 15,
-    height: 45,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
-    width: 250,
+    width: 200,
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 1,
     },
     shadowOpacity: 4,
     shadowColor: "rgba(0, 0, 0, 0.25)",
+    elevation: 1,
   },
   buttontext: {
     color: "white",
     fontSize: 20,
   },
   input: {
-    height: 40,
-    width: 270,
+    height: 50,
+    width: 300,
     margin: 5,
     fontSize: 18,
     paddingLeft: 10,
@@ -44,26 +45,26 @@ export default StyleSheet.create({
     borderColor: COLORS.darkblue,
   },
   savebutton: {
-    backgroundColor: COLORS.darkblue,
+    backgroundColor: COLORS.sage,
     borderRadius: 7,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    width: 60,
-    marginLeft: 110,
+    width: 150,
+    margin: 7
   },
   savebuttontext: {
-    color: 'white',
-    fontSize: 18,
+    color: COLORS.darkblue,
+    fontSize: 20,
   },
   savesexbutton: {
-    backgroundColor: COLORS.darkblue,
+    backgroundColor: COLORS.sage,
     borderRadius: 7,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    width: 60,
-    marginLeft: 90,
+    width: 150,
+    marginLeft: 45
   },
 
   radiocontainer: {
@@ -119,4 +120,9 @@ export default StyleSheet.create({
     alignSelf: 'flex-end',
     marginTop: 0
   },
+  formContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

@@ -13,7 +13,7 @@ export default function Achievements() {
   const { _id } = useSelector(state => state.user);
   const dateToday = new Date().toISOString().substring(0, 10);
 
-  const API_URL = 'http://192.168.1.148:3001';
+  const API_URL = process.env.EXPO_API_URL;
 
   const [days, setDays] = useState([]);
   const [streak, setStreak] = useState(0);
