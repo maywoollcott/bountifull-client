@@ -58,8 +58,7 @@ export default function UpdateInfo() {
     (params) => {
       setOpen(false);
       setDate(params.date);
-      setSelectedButton("");
-    },
+     },
     [setOpen, setDate, setInputData]
   );
 
@@ -149,7 +148,8 @@ export default function UpdateInfo() {
   };
 
   const handleSubmit = async () => {
-    await dispatch(updateUser(inputData));
+    console.log(date)
+    await dispatch(updateUser({ ...inputData, birthdate: date }));
   };
 
   return (
@@ -277,6 +277,15 @@ export default function UpdateInfo() {
                 date={date}
                 onConfirm={onConfirmDate}
               />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.savebutton}
+              onPress={async () => {
+                handleSubmit();
+                setSelectedButton("");
+              }}
+            >
+              <Text style={styles.savebuttontext}>Save</Text>
             </TouchableOpacity>
           </View>
         )}

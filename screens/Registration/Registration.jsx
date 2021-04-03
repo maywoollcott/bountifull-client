@@ -182,6 +182,7 @@ export default function Dashboard() {
           style={styles.input}
           placeholder='Password'
           name='password'
+          secureTextEntry={true}
           onChangeText={text => setFormData({ ...formData, password: text })}
         />
         <View>

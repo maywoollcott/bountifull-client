@@ -124,5 +124,17 @@ export default StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  birthdate: {
+    height: 40,
+    width: 270,
+    margin: 7,
+    color: 'grey',
+    fontSize: 18,
+    paddingLeft: 10,
+    borderWidth: 2,
+    borderRadius: 5,
+    paddingTop: 5,
+    borderColor: COLORS.darkblue
+  },
 });

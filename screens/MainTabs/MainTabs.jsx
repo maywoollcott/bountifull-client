@@ -33,7 +33,7 @@ export default function MainTabs() {
     <Tab.Navigator
       initialRouteName='Dashboard'
       tabBarOptions={{
-        activeTintColor: COLORS.palegreen,
+        activeTintColor: '#01223b',
         inactiveTintColor: COLORS.darkblue,
         style: {
           backgroundColor: COLORS.sage,

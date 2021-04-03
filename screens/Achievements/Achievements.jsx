@@ -15,7 +15,7 @@ export default function Achievements() {
   const dateToday = new Date().toISOString().substring(0, 10);
   const [days, setDays] = useState([]);
   const [streak, setStreak] = useState(0);
-  const [streakRecord, setStreakRecord] = useState(0);
+  const [streakRecord, setStreakRecord] = useState(30);
   const [singleDayHundredTrophy, setSingleDayHundredTrophy] = useState(false);
   const [thirtyDayHundredTrophy, setThirtyDayHundredTrophy] = useState(false);
 
@@ -25,7 +25,7 @@ export default function Achievements() {
 
   useEffect( () => {
     calculateCurrentStreak();
-    calculateRecordStreak();
+    // calculateRecordStreak();
     checkSingleDayHundredTrophy();
     checkThirtyDayHundredTrophy();
   }, [days])
@@ -57,7 +57,7 @@ export default function Achievements() {
     let currentStreak = 0
 
     if (activeDates[0] === Date.parse(dateToday) || activeDates[0] === Date.parse(dateToday) - 86400000) {
-      currentStreak = 1
+      currentStreak = 0
       for (let i = 0; i < activeDates.length; i++) {
         if (activeDates[i] - activeDates[i+1] === 86400000) {
           currentStreak ++

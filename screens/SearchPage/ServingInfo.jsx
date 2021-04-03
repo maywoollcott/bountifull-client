@@ -7,7 +7,7 @@ import { Title, Subheading, Paragraph, Headline } from 'react-native-paper';
 export default function ServingInfo() {
 
   return (
-      <View style={{alignItems: 'center', color: COLORS.darkblue}}>
+      <View style={{alignItems: 'center', color: COLORS.darkblue, backgroundColor: 'white'}}>
         <Title style={styles.mainHeader}>What counts as one serving?</Title>
 
         {/* <Paragraph style={{alignItems: 'center', margin:10, color: COLORS.darkblue}}>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     width:40
   },
   container : {
-    color: COLORS.darkblue
+    color: COLORS.darkblue,
   },
   iconImg: {
     marginHorizontal:125,

@@ -48,14 +48,14 @@ export default function UserPage({ navigation }) {
             style={styles.submitbutton}
             onPress={() => navigation.push('UpdateInfo')}>
             <Text style={styles.buttontext}>
-              Update info
+              Update Info
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.submitbutton}
             onPress={handleLogout}>
             <Text style={styles.buttontext}>
-              Log out
+              Log Out
             </Text>
           </TouchableOpacity>
         </View>
