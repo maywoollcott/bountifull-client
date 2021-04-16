@@ -8,15 +8,66 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@formatjs/intl-datetimeformat": "^3.3.1",
+    "@formatjs/intl-displaynames": "^4.0.12",
+    "@formatjs/intl-getcanonicallocales": "^1.5.8",
+    "@formatjs/intl-listformat": "^5.0.13",
+    "@formatjs/intl-locale": "^2.4.21",
+    "@formatjs/intl-numberformat": "^6.2.5",
+    "@formatjs/intl-pluralrules": "^4.0.13",
+    "@formatjs/intl-relativetimeformat": "^8.1.4",
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/bottom-tabs": "^5.11.8",
+    "@react-navigation/native": "^5.9.3",
+    "@react-navigation/stack": "^5.14.3",
+    "axios": "^0.21.1",
+    "babel-plugin-inline-dotenv": "^1.6.0",
+    "dotenv": "^8.2.0",
     "expo": "~40.0.0",
+    "expo-camera": "^10.0.0",
+    "expo-image-picker": "^10.0.0",
+    "expo-permissions": "~10.0.0",
+    "expo-secure-store": "~9.3.0",
     "expo-status-bar": "~1.0.3",
+    "intl": "^1.2.5",
+    "lodash": "^4.17.21",
+    "radio-buttons-react-native": "^1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-intl": "^5.13.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-    "react-native-web": "~0.13.12"
+    "react-native-aws3": "^0.0.9",
+    "react-native-calendars": "^1.1254.0",
+    "react-native-dotenv": "^2.5.3",
+    "react-native-gesture-handler": "~1.8.0",
+    "react-native-get-random-values": "^1.6.0",
+    "react-native-localize": "^2.0.2",
+    "react-native-masked-text": "^1.13.0",
+    "react-native-numeric-input": "^1.8.3",
+    "react-native-paper": "^4.7.2",
+    "react-native-paper-dates": "^0.4.1",
+    "react-native-reanimated": "~1.13.0",
+    "react-native-safe-area-context": "3.1.9",
+    "react-native-screens": "^2.15.2",
+    "react-native-simple-radio-button": "^2.7.4",
+    "react-native-svg": "^12.1.0",
+    "react-native-web": "^0.15.0",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "uuid": "^8.3.2",
+    "victory-native": "^35.3.1",
+    "xdate": "^0.8.2"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "jest": "^26.6.3"
   },
-  "private": true
+  "private": true,
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
